@@ -1,11 +1,11 @@
-import pygame as pg
+# import pygame as pg
 from settings import *
 from button import Button
 from screen import Screen
 
 # pg.init()
 
-screen_surface = pg.display.set_mode((WIDTH, HEIGHT))
+# screen_surface = pg.display.set_mode((WIDTH, HEIGHT))
 
 
 # pg.display.set_caption("test")
@@ -25,6 +25,7 @@ button_new_game = Button("Новая игра", None,
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
                          WIDTH / 2 - (200 / 2), 100, 200, 60)
+
 # Кнопка "Настройки"
 # Перехов в окно "Настройки"
 button_settings = Button("Настройки", None,

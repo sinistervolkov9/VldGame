@@ -2,6 +2,11 @@
 RES = WIDTH, HEIGHT = 600, 400
 FPS = 60
 
+PLAYER_POS = 1, 1
+PLAYER_LVL = 10
+PLAYER_SPEED = 5
+PLAYER_START_ENDURANCE = 1
+
 # Игра:
 # Включить автопасование
 # Задержка перед отображением подсказок
@@ -13,5 +18,3 @@ FPS = 60
 # Аудио:
 # Звук: общий, музыка, эффекты
 
-TEXTURE_SIZE = 256
-HALF_TEXTURE_SIZE = TEXTURE_SIZE // 2

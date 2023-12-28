@@ -17,8 +17,8 @@ class Screen:
         self.background = background  # Задний фон (Изображение)
         self.x = x  # Позиция по x-координате
         self.y = y  # Позиция по y-координате
-        self.width = width  # Длина кнопки
-        self.height = height  # Высота кнопки
+        self.width = width  # Длина фонового изображения
+        self.height = height  # Высота фонового изображения
         self.sound = sound  # Фоновая музыка
         self.text = text  # Выводимый на заднем фоне текст (если надо)
         self.font = font  # Шрифт выводимого текста (будет постоянный для всех состояний текста)

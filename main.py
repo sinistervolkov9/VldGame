@@ -1,8 +1,7 @@
 import sys
-import pygame as pg
-from screen import *
+# from screen_manager import *
 from settings import *
-from screen_manager import *
+from TEST_scr_itgisdg import *
 
 
 class Game:
@@ -13,13 +12,14 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        start_game(screen_main_menu())
-        self.battlefield = Battlefield(self)
+        # start_game(screen_main_menu())
+        self.screeeeeeeen = Screen(self)
 
     def update(self):
         '''
         Метод обновления экрана (flip)
         '''
+        self.screeeeeeeen.update()
         pg.display.flip()
         self.clock.tick(FPS) # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
@@ -32,7 +32,7 @@ class Game:
         Видимо здесь должны подгружаться менюшки
         '''
         self.screen.fill("black")
-        self.battlefield.draw()
+        self.screeeeeeeen.draw()
 
     def check_events(self):
         '''
@@ -51,6 +51,7 @@ class Game:
             self.check_events()
             self.update()
             self.draw()
+
 
 if __name__ == "__main__":
     game = Game()

@@ -4,13 +4,10 @@ from settings import *
 from button import Button
 from screen import Screen
 
-# pg.init()
+pg.init()
 
 screen_surface = pg.display.set_mode((WIDTH, HEIGHT))
-
-
 # pg.display.set_caption("test")
-
 
 def screen_main_menu():
     background = Screen("default_background.jpg",
@@ -87,6 +84,14 @@ def screen_new_game():
                         "ИГРА...", None, "white",
                         50)
 
+    # Кнопка "Ход"
+    # Передача хода (игра)"
+    button_round = Button("Ход", None,
+                             "white", "black", "green",
+                             "b.png", "g.png", "r.png",
+                             "dig_click_03.wav", "mouse_click_04.wav",
+                             WIDTH / 2 - (100 / 2), 170, 100, 60)
+
     # ПОСТОЯННАЯ. Запуск самой программы отображения
     running = True
     while running:
@@ -103,6 +108,14 @@ def screen_new_game():
             elif event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     screen_pause()
+            elif event.type == pg.USEREVENT and event.button == button_round:
+                print("Ход")
+            for button in [button_round]:
+                button.handle_event(event)
+
+        for button in [button_round]:
+            button.check_hover(pg.mouse.get_pos())
+            button.draw(screen_surface)
 
         pg.display.flip()
 
@@ -228,4 +241,3 @@ start_screen = screen_main_menu()
 def start_game(screen):
     global start_screen
     start_screen = screen
-    # pass
