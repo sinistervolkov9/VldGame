@@ -9,9 +9,9 @@ class Screen:
             self,
             background,
             x=0, y=0, width=600, height=400,
-            sound=None,
+
             text=None, font=None, text_color=None,
-            text_size=50,
+            text_size=50
     ):
 
         self.background = background  # Задний фон (Изображение)
@@ -19,7 +19,7 @@ class Screen:
         self.y = y  # Позиция по y-координате
         self.width = width  # Длина фонового изображения
         self.height = height  # Высота фонового изображения
-        self.sound = sound  # Фоновая музыка
+        # self.sound = sound  # Фоновая музыка
         self.text = text  # Выводимый на заднем фоне текст (если надо)
         self.font = font  # Шрифт выводимого текста (будет постоянный для всех состояний текста)
         self.text_color = text_color  # Цвет выводимого текста
@@ -35,11 +35,11 @@ class Screen:
         else:
             self.background = "resources/backgrounds/default_background.jpg"
 
-        # sound
-        if sound:
-            self.sound = "resources/sounds/" + sound
-        else:
-            self.sound = None
+        # # sound
+        # if sound:
+        #     self.sound = "resources/sounds/" + sound
+        # else:
+        #     self.sound = None
 
         # text
         if text:
@@ -65,11 +65,11 @@ class Screen:
         self.background = pg.transform.scale(self.background, (width, height))
         self.rect = self.background.get_rect(topleft=(x, y))  # rect
 
-        # Если будет добавлена фоновая музыка (звуки)
-        if self.sound:
-            self.sound = pg.mixer.Sound(self.sound)
-        else:
-            self.sound = None
+        # # Если будет добавлена фоновая музыка (звуки)
+        # if self.sound:
+        #     self.sound = pg.mixer.Sound(self.sound)
+        # else:
+        #     self.sound = None
 
     def update(self, screen):
         """
@@ -103,11 +103,11 @@ class Screen:
             # Вывод текста
             screen.blit(text_surface, text_rect)
 
-    def handle_event(self):
-        """
-        Метод обрабоки событий
-        """
-
-        # Фоновая музыка (звуки), если есть:
-        if self.sound:
-            self.sound.play()
+    # def handle_event(self):
+    #     """
+    #     Метод обрабоки событий
+    #     """
+    #
+    #     # Фоновая музыка (звуки), если есть:
+    #     if self.sound:
+    #         self.sound.play()

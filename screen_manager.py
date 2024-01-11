@@ -12,9 +12,8 @@ screen_surface = pg.display.set_mode((WIDTH, HEIGHT))
 def screen_main_menu():
     background = Screen("default_background.jpg",
                         0, 0, WIDTH, HEIGHT,
-                        None,
-                        "МЕНЮ", None, "white",
-                        50)
+                        "МЕНЮ",
+                        None, "white", 50)
 
     # Кнопка "Новая игра"
     # Перехов в окно "Новая игра"
@@ -45,7 +44,7 @@ def screen_main_menu():
         for screen in [background]:
             screen.update(screen_surface)
             screen.draw(screen_surface)
-            screen.handle_event()
+            # screen.handle_event()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -80,9 +79,8 @@ def screen_main_menu():
 def screen_new_game():
     background = Screen("default_background.jpg",
                         0, 0, WIDTH, HEIGHT,
-                        None,
-                        "ИГРА...", None, "white",
-                        50)
+                        "ИГРА...",
+                        None, "white",50)
 
     # Кнопка "Ход"
     # Передача хода (игра)"
@@ -98,7 +96,7 @@ def screen_new_game():
         for screen in [background]:
             screen.update(screen_surface)
             screen.draw(screen_surface)
-            screen.handle_event()
+            # screen.handle_event()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -123,9 +121,8 @@ def screen_new_game():
 def screen_exit():
     background = Screen("background.jpg",
                         WIDTH * 0.2 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.2, HEIGHT - HEIGHT * 0.4,
-                        None,
-                        "ВЫЙТИ ИЗ ИГРЫ?", None, "white",
-                        50)
+                        "ВЫЙТИ ИЗ ИГРЫ?",
+                        None, "white", 50)
 
     # Кнопка "Да"
     # Подтверждение выхода
@@ -148,7 +145,7 @@ def screen_exit():
         for screen in [background]:
             screen.update(screen_surface)
             screen.draw(screen_surface)
-            screen.handle_event()
+            # screen.handle_event()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -179,9 +176,8 @@ def screen_exit():
 def screen_pause():
     background = Screen("background.jpg",
                         WIDTH * 0.5 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.5, HEIGHT - HEIGHT * 0.4,
-                        None,
-                        "ПАУЗА", None, "white",
-                        50)
+                        "ПАУЗА",
+                        None, None, 50)
 
     # Кнопка "Продолжить"
     # Вернуться в игру
@@ -205,7 +201,7 @@ def screen_pause():
         for screen in [background]:
             screen.update(screen_surface)
             screen.draw(screen_surface)
-            screen.handle_event()
+            # screen.handle_event()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:

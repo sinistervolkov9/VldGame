@@ -2,6 +2,8 @@
 from settings import *
 from button import Button
 from screen import Screen
+from event import Event
+from screen_item import ScreenItem
 
 # pg.init()
 
@@ -12,15 +14,14 @@ from screen import Screen
 
 
 
-background_main_menu = Screen("default_background.jpg",
+screen_0 = Screen("default_background.jpg",
                     0, 0, WIDTH, HEIGHT,
-                    None,
-                    "МЕНЮ", None, "white",
-                    50)
+                    "screen_0",
+                    None, "white", 50)
 
 # Кнопка "Новая игра"
 # Перехов в окно "Новая игра"
-button_new_game = Button("Новая игра", None,
+button_1 = Button("to_scr_1", None,
                          "white", "black", "green",
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
@@ -28,7 +29,7 @@ button_new_game = Button("Новая игра", None,
 
 # Кнопка "Настройки"
 # Перехов в окно "Настройки"
-button_settings = Button("Настройки", None,
+button_2 = Button("to_scr_2", None,
                          "white", "black", "green",
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
@@ -36,32 +37,36 @@ button_settings = Button("Настройки", None,
 
 # Кнопка "Выход"
 # Выход из программы
-button_exit = Button("Выход", None,
+button_3 = Button("to_scr_3", None,
                      "white", "brown", "green",
                      "b.png", "g.png", "r.png",
                      "dig_click_03.wav", "mouse_click_04.wav",
                      WIDTH / 2 - (200 / 2), 240, 200, 60)
 
-background_new_game = Screen("default_background.jpg",
+screen_1 = Screen("default_background.jpg",
+                    0, 0, WIDTH, HEIGHT,
+                    "screen_1",
+                    None, "white", 50)
+
+button_1_1 = Button("to_scr_4", None,
+                         "white", "black", "green",
+                         "b.png", "g.png", "r.png",
+                         "dig_click_03.wav", "mouse_click_04.wav",
+                         WIDTH / 2 - (200 / 2), 170, 200, 60)
+
+screen_2 = Screen("default_background.jpg",
                     0, 0, WIDTH, HEIGHT,
                     None,
-                    "ИГРА...", None, "white",
-                    50)
+                    "screen_2", "white", 50)
 
-background_settings = Screen("default_background.jpg",
-                    0, 0, WIDTH, HEIGHT,
-                    None,
-                    "НАСТРОЙКИ", None, "white",
-                    50)
-
-button_settings_game = Button("Общие", None,
+button_2_1 = Button("Общие", None,
                          "white", "black", "green",
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
                          WIDTH / 2 - (200 / 2), 100, 200, 60)
 # Кнопка "Настройки"
 # Перехов в окно "Настройки"
-button_settings_audio = Button("Аудио", None,
+button_2_2 = Button("Аудио", None,
                          "white", "black", "green",
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
@@ -69,42 +74,40 @@ button_settings_audio = Button("Аудио", None,
 
 # Кнопка "Выход"
 # Выход из программы
-button_settings_video = Button("Видео", None,
+button_2_3 = Button("Видео", None,
                      "white", "brown", "green",
                      "b.png", "g.png", "r.png",
                      "dig_click_03.wav", "mouse_click_04.wav",
                      WIDTH / 2 - (200 / 2), 240, 200, 60)
 
-background_is_exit = Screen("background.jpg",
+screen_3 = Screen("background.jpg",
                     WIDTH * 0.2 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.2, HEIGHT - HEIGHT * 0.4,
-                    None,
-                    "ВЫЙТИ ИЗ ИГРЫ?", None, "white",
-                    50)
+                    "screen_3",
+                    None, "white", 50)
 
 # Кнопка "Да"
 # Подтверждение выхода
-button_yes = Button("Да", None,
+button_3_1 = Button("exit", None,
                     "white", "black", "green",
                     "b.png", "g.png", "r.png",
                     "dig_click_03.wav", "mouse_click_04.wav",
                     (WIDTH + WIDTH * 0.2 / 2) / 8, 200, 200, 60)
 # Кнопка "Нет"
 # Вернуться назад в меню
-button_no = Button("Нет", None,
+button_3_2 = Button("to_scr_0", None,
                    "white", "black", "green",
                    "b.png", "g.png", "r.png",
                    "dig_click_03.wav", "mouse_click_04.wav",
                    (WIDTH + WIDTH * 0.2 / 2) / 2, 200, 200, 60)
 
-background_pause = Screen("background.jpg",
+screen_4 = Screen("background.jpg",
                     WIDTH * 0.5 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.5, HEIGHT - HEIGHT * 0.4,
-                    None,
-                    "ПАУЗА", None, "white",
-                    50)
+                    "screen_4",
+                    None, "white", 50)
 
 # Кнопка "Продолжить"
 # Вернуться в игру
-button_continue = Button("Продолжить", None,
+button_4_1 = Button("to_scr_1", None,
                          "white", "black", "green",
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
@@ -112,11 +115,17 @@ button_continue = Button("Продолжить", None,
 
 # Кнопка "Выйти в главное меню"
 # Перейти в главное меню
-button_main_menu = Button("В главное меню", None,
+button_4_2 = Button("to_scr_0", None,
                           "white", "black", "green",
                           "b.png", "g.png", "r.png",
                           "dig_click_03.wav", "mouse_click_04.wav",
                           WIDTH / 2 - (200 / 2), 240, 200, 60)
+
+# ---
+
+event_1 = Event(game=None)
+
+# item_1 = ScreenItem("r", 0, 0, 20, 20, None, None, None, None)
 
 # ----------------------------------------------------------------------------------------------------------------------
 
