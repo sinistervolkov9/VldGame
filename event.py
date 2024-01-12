@@ -1,3 +1,5 @@
+import pygame as pg
+
 # class Event:
 #     pass
 #
@@ -24,8 +26,8 @@ class Event:
     def __init__(self, game):
         self.game = game
 
-    def moving(self):
-        for event in pg.event.get():
+    def moving(self, event):
+        # for event in pg.event.get():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_w:
                     print("Вперед")

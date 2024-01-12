@@ -1,7 +1,7 @@
 import sys
 from settings import *
 import pygame as pg
-
+from scene_init import Scene
 
 class Game:
     def __init__(self):
@@ -11,16 +11,19 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        pass
+        self.scene = Scene(current_scene="scene_0")
 
     def update(self):
         '''
         Метод обновления экрана (flip)
         '''
+        self.scene.screen_updater(self.screen)
+        self.scene.button_updater(self.screen)
         pg.display.flip()
         self.clock.tick(FPS) # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
         # pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
+
 
     def draw(self):
         '''
@@ -38,6 +41,10 @@ class Game:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            self.scene.event_updater(event)
+            self.scene.event_keydown(event)
+            self.scene.user_event(event)
+            self.scene.button_handle_event(event)
 
     def run(self):
         '''
