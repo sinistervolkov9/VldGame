@@ -1,7 +1,5 @@
 import pygame as pg
 
-pg.init()
-
 
 # Экран сам по себе
 class Screen:

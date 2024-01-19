@@ -1,7 +1,5 @@
 import pygame as pg
 
-pg.init()
-
 
 # Интерактивные штуки, отображаемые на экране
 class ScreenItem:
