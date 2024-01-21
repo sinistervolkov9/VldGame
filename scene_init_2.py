@@ -15,15 +15,9 @@ class Scene:
 
         self.unpacking()
 
-    def screen_update(self, screen_surface):
-        for screennn in self.current_screen:
-            screennn.update(screen_surface)
-            screennn.draw(screen_surface)
-            # screennn.handle_event()
-
     def screen_draw(self, screen_surface):
         for screennn in self.current_screen:
-            screennn.update(screen_surface)
+            #screennn.update(screen_surface)
             screennn.draw(screen_surface)
             # screennn.handle_event()
 
@@ -102,6 +96,7 @@ class Scene:
     def button_update(self, screen_surface):
         for button in self.button_objts:
             button.check_hover(pg.mouse.get_pos())
+
             button.draw(screen_surface)
 
     def button_click_event(self, event):

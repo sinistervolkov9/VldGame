@@ -20,7 +20,7 @@ class Game:
         """
         Метод обновления экрана (flip)
         """
-        self.scene.screen_update(self.screen)
+        self.scene.screen_draw(self.screen)
         self.scene.button_update(self.screen)
         self.scene.dnd_drawer(self.screen)
 

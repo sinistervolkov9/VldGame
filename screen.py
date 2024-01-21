@@ -69,19 +69,22 @@ class Screen:
         # else:
         #     self.sound = None
 
-    def update(self, screen):
-        """
-        pass
-        """
-
-        # ПОСТОЯННАЯ. Отображение заднего фона
-        # screen.fill("white")
-        screen.blit(self.background, self.rect.topleft)
+    # def update(self, screen):
+    #     """
+    #     pass
+    #     """
+    #
+    #     # ПОСТОЯННАЯ. Отображение заднего фона
+    #     # screen.fill("white")
+    #     screen.blit(self.background, self.rect.topleft)
 
     def draw(self, screen):
         """
         pass
         """
+        # ПОСТОЯННАЯ. Отображение заднего фона
+        # screen.fill("white")
+        screen.blit(self.background, self.rect.topleft)
 
         # ПОСТОЯННАЯ. Отображение текста на заднем фоне (если есть)
         if self.text:
