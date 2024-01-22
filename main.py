@@ -10,6 +10,7 @@ class Game:
         pg.init()  # Инициализатор pygame
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
+        # self.mouse_pos = pg.mouse.get_pos()
         self.new_game()
 
     def new_game(self):

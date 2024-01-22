@@ -561,16 +561,6 @@ class Screen:
             # Вывод текста
             self.game.screen.blit(text_surface, text_rect)
 
-    # def handle_event(self):
-    #     """
-    #     Метод обрабоки событий
-    #     """
-    #
-    #     # Фоновая музыка (звуки), если есть:
-    #     if self.sound:
-    #         self.sound.play()
-
-
 # ----------------------------------------------------------------------------------------------------------------------
 
 class ScreenColor:
@@ -584,6 +574,15 @@ class ScreenColor:
 
     def create_recttt(self):
         x, y = pg.mouse.get_pos()
+
+        x_1 = x + self.width
+        if x_1 > WIDTH:
+            x = WIDTH - 120
+
+        y_1 = y + self.height
+        if y_1 > HEIGHT:
+            y = HEIGHT - 120
+
         self.screennnn = pg.Rect(x, y, self.width, self.height)
 
     def draw(self, status):
@@ -651,6 +650,33 @@ class ButtonColor:
 
     def create_rectttttttt(self):
         x, y = pg.mouse.get_pos()
+
+        if self.x == 0:
+            x_1 = x + self.x + self.width * 3
+            if x_1 > WIDTH:
+                x = WIDTH - 120
+        elif self.x == self.width:
+            x_1 = x + self.x + self.width * 2
+            if x_1 > WIDTH:
+                x = WIDTH - 120
+        elif self.x == self.width * 2:
+            x_1 = x + self.x + self.width
+            if x_1 > WIDTH:
+                x = WIDTH - 120
+
+        if self.y == 0:
+            y_1 = y + self.y + self.height * 3
+            if y_1 > HEIGHT:
+                y = HEIGHT - 120
+        elif self.y == self.height:
+            y_1 = y + self.y + self.height * 2
+            if y_1 > HEIGHT:
+                y = HEIGHT - 120
+        elif self.y == self.height * 2:
+            y_1 = y + self.y + self.height
+            if y_1 > HEIGHT:
+                y = HEIGHT - 120
+
         self.buttonnnn = pg.Rect(x + self.x, y + self.y, self.width, self.height)
 
     def draw(self, status):

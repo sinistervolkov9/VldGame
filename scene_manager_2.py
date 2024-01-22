@@ -1,6 +1,6 @@
 from drag_drop import Gameeee
 from settings import *
-from button import Button
+from button import Button, ButtonWithTrigger
 from screen import Screen
 # from event import Event
 
@@ -35,6 +35,21 @@ screen_4_pause = Screen("background.jpg",
                         None, "white", 50)
 
 # ----------------------------------------------------------------------------------------------------------------------
+class Trigger:
+    def __init__(self, booll):
+        self.booll = booll
+    def prrrr(self):
+        return bool(self.booll)
+    def change_trigger(self):
+        if self.booll == 1:
+            self.booll = 0
+        else:
+            self.booll = 1
+
+trigger_11 = Trigger(1)
+trigger_12 = Trigger(0)
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 # Кнопка "Новая игра"
 # Перехов в окно "Новая игра"
@@ -60,17 +75,23 @@ button_02_exit = Button("ВЫХОД", None,
                         "dig_click_03.wav", "mouse_click_04.wav",
                         WIDTH / 2 - (200 / 2), 240, 200, 60)
 
-button_10_click = Button("<", None,
+button_10_pause = Button("<", None,
                          "white", "black", "green",
                          "b.png", "g.png", "r.png",
                          "dig_click_03.wav", "mouse_click_04.wav",
                          20, 20, 60, 60)
 
-button_11_turn = Button("Ход", None,
+button_11_turn_1 = ButtonWithTrigger("Ход", None,
                         "white", "black", "green",
                         "b.png", "g.png", "r.png",
                         "dig_click_03.wav", "mouse_click_04.wav",
-                        WIDTH / 2 - (200 / 2), 170, 200, 60)
+                        50, 170, 60, 60, trigger_11.prrrr())
+
+button_12_turn_2 = ButtonWithTrigger("Ход", None,
+                        "white", "black", "green",
+                        "b.png", "g.png", "r.png",
+                        "dig_click_03.wav", "mouse_click_04.wav",
+                        200, 170, 60, 60, trigger_12.prrrr())
 
 button_20 = Button("Общие", None,
                    "white", "black", "green",
@@ -181,14 +202,21 @@ scenes = [
             {"screen": screen_1_new_game},
             {"buttons":
                 [
-                    {button_10_click:
+                    {button_10_pause:
                         [
                             {"change_scene": "scene_4"},
                         ]
                     },
-                    {button_11_turn:
+                    {button_11_turn_1:
                         [
-                            {"print_some": print_event_1}
+                            {"print_some": print_event_1},
+                            {"change_trigger": [trigger_11, trigger_12]}
+                        ]
+                    },
+                    {button_12_turn_2:
+                        [
+                            {"print_some": print_event_1},
+                            {"change_trigger": [trigger_11, trigger_12]}
                         ]
                     }
                 ]

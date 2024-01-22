@@ -7,11 +7,12 @@ class Scene:
     def __init__(self, current_scene="scene_0"):
         self.current_scene = current_scene
         self.scenes_history = []
-        self.esc_screen = []
-        self.current_screen = []
-        self.current_buttons = []
-        self.button_objts = []
-        self.dnd = []
+
+        # self.current_screen = []
+        # self.current_buttons = []
+        # self.button_objts = []
+        # self.esc_screen = []
+        # self.dnd = []
 
         self.unpacking()
 
@@ -120,3 +121,8 @@ class Scene:
                 self.unpacking()
         if key == "print_some":
             value.print_some()
+        if key == "change_trigger":
+            for i in value:
+                i.change_trigger()
+            print(f"{sm.trigger_11.prrrr()}, {sm.trigger_12.prrrr()}")
+            print(f"{sm.button_11_turn_1.trigger}, {sm.button_12_turn_2.trigger}")
