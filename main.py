@@ -2,7 +2,7 @@ import sys
 #from drag_drop import Gameeee
 from settings import *
 import pygame as pg
-from scene_init_2 import Scene
+from scene_init import Scene
 
 
 class Game:
