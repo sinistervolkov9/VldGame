@@ -11,14 +11,14 @@ class MainGame:
         pg.init()  # Инициализатор pygame
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
-        #self.mouse_pos = pg.mouse.get_pos()
+        # self.mouse_pos = pg.mouse.get_pos()
 
-        #self.allies_list = []
-        #self.opponents_list = []
+        # self.allies_list = []
+        # self.opponents_list = []
 
         self.new_game()
 
-    #def triggers(self):
+        # def triggers(self):
         # Участие в игре
         self.par_0l_in = True
         self.par_1l_in = False
@@ -35,7 +35,7 @@ class MainGame:
         self.col_pal_2r_isopen = False
 
     def new_game(self):
-    #def screens(self):
+        # def screens(self):
         self.game_screen = Screen(self, "default_background.jpg",
                                   0, 0, WIDTH, HEIGHT,
                                   "Настройки игры",
@@ -48,7 +48,7 @@ class MainGame:
         self.color_palette_screen_1r = ScreenRect(self)
         self.color_palette_screen_2r = ScreenRect(self)
 
-    #def buttons(self):
+        # def buttons(self):
         self.start_button = Button(self, "Старт", None,
                                    "white", "black", "green",
                                    "b.png", "g.png", "r.png",
@@ -56,25 +56,25 @@ class MainGame:
                                    WIDTH / 2 - (200 / 2), 320, 200, 60)
 
         self.add_par_1l_button = ButtonTrigger(self, None,
-                                                      "white", "black", "green",
-                                                      "b.png", "g.png", "r.png",
-                                                      "dig_click_03.wav", "mouse_click_04.wav",
-                                                      160, 180, 50, 50)
+                                               "white", "black", "green",
+                                               "b.png", "g.png", "r.png",
+                                               "dig_click_03.wav", "mouse_click_04.wav",
+                                               160, 180, 50, 50)
         self.add_par_2l_button = ButtonTrigger(self, None,
-                                                      "white", "black", "green",
-                                                      "b.png", "g.png", "r.png",
-                                                      "dig_click_03.wav", "mouse_click_04.wav",
-                                                      160, 240, 50, 50)
+                                               "white", "black", "green",
+                                               "b.png", "g.png", "r.png",
+                                               "dig_click_03.wav", "mouse_click_04.wav",
+                                               160, 240, 50, 50)
         self.add_par_1r_button = ButtonTrigger(self, None,
-                                                      "white", "black", "green",
-                                                      "b.png", "g.png", "r.png",
-                                                      "dig_click_03.wav", "mouse_click_04.wav",
-                                                      390, 180, 50, 50)
+                                               "white", "black", "green",
+                                               "b.png", "g.png", "r.png",
+                                               "dig_click_03.wav", "mouse_click_04.wav",
+                                               390, 180, 50, 50)
         self.add_par_2r_button = ButtonTrigger(self, None,
-                                                      "white", "black", "green",
-                                                      "b.png", "g.png", "r.png",
-                                                      "dig_click_03.wav", "mouse_click_04.wav",
-                                                      390, 240, 50, 50)
+                                               "white", "black", "green",
+                                               "b.png", "g.png", "r.png",
+                                               "dig_click_03.wav", "mouse_click_04.wav",
+                                               390, 240, 50, 50)
 
         self.button_color_red = ButtonColor(self, "red", 0, 0)
         self.button_color_gray = ButtonColor(self, "gray", 40, 0)
@@ -86,7 +86,7 @@ class MainGame:
         self.button_color_green = ButtonColor(self, "green", 40, 80)
         self.button_color_yellow = ButtonColor(self, "yellow", 80, 80)
 
-    #def free_items(self):
+        # def free_items(self):
         self.freetext_allies = FreeItemText(self, "союзники", 100)
         self.freetext_opponents = FreeItemText(self, "противники", 500)
 

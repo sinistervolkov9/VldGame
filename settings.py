@@ -2,11 +2,6 @@
 RES = WIDTH, HEIGHT = 600, 400
 FPS = 60
 
-PLAYER_POS = 1, 1
-PLAYER_LVL = 10
-PLAYER_SPEED = 5
-PLAYER_START_ENDURANCE = 1
-
 # Игра:
 # Включить автопасование
 # Задержка перед отображением подсказок

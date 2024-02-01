@@ -1,7 +1,7 @@
-from drag_drop import Gameeee
 from settings import *
 from button import Button, ButtonWithTrigger
 from screen import Screen
+
 # from event import Event
 
 # from screen_item import ScreenItem
@@ -34,17 +34,21 @@ screen_4_pause = Screen("background.jpg",
                         "ПАУЗА",
                         None, "white", 50)
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 class Trigger:
     def __init__(self, booll):
         self.booll = booll
+
     def prrrr(self):
         return bool(self.booll)
+
     def change_trigger(self):
         if self.booll == 1:
             self.booll = 0
         else:
             self.booll = 1
+
 
 trigger_11 = Trigger(1)
 trigger_12 = Trigger(0)
@@ -82,16 +86,16 @@ button_10_pause = Button("<", None,
                          20, 20, 60, 60)
 
 button_11_turn_1 = ButtonWithTrigger("Ход", None,
-                        "white", "black", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        50, 170, 60, 60, trigger_11.prrrr())
+                                     "white", "black", "green",
+                                     "b.png", "g.png", "r.png",
+                                     "dig_click_03.wav", "mouse_click_04.wav",
+                                     50, 170, 60, 60, trigger_11.prrrr())
 
 button_12_turn_2 = ButtonWithTrigger("Ход", None,
-                        "white", "black", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        200, 170, 60, 60, trigger_12.prrrr())
+                                     "white", "black", "green",
+                                     "b.png", "g.png", "r.png",
+                                     "dig_click_03.wav", "mouse_click_04.wav",
+                                     200, 170, 60, 60, trigger_12.prrrr())
 
 button_20 = Button("Общие", None,
                    "white", "black", "green",
