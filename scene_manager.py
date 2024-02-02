@@ -1,10 +1,6 @@
 from settings import *
-from button import Button, ButtonWithTrigger
-from screen import Screen
-
-# from event import Event
-
-# from screen_item import ScreenItem
+from button import ButtonOld
+from screen_old_ver import Screen
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -36,118 +32,113 @@ screen_4_pause = Screen("background.jpg",
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-class Trigger:
-    def __init__(self, booll):
-        self.booll = booll
-
-    def prrrr(self):
-        return bool(self.booll)
-
-    def change_trigger(self):
-        if self.booll == 1:
-            self.booll = 0
-        else:
-            self.booll = 1
-
-
-trigger_11 = Trigger(1)
-trigger_12 = Trigger(0)
+# class Trigger:
+#     def __init__(self, booll):
+#         self.booll = booll
+#
+#     def prrrr(self):
+#         return bool(self.booll)
+#
+#     def change_trigger(self):
+#         if self.booll == 1:
+#             self.booll = 0
+#         else:
+#             self.booll = 1
+#
+#
+# trigger_11 = Trigger(1)
+# trigger_12 = Trigger(0)
 
 # ----------------------------------------------------------------------------------------------------------------------
 
 # Кнопка "Новая игра"
 # Перехов в окно "Новая игра"
-button_00_new_game = Button("НОВАЯ ИГРА", None,
-                            "white", "black", "green",
-                            "b.png", "g.png", "r.png",
-                            "dig_click_03.wav", "mouse_click_04.wav",
-                            WIDTH / 2 - (200 / 2), 100, 200, 60)
+button_00_new_game = ButtonOld("НОВАЯ ИГРА", None,
+                               "white", "black", "green",
+                               "b.png", "g.png", "r.png",
+                               "dig_click_03.wav", "mouse_click_04.wav",
+                               WIDTH / 2 - (200 / 2), 100, 200, 60)
 
 # Кнопка "Настройки"
 # Перехов в окно "Настройки"
-button_01_settings = Button("НАСТРОЙКИ", None,
+button_01_settings = ButtonOld("НАСТРОЙКИ", None,
+                               "white", "black", "green",
+                               "b.png", "g.png", "r.png",
+                               "dig_click_03.wav", "mouse_click_04.wav",
+                               WIDTH / 2 - (200 / 2), 170, 200, 60)
+
+# Кнопка "Выход"
+# Выход из программы
+button_02_exit = ButtonOld("ВЫХОД", None,
+                           "white", "brown", "green",
+                           "b.png", "g.png", "r.png",
+                           "dig_click_03.wav", "mouse_click_04.wav",
+                           WIDTH / 2 - (200 / 2), 240, 200, 60)
+
+button_10_pause = ButtonOld("<", None,
                             "white", "black", "green",
                             "b.png", "g.png", "r.png",
                             "dig_click_03.wav", "mouse_click_04.wav",
-                            WIDTH / 2 - (200 / 2), 170, 200, 60)
+                            20, 20, 60, 60)
 
-# Кнопка "Выход"
-# Выход из программы
-button_02_exit = Button("ВЫХОД", None,
-                        "white", "brown", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        WIDTH / 2 - (200 / 2), 240, 200, 60)
+button_11_turn_1 = ButtonOld("Ход", None,
+                             "white", "black", "green",
+                             "b.png", "g.png", "r.png",
+                             "dig_click_03.wav", "mouse_click_04.wav",
+                             WIDTH / 2 - (200 / 2), 170, 200, 60)
 
-button_10_pause = Button("<", None,
-                         "white", "black", "green",
-                         "b.png", "g.png", "r.png",
-                         "dig_click_03.wav", "mouse_click_04.wav",
-                         20, 20, 60, 60)
+button_20 = ButtonOld("Общие", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      WIDTH / 2 - (200 / 2), 100, 200, 60)
 
-button_11_turn_1 = ButtonWithTrigger("Ход", None,
-                                     "white", "black", "green",
-                                     "b.png", "g.png", "r.png",
-                                     "dig_click_03.wav", "mouse_click_04.wav",
-                                     50, 170, 60, 60, trigger_11.prrrr())
-
-button_12_turn_2 = ButtonWithTrigger("Ход", None,
-                                     "white", "black", "green",
-                                     "b.png", "g.png", "r.png",
-                                     "dig_click_03.wav", "mouse_click_04.wav",
-                                     200, 170, 60, 60, trigger_12.prrrr())
-
-button_20 = Button("Общие", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 100, 200, 60)
 # Кнопка "Настройки"
 # Перехов в окно "Настройки"
-button_21 = Button("Аудио", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 170, 200, 60)
+button_21 = ButtonOld("Аудио", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      WIDTH / 2 - (200 / 2), 170, 200, 60)
 
 # Кнопка "Выход"
 # Выход из программы
-button_22 = Button("Видео", None,
-                   "white", "brown", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 240, 200, 60)
+button_22 = ButtonOld("Видео", None,
+                      "white", "brown", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      WIDTH / 2 - (200 / 2), 240, 200, 60)
 
 # Кнопка "Да"
 # Подтверждение выхода
-button_30 = Button("ДА", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   (WIDTH + WIDTH * 0.2 / 2) / 8, 200, 200, 60)
+button_30 = ButtonOld("ДА", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      (WIDTH + WIDTH * 0.2 / 2) / 8, 200, 200, 60)
 # Кнопка "Нет"
 # Вернуться назад в меню
-button_31 = Button("НЕТ", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   (WIDTH + WIDTH * 0.2 / 2) / 2, 200, 200, 60)
+button_31 = ButtonOld("НЕТ", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      (WIDTH + WIDTH * 0.2 / 2) / 2, 200, 200, 60)
 
 # Кнопка "Продолжить"
 # Вернуться в игру
-button_40 = Button("ПРОДОЛЖИТЬ", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 170, 200, 60)
+button_40 = ButtonOld("ПРОДОЛЖИТЬ", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      WIDTH / 2 - (200 / 2), 170, 200, 60)
 
 # Кнопка "Выйти в главное меню"
 # Перейти в главное меню
-button_41 = Button("В МЕНЮ", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 240, 200, 60)
+button_41 = ButtonOld("В МЕНЮ", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      WIDTH / 2 - (200 / 2), 240, 200, 60)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -168,9 +159,6 @@ print_event_3 = PEvent("В разработке")
 
 # item_1 = ScreenItem("r", 0, 0, 20, 20, None, None, None, None)
 
-# ----------------------------------------------------------------------------------------------------------------------
-
-drag_n_drop = Gameeee()
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -213,20 +201,12 @@ scenes = [
                     },
                     {button_11_turn_1:
                         [
-                            {"print_some": print_event_1},
-                            {"change_trigger": [trigger_11, trigger_12]}
-                        ]
-                    },
-                    {button_12_turn_2:
-                        [
-                            {"print_some": print_event_1},
-                            {"change_trigger": [trigger_11, trigger_12]}
+                            {"print_some": print_event_1}
                         ]
                     }
                 ]
             },
-            {"esc_screen": "scene_4"},
-            {"drag_drop": drag_n_drop}
+            {"esc_screen": "scene_4"}
         ]
     },
     {"scene_2":

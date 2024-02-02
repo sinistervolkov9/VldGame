@@ -78,38 +78,37 @@ class Screen:
     #     # screen.fill("white")
     #     screen.blit(self.background, self.rect.topleft)
 
-    def draw(self, screen, trigger):
+    def draw(self, screen):
         """
         pass
         """
-        if bool(trigger) is True:
-            # ПОСТОЯННАЯ. Отображение заднего фона
-            # screen.fill("white")
-            screen.blit(self.background, self.rect.topleft)
+        # ПОСТОЯННАЯ. Отображение заднего фона
+        # screen.fill("white")
+        screen.blit(self.background, self.rect.topleft)
 
-            # ПОСТОЯННАЯ. Отображение текста на заднем фоне (если есть)
-            if self.text:
-                # Отображение текста:
-                # Размер шрифта
-                text_size = self.text_size
+        # ПОСТОЯННАЯ. Отображение текста на заднем фоне (если есть)
+        if self.text:
+            # Отображение текста:
+            # Размер шрифта
+            text_size = self.text_size
 
-                # Подключение шрифта (базово - базовый)
-                font = pg.font.Font(self.font, int(text_size))
+            # Подключение шрифта (базово - базовый)
+            font = pg.font.Font(self.font, int(text_size))
 
-                # Рендеринг текста
-                text_surface = font.render(self.text, True, self.text_color)
+            # Рендеринг текста
+            text_surface = font.render(self.text, True, self.text_color)
 
-                # rect текста (создание невидимой обводки текста)
-                text_rect = text_surface.get_rect(center=((self.width+self.x*2) / 2, self.y+50))
+            # rect текста (создание невидимой обводки текста)
+            text_rect = text_surface.get_rect(center=((self.width+self.x*2) / 2, self.y+50))
 
-                # Вывод текста
-                screen.blit(text_surface, text_rect)
+            # Вывод текста
+            screen.blit(text_surface, text_rect)
 
-        # def handle_event(self):
-        #     """
-        #     Метод обрабоки событий
-        #     """
-        #
-        #     # Фоновая музыка (звуки), если есть:
-        #     if self.sound:
-        #         self.sound.play()
+    # def handle_event(self):
+    #     """
+    #     Метод обрабоки событий
+    #     """
+    #
+    #     # Фоновая музыка (звуки), если есть:
+    #     if self.sound:
+    #         self.sound.play()

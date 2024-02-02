@@ -2,9 +2,8 @@ import pygame as pg
 
 pg.init()
 
-
 # Кнопка сама по себе
-class Button:
+class ButtonOld:
     def __init__(
             self,
             text: str = None, font=None,
@@ -214,13 +213,13 @@ class Button:
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-class ButtonWithTrigger:
+class Button:
     def __init__(
             self,
             text: str = None, font=None,
             text_color=None, text_color_hover=None, text_color_click=None,
             image=None, image_hover=None, image_click=None, sound_hover=None, sound_click=None,
-            x=0, y=0, width=200, height=60, trigger=True):
+            x=0, y=0, width=200, height=60):
 
         self.text = text  # Выводимый текст
         self.font = font  # Шрифт выводимого текста (будет постоянный для всех состояний текста)
@@ -237,7 +236,6 @@ class ButtonWithTrigger:
         self.width = width  # Длина кнопки
         self.height = height  # Высота кнопки
         self.over = None  # Вспомогательный аргумент
-        self.trigger = trigger
 
         # Работа с аргументами-переменными 1:
         # text
@@ -351,12 +349,12 @@ class ButtonWithTrigger:
         # Для проверки, наведена ли мышка на кнопку
         self.is_clicked = False
 
-    def draw(self, screen):
+    def draw(self, screen, trigger):
         """
         Метод, который позволит нарисовать кнопку.
         В него передаем экран, на котором будет рисоваться кнопка
         """
-        if bool(self.trigger) is True:
+        if bool(trigger) is True:
             # Чтобы понять, какую картинку и какого цвета текст необх. отобразить
             # current_image = self.image_hover if self.is_hovered else self.image
             if self.is_clicked:
@@ -391,21 +389,21 @@ class ButtonWithTrigger:
             # Вывод текста
             screen.blit(text_surface, text_rect)
 
-    def check_hover(self, mouse_pos):
+    def check_hover(self, mouse_pos, trigger):
         """
         Проверяет, наведена мышка на кнопку или нет
         """
-        if bool(self.trigger) is True:
+        if bool(trigger) is True:
             self.is_hovered = self.rect.collidepoint(mouse_pos)
 
         # if self.rect.collidepoint(mouse_pos):
         #     self.is_hovered = True
 
-    def handle_event(self, event):
+    def handle_event(self, event, trigger):
         """
         Метод обрабоки событий
         """
-        if bool(self.trigger) is True:
+        if bool(trigger) is True:
             # Звук наведения, если есть:
             if self.is_hovered:
                 if not self.over:
