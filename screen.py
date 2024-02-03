@@ -9,7 +9,8 @@ class Screen:
             x=0, y=0, width=600, height=400,
 
             text=None, font=None, text_color=None,
-            text_size=50
+            text_size=50,
+            visible=True
     ):
 
         self.background = background  # Задний фон (Изображение)
@@ -22,8 +23,10 @@ class Screen:
         self.font = font  # Шрифт выводимого текста (будет постоянный для всех состояний текста)
         self.text_color = text_color  # Цвет выводимого текста
         self.text_size = text_size
-        # self.text_pos = text_pos
 
+        self.visible = visible
+
+        # self.text_pos = text_pos
         # text_pos = (self.width / 4)
 
         # Работа с аргументами-переменными 1:
@@ -78,11 +81,11 @@ class Screen:
     #     # screen.fill("white")
     #     screen.blit(self.background, self.rect.topleft)
 
-    def draw(self, screen, trigger):
+    def draw(self, screen):
         """
         pass
         """
-        if bool(trigger) is True:
+        if self.visible:
             # ПОСТОЯННАЯ. Отображение заднего фона
             # screen.fill("white")
             screen.blit(self.background, self.rect.topleft)
@@ -113,3 +116,9 @@ class Screen:
         #     # Фоновая музыка (звуки), если есть:
         #     if self.sound:
         #         self.sound.play()
+
+    def switch_visibility(self):
+        """
+        Меняет значение триггера видимости на противоположное
+        """
+        self.visible = not self.visible

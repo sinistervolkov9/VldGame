@@ -52,7 +52,8 @@ class Scene:
                     for item in scene_items_list:
                         for k, v in item.items():
                             if k == "screen":
-                                self.current_screen.append(v)
+                                for i in v:
+                                    self.current_screen.append(i)
                             if k == "buttons":
                                 self.current_buttons = v
                             if k == "esc_screen":
@@ -113,5 +114,11 @@ class Scene:
             else:
                 self.current_scene = value
                 self.unpacking()
-        if key == "print_some":
-            value.print_some()
+        if key == "print_text":
+            value.print_text()
+        if key == "switch_visibility":  # Если есть скрипт change_display
+            for btn in value:  # Перебираем все кнопки в списке
+                btn.switch_visibility()  # Вызываем метод toggle_display для каждой кнопки
+        if key == "switch_activity":
+            for btn in value:
+                btn.switch_activity()

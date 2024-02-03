@@ -2,14 +2,16 @@ import pygame as pg
 
 pg.init()
 
+
 # Кнопка сама по себе
-class ButtonOld:
+class Button:
     def __init__(
             self,
             text: str = None, font=None,
             text_color=None, text_color_hover=None, text_color_click=None,
             image=None, image_hover=None, image_click=None, sound_hover=None, sound_click=None,
-            x=0, y=0, width=200, height=60
+            x=0, y=0, width=200, height=60,
+            visible=True, activity=True
     ):
 
         self.text = text  # Выводимый текст
@@ -27,6 +29,12 @@ class ButtonOld:
         self.width = width  # Длина кнопки
         self.height = height  # Высота кнопки
         self.over = None  # Вспомогательный аргумент
+
+        self.visible = visible
+        self.activity = activity
+
+        # self.functions = functions  # Список функциональных возможностей кнопки
+        # self.display_trigger = {"display_trigger": True}  # Словарь для триггера видимости кнопки
 
         # Работа с аргументами-переменными 1:
         # text
@@ -144,76 +152,89 @@ class ButtonOld:
         Метод, который позволит нарисовать кнопку.
         В него передаем экран, на котором будет рисоваться кнопка
         """
+        if self.visible:
+            # Чтобы понять, какую картинку и какого цвета текст необх. отобразить
+            if self.is_clicked:
+                current_image = self.image_click
+                current_text_color = self.color_click
+            elif self.is_hovered:
+                current_image = self.image_hover
+                current_text_color = self.color_hover
+            else:
+                current_image = self.image
+                current_text_color = self.text_color
 
-        # Чтобы понять, какую картинку и какого цвета текст необх. отобразить
-        if self.is_clicked:
-            current_image = self.image_click
-            current_text_color = self.color_click
-        elif self.is_hovered:
-            current_image = self.image_hover
-            current_text_color = self.color_hover
-        else:
-            current_image = self.image
-            current_text_color = self.text_color
+            # Отображение кнопки:
+            screen.blit(current_image, self.rect.topleft)
 
-        # Отображение кнопки:
-        screen.blit(current_image, self.rect.topleft)
+            # Отображение текста:
+            # Размер шрифта (базово - половина высоты кнопки)
+            text_size = self.height / 2
 
-        # Отображение текста:
-        # Размер шрифта (базово - половина высоты кнопки)
-        text_size = self.height / 2
+            # Подключение шрифта (базово - базовый)
+            font = pg.font.Font(self.font, int(text_size))
 
-        # Подключение шрифта (базово - базовый)
-        font = pg.font.Font(self.font, int(text_size))
+            # Рендеринг текста
+            text_surface = font.render(self.text, True, current_text_color)
 
-        # Рендеринг текста
-        text_surface = font.render(self.text, True, current_text_color)
+            # rect текста (создание невидимой обводки текста)
+            text_rect = text_surface.get_rect(center=self.rect.center)
 
-        # rect текста (создание невидимой обводки текста)
-        text_rect = text_surface.get_rect(center=self.rect.center)
-
-        # Вывод текста
-        screen.blit(text_surface, text_rect)
+            # Вывод текста
+            screen.blit(text_surface, text_rect)
 
     def check_hover(self, mouse_pos):
         """
         Проверяет, наведена мышка на кнопку или нет
         """
-
-        self.is_hovered = self.rect.collidepoint(mouse_pos)
+        if self.activity:
+            self.is_hovered = self.rect.collidepoint(mouse_pos)
+        # if self.visible:
+        #     self.is_hovered = self.rect.collidepoint(mouse_pos)
 
     def handle_event(self, event):
         """
         Метод обрабоки событий
         """
+        if self.visible:
 
-        # Звук наведения, если есть:
-        if self.is_hovered:
-            if not self.over:
-                if self.sound_hover:
-                    self.sound_hover.play()
-                self.over = True
-        else:
-            self.over = False
+            # Звук наведения, если есть:
+            if self.is_hovered:
+                if not self.over:
+                    if self.sound_hover:
+                        self.sound_hover.play()
+                    self.over = True
+            else:
+                self.over = False
 
-        # Звук нажатия, если есть:
-        pressed = pg.mouse.get_pressed()
-        if pressed[0] and self.is_hovered:
-            self.is_clicked = True
+            # Звук нажатия, если есть:
+            pressed = pg.mouse.get_pressed()
+            if pressed[0] and self.is_hovered:
+                self.is_clicked = True
 
-        if event.type == pg.MOUSEBUTTONUP and event.button == 1 and self.is_hovered:
-            if self.sound_click:
-                self.sound_click.play()
-                #  Пока не завершится анимация кнопки-клика:
-            self.is_clicked = False
-            pg.event.post(pg.event.Event(pg.USEREVENT, button=self))
-            # print("self.is_clicked = False")
-        if event.type == pg.MOUSEBUTTONUP and event.button == 1 and not self.is_hovered:
-            self.is_clicked = False
+            if event.type == pg.MOUSEBUTTONUP and event.button == 1 and self.is_hovered:
+                if self.sound_click:
+                    self.sound_click.play()
+                    #  Пока не завершится анимация кнопки-клика:
+                self.is_clicked = False
+                pg.event.post(pg.event.Event(pg.USEREVENT, button=self))
+                # print("self.is_clicked = False")
+            if event.type == pg.MOUSEBUTTONUP and event.button == 1 and not self.is_hovered:
+                self.is_clicked = False
+
+    def switch_visibility(self):
+        """
+        Меняет значение триггера видимости на противоположное
+        """
+        self.visible = not self.visible
+
+    def switch_activity(self):
+        self.activity = not self.activity
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-class Button:
+class ButtonOld:
     def __init__(
             self,
             text: str = None, font=None,
