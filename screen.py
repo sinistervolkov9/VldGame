@@ -26,6 +26,8 @@ class Screen:
 
         self.visible = visible
 
+        self.base_visible = visible
+
         # self.text_pos = text_pos
         # text_pos = (self.width / 4)
 
@@ -116,6 +118,9 @@ class Screen:
         #     # Фоновая музыка (звуки), если есть:
         #     if self.sound:
         #         self.sound.play()
+
+    def bring_to_basic_state(self):
+        self.visible = self.base_visible
 
     def switch_visibility(self):
         """

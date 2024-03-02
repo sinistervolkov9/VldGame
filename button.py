@@ -33,6 +33,9 @@ class Button:
         self.visible = visible
         self.activity = activity
 
+        self.base_visible = visible
+        self.base_activity = activity
+
         # self.functions = functions  # Список функциональных возможностей кнопки
         # self.display_trigger = {"display_trigger": True}  # Словарь для триггера видимости кнопки
 
@@ -180,6 +183,24 @@ class Button:
             # rect текста (создание невидимой обводки текста)
             text_rect = text_surface.get_rect(center=self.rect.center)
 
+            text_size_count = 4
+            for i in range(3):
+                if text_rect.width > self.rect.width or text_rect.height > self.rect.height:
+                    # Обрезаем текст
+                    text_size = self.height / text_size_count
+                    # Подключение шрифта (базово - базовый)
+                    font = pg.font.Font(self.font, int(text_size))
+
+                    # Рендеринг текста
+                    text_surface = font.render(self.text, True, current_text_color)
+
+                    # rect текста (создание невидимой обводки текста)
+                    text_rect = text_surface.get_rect(center=self.rect.center)
+
+                    text_size_count += 2
+                else:
+                    break
+
             # Вывод текста
             screen.blit(text_surface, text_rect)
 
@@ -221,6 +242,10 @@ class Button:
                 # print("self.is_clicked = False")
             if event.type == pg.MOUSEBUTTONUP and event.button == 1 and not self.is_hovered:
                 self.is_clicked = False
+
+    def bring_to_basic_state(self):
+        self.visible = self.base_visible
+        self.activity = self.base_activity
 
     def switch_visibility(self):
         """

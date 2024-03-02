@@ -7,43 +7,84 @@ from print_event import PrintEvent
 
 screen_0_main = Screen("default_background.jpg",
                        0, 0, WIDTH, HEIGHT,
-                       "МЕНЮ",
+                       "ГЛАВНАЯ",
                        None, "white", 50)
 
-screen_1_new_game = Screen("default_background.jpg",
-                           0, 0, WIDTH, HEIGHT,
-                           "ИГРА ТИПА...",
+screen_pause_menu = Screen("background.jpg",
+                           WIDTH * 0.5 / 2, HEIGHT * 0.2 / 2, WIDTH - WIDTH * 0.5, HEIGHT - HEIGHT * 0.2,
+                           "Меню",
                            None, "white", 50)
 
-screen_2_settings = Screen("default_background.jpg",
-                           0, 0, WIDTH, HEIGHT,
-                           "НАСТРОЙКИ",
-                           None, "white", 50)
+screen_exit = Screen("background.jpg",
+                     WIDTH * 0.2 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.2, HEIGHT - HEIGHT * 0.4,
+                     "ВЫЙТИ?",
+                     None, "white", 50,
+                     visible=False)
 
-screen_3_exit = Screen("background.jpg",
-                       WIDTH * 0.2 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.2, HEIGHT - HEIGHT * 0.4,
-                       "ВЫЙТИ?",
-                       None, "white", 50)
+screen_sections = Screen("background.jpg",
+                         0, 0, 100, HEIGHT,
+                         "",
+                         None, "white", 50)
 
-screen_4_pause = Screen("background.jpg",
-                        WIDTH * 0.5 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.5, HEIGHT - HEIGHT * 0.4,
-                        "ПАУЗА",
-                        None, "white", 50)
+screen_subsections_to_play = Screen("background.jpg",
+                                    100, 0, 200, HEIGHT,
+                                    "ИГРАТЬ",
+                                    None, "white", 50, visible=False)
 
-screen_5 = Screen("background.jpg",
-                  0, 0, 100, HEIGHT,
-                  "тест",
-                  None, "white", 50, visible=False)
+screen_subsections_to_collection = Screen("background.jpg",
+                                          100, 0, 200, HEIGHT,
+                                          "КОЛЛЕКЦИЯ",
+                                          None, "white", 50, visible=False)
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-# Кнопка "Новая игра"
-# Перехов в окно "Новая игра"
-button_00_new_game = Button("Новая игра", None,
-                            "white", "black", "green",
-                            "b.png", "g.png", "r.png",
-                            "dig_click_03.wav", "mouse_click_04.wav",
-                            WIDTH / 2 - (200 / 2), 100, 200, 60)
+# Кнопка "Профиль"
+# Перехов в окно профиля игрока
+button_00_to_profile = Button("Профиль", None,
+                              "white", "black", "green",
+                              "b.png", "g.png", "r.png",
+                              "dig_click_03.wav", "mouse_click_04.wav",
+                              20, 20, 60, 60)
+
+#
+#
+button_00_to_main_menu = Button("Главная", None,
+                                "white", "black", "green",
+                                "b.png", "g.png", "r.png",
+                                "dig_click_03.wav", "mouse_click_04.wav",
+                                20, 100, 60, 60)
+
+#
+#
+button_00_to_play = Button("Играть", None,
+                           "white", "black", "green",
+                           "b.png", "g.png", "r.png",
+                           "dig_click_03.wav", "mouse_click_04.wav",
+                           20, 180, 60, 60)
+
+#
+#
+button_00_to_collection = Button("Коллекция", None,
+                                 "white", "black", "green",
+                                 "b.png", "g.png", "r.png",
+                                 "dig_click_03.wav", "mouse_click_04.wav",
+                                 20, 260, 60, 60)
+
+#
+#
+button_00_to_pause_menu = Button("Меню", None,
+                                 "white", "black", "green",
+                                 "b.png", "g.png", "r.png",
+                                 "dig_click_03.wav", "mouse_click_04.wav",
+                                 520, 20, 60, 60)
+
+# Кнопка "Вернуться"
+#
+button_01_back = Button("Вернуться", None,
+                        "white", "black", "green",
+                        "b.png", "g.png", "r.png",
+                        "dig_click_03.wav", "mouse_click_04.wav",
+                        WIDTH / 2 - (200 / 2), 120, 200, 60)
 
 # Кнопка "Настройки"
 # Перехов в окно "Настройки"
@@ -51,7 +92,7 @@ button_01_settings = Button("Настройки", None,
                             "white", "black", "green",
                             "b.png", "g.png", "r.png",
                             "dig_click_03.wav", "mouse_click_04.wav",
-                            WIDTH / 2 - (200 / 2), 170, 200, 60)
+                            WIDTH / 2 - (200 / 2), 190, 200, 60)
 
 # Кнопка "Выход"
 # Выход из программы
@@ -59,90 +100,82 @@ button_02_exit = Button("Выход", None,
                         "white", "brown", "green",
                         "b.png", "g.png", "r.png",
                         "dig_click_03.wav", "mouse_click_04.wav",
-                        WIDTH / 2 - (200 / 2), 240, 200, 60)
-
-button_10_pause = Button("<", None,
-                         "white", "black", "green",
-                         "b.png", "g.png", "r.png",
-                         "dig_click_03.wav", "mouse_click_04.wav",
-                         20, 20, 60, 60)
-
-button_11_turn_1 = Button("Ход", None,
-                          "white", "black", "green",
-                          "b.png", "g.png", "r.png",
-                          "dig_click_03.wav", "mouse_click_04.wav",
-                          WIDTH / 2 - (200 / 2), 170, 200, 60)
-
-button_11_turn_2 = Button("Ход", None,
-                          "white", "black", "green",
-                          "b.png", "g.png", "r.png",
-                          "dig_click_03.wav", "mouse_click_04.wav",
-                          WIDTH / 2 - (200 / 2), 250, 200, 60, visible=False)
-
-button_20 = Button("Общие", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 100, 200, 60)
-
-# Кнопка "Настройки"
-# Перехов в окно "Настройки"
-button_21 = Button("Аудио", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 170, 200, 60)
-
-# Кнопка "Выход"
-# Выход из программы
-button_22 = Button("Видео", None,
-                   "white", "brown", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 240, 200, 60)
-
-button_23_back = Button("<", None,
-                        "white", "black", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        20, 20, 60, 60)
+                        WIDTH / 2 - (200 / 2), 260, 200, 60)
 
 # Кнопка "Да"
 # Подтверждение выхода
-button_30 = Button("Да", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   (WIDTH + WIDTH * 0.2 / 2) / 8, 200, 200, 60)
+button_exit_yes = Button("Да", None,
+                         "white", "black", "green",
+                         "b.png", "g.png", "r.png",
+                         "dig_click_03.wav", "mouse_click_04.wav",
+                         (WIDTH + WIDTH * 0.2 / 2) / 8, 200, 200, 60,
+                         visible=False)
 # Кнопка "Нет"
 # Вернуться назад в меню
-button_31 = Button("Нет", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   (WIDTH + WIDTH * 0.2 / 2) / 2, 200, 200, 60)
+button_exit_no = Button("Нет", None,
+                        "white", "black", "green",
+                        "b.png", "g.png", "r.png",
+                        "dig_click_03.wav", "mouse_click_04.wav",
+                        (WIDTH + WIDTH * 0.2 / 2) / 2, 200, 200, 60,
+                        visible=False)
 
-# Кнопка "Продолжить"
-# Вернуться в игру
-button_40 = Button("Продолжить", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 170, 200, 60)
+# Кампания
+#
+button_game_campaign = Button("Кампания", None,
+                              "white", "black", "green",
+                              "b.png", "g.png", "r.png",
+                              "dig_click_03.wav", "mouse_click_04.wav",
+                              125, 100, 150, 50,
+                              visible=False)
 
-# Кнопка "Выйти в главное меню"
-# Перейти в главное меню
-button_41 = Button("В меню", None,
-                   "white", "black", "green",
-                   "b.png", "g.png", "r.png",
-                   "dig_click_03.wav", "mouse_click_04.wav",
-                   WIDTH / 2 - (200 / 2), 240, 200, 60)
+# Стандартная игра
+#
+button_free_game = Button("Против компа", None,
+                          "white", "black", "green",
+                          "b.png", "g.png", "r.png",
+                          "dig_click_03.wav", "mouse_click_04.wav",
+                          125, 175, 150, 50,
+                          visible=False)
+
+# Боевка онли
+#
+button_game_combat = Button("Схватка", None,
+                            "white", "black", "green",
+                            "b.png", "g.png", "r.png",
+                            "dig_click_03.wav", "mouse_click_04.wav",
+                            125, 250, 150, 50,
+                            visible=False)
+
+# Карточки
+#
+button_cards = Button("Карточки", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      125, 100, 150, 50,
+                      visible=False)
+
+# Колоды
+#
+button_decks = Button("Колоды", None,
+                      "white", "black", "green",
+                      "b.png", "g.png", "r.png",
+                      "dig_click_03.wav", "mouse_click_04.wav",
+                      125, 175, 150, 50,
+                      visible=False)
+
+# Рубашки
+#
+button_shirts = Button("Рубашки", None,
+                       "white", "black", "green",
+                       "b.png", "g.png", "r.png",
+                       "dig_click_03.wav", "mouse_click_04.wav",
+                       125, 250, 150, 50,
+                       visible=False)
 
 # ----------------------------------------------------------------------------------------------------------------------
 
-print_event_0 = PrintEvent("Новая игра")
-print_event_1 = PrintEvent("Ход")
-print_event_2 = PrintEvent("В разработке")
+print_event_0 = PrintEvent("В разработке")
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -151,129 +184,128 @@ print_event_2 = PrintEvent("В разработке")
 # ----------------------------------------------------------------------------------------------------------------------
 
 scenes = [
-    {"scene_0":
+    {"scene_main_menu":
         [
-            {"screen": [screen_0_main]},
+            {"screen": [screen_0_main,
+                        screen_sections, screen_subsections_to_collection, screen_subsections_to_play]},
             {"buttons":
                 [
-                    {button_00_new_game:
+                    {button_00_to_profile:
                         [
-                            {"change_scene": "scene_1"},
                             {"print_text": print_event_0}
                         ]
                     },
-                    {button_01_settings:
+                    {button_00_to_main_menu:
                         [
-                            {"change_scene": "scene_2"},
+                            {"bring_to_basic": [screen_subsections_to_collection, screen_subsections_to_play,
+                                                button_game_campaign, button_free_game, button_game_combat,
+                                                button_cards, button_decks, button_shirts]}
                         ]
                     },
-                    {button_02_exit:
+                    {button_00_to_play:
                         [
-                            {"change_scene": "scene_3"},
+                            {"bring_to_basic": [screen_subsections_to_collection,
+                                                button_cards, button_decks, button_shirts]},
+                            {"switch_visibility": [screen_subsections_to_play,
+                                                   button_game_campaign, button_free_game, button_game_combat]}
+                        ]
+                    },
+                    {button_00_to_collection:
+                        [
+                            {"bring_to_basic": [screen_subsections_to_play,
+                                                button_game_campaign, button_free_game, button_game_combat]},
+                            {"switch_visibility": [screen_subsections_to_collection,
+                                                   button_cards, button_decks, button_shirts]}
+                        ]
+                    },
+                    {button_00_to_pause_menu:
+                        [
+                            {"change_scene": "scene_pause_menu"}
+                        ]
+                    },
+                    {button_game_campaign:
+                        [
+                            {"print_text": print_event_0}
+                        ]
+                    },
+                    {button_free_game:
+                        [
+                            {"print_text": print_event_0}
+                        ]
+                    },
+                    {button_game_combat:
+                        [
+                            {"print_text": print_event_0}
+                        ]
+                    },
+                    {button_cards:
+                        [
+                            {"print_text": print_event_0}
+                        ]
+                    },
+                    {button_decks:
+                        [
+                            {"print_text": print_event_0}
+                        ]
+                    },
+                    {button_shirts:
+                        [
+                            {"print_text": print_event_0}
                         ]
                     }
                 ]
             },
-            {"esc_screen": "scene_3"}
-        ]
-    },
-    {"scene_1":
-        [
-            {"screen": [screen_1_new_game, screen_5]},
-            {"buttons":
+            {"esc_event":
                 [
-                    {button_10_pause:
-                        [
-                            {"change_scene": "scene_4"},
-                        ]
-                    },
-                    {button_11_turn_1:
-                        [
-                            {"print_text": print_event_1},
-                            {"switch_visibility": [button_11_turn_1, button_11_turn_2, screen_5]},
-                            {"switch_activity": [button_10_pause]}
-                        ]
-                    },
-                    {button_11_turn_2:
-                        [
-                            {"print_text": print_event_1},
-                            {"switch_visibility": [button_11_turn_1, button_11_turn_2, screen_5]},
-                            {"switch_activity": [button_10_pause]}
-                        ]
-                    }
+                    {"change_scene": "scene_pause_menu"}
                 ]
-            },
-            {"esc_screen": "scene_4"}
+            }
         ]
     },
-    {"scene_2":
+    {"scene_pause_menu":
         [
-            {"screen": [screen_2_settings]},
+            {"screen": [screen_pause_menu, screen_exit]},
             {"buttons":
                 [
-                    {button_20:
-                        [
-                            {"print_text": print_event_2}
-                        ]
-                    },
-                    {button_21:
-                        [
-                            {"print_text": print_event_2}
-                        ]
-                    },
-                    {button_22:
-                        [
-                            {"print_text": print_event_2}
-                        ]
-                    },
-                    {button_23_back:
-                        [
-                            {"change_scene": "scene_0"}
-                        ]
-                    }
-                ]
-            },
-            {"esc_screen": "scene_0"}
-        ]
-    },
-    {"scene_3":
-        [
-            {"screen": [screen_3_exit]},
-            {"buttons":
-                [
-                    {button_30:
+                    {button_01_back:
                         [
                             {"change_scene": None}
                         ]
                     },
-                    {button_31:
+                    {button_01_settings:
                         [
-                            {"change_scene": "scene_0"}
-                        ]
-                    }
-                ]
-            },
-            {"esc_screen": "scene_0"}
-        ]
-    },
-    {"scene_4":
-        [
-            {"screen": [screen_4_pause]},
-            {"buttons":
-                [
-                    {button_40:
-                        [
-                            {"change_scene": "scene_1"}
+                            {"print_text": print_event_0}
                         ]
                     },
-                    {button_41:
+                    {button_02_exit:
                         [
-                            {"change_scene": "scene_0"}
+                            {"switch_visibility": [screen_exit,
+                                                   button_exit_yes, button_exit_no,
+                                                   button_01_back, button_01_settings, button_02_exit]}
+                        ]
+                    },
+                    {button_exit_yes:
+                        [
+                            {"change_scene": "EXIT"}
+                        ]
+                    },
+                    {button_exit_no:
+                        [
+                            {"bring_to_basic": [screen_exit,
+                                                button_exit_yes, button_exit_no,
+                                                button_01_back, button_01_settings, button_02_exit]}
                         ]
                     }
                 ]
             },
-            {"esc_screen": "scene_1"}
+            {"esc_event":
+                [
+                    {"bring_to_basic": [screen_exit,
+                                        button_exit_yes, button_exit_no,
+                                        button_01_back, button_01_settings, button_02_exit]},
+                    {"change_scene": None}
+                ]
+            }
         ]
     }
 ]

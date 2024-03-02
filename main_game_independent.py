@@ -2,6 +2,8 @@ import sys
 from settings import *
 import pygame as pg
 
+from card import Card
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -356,6 +358,16 @@ class Area:
     def draw(self, screen):
         pg.draw.rect(screen, self.color, self.area)
 
+    def check_tap(self, event):
+        # если событие - нажатие левой кнопки мыши
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            # получаем координаты курсора
+            mouse_x, mouse_y = event.pos
+            # если курсор находится внутри прямоугольника
+            if self.area.collidepoint(mouse_x, mouse_y):
+                # выводим сообщение в терминал
+                print(f"вы нажали на {self.color}")
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -366,34 +378,34 @@ class Player:
 # ----------------------------------------------------------------------------------------------------------------------
 
 class Deck:
-    def __init__(self, game, number_of_cards):
+    def __init__(self, game, cards_list):
         self.game = game
-        self.number_of_cards = number_of_cards
         self.active_box = None
-        self.boxes = []
-        self.create_cards()
+        # self.cards = []
+        self.cards_list = cards_list
+        # self.create_cards()
 
-    def create_cards(self):
-        for i in range(self.number_of_cards):
-            x = self.check_players_num()  # Позиция по x (зависит от количества игроков !!!и порядкового номера игрока)
-            y = 250  # Позиция по y
-            w = 70  # Ширина
-            h = 100  # Высота
-            card = pg.Rect(x, y, w, h)
-            self.boxes.append(card)
+    # def create_cards(self):
+    #     for i in range(len(self.cards_list)):
+    #         x = self.check_players_num()  # Позиция по x (зависит от количества игроков !!!и порядкового номера игрока)
+    #         y = 250  # Позиция по y
+    #         w = 70  # Ширина
+    #         h = 100  # Высота
+    #         card = pg.Rect(x, y, w, h)
+    #         self.cards.append(card)
 
     def check_players_num(self):  # еще зависит от порядкого номера игрока
         return WIDTH / 2 - (70 * self.game.players / 2)
 
-    def draw(self):
-        for box in self.boxes:
-            pg.draw.rect(self.game.screen, "white", box)
+    def draw_deck(self):
+        for card in self.cards_list:
+            card.draw()
 
     def check_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
-                for num, box in enumerate(self.boxes):
-                    if box.collidepoint(event.pos):
+                for num, box in enumerate(self.cards_list):
+                    if box.rect.collidepoint(event.pos):
                         self.active_box = num
 
         if event.type == pg.MOUSEBUTTONUP:
@@ -402,7 +414,7 @@ class Deck:
 
         if event.type == pg.MOUSEMOTION:
             if self.active_box != None:
-                self.boxes[self.active_box].move_ip(event.rel)
+                self.cards_list[self.active_box].rect.move_ip(event.rel)
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -439,7 +451,13 @@ class MainGame:
         self.allies_area = Area(WIDTH / 2 - (420 / 2), 250, 420, 100, "blue")
         self.enemys_area = Area(WIDTH / 2 - (420 / 2), 50, 420, 100, "red")
         self.game_cards_area = Area(WIDTH / 2 - (500 / 2), 150, 500, 100, "green")
-        self.deck = Deck(self, 5)
+
+        self.card_1 = Card(self, 0)
+        self.card_2 = Card(self, 1)
+
+        self.cards_list = [self.card_1, self.card_2]
+
+        self.deck = Deck(self, self.cards_list)
 
     def update(self):
         """
@@ -467,7 +485,7 @@ class MainGame:
         self.enemys_area.draw(self.screen)
         self.game_cards_area.draw(self.screen)
 
-        self.deck.draw()
+        self.deck.draw_deck()
 
     def check_events(self):
         """
@@ -479,6 +497,12 @@ class MainGame:
                 sys.exit()
             self.turn_button.handle_event(event)
             self.deck.check_event(event)
+
+            self.player_hand_area.check_tap(event)
+            self.enemy_hand_area.check_tap(event)
+            self.allies_area.check_tap(event)
+            self.enemys_area.check_tap(event)
+            self.game_cards_area.check_tap(event)
 
     def run(self):
         """

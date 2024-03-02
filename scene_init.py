@@ -8,7 +8,7 @@ class Scene:
         self.current_scene = current_scene
         self.scenes_history = []
 
-        self.esc_screen = []
+        self.esc_events = []
         self.current_screen = []
         self.buttons_swh = []
         self.current_buttons = []
@@ -22,9 +22,23 @@ class Scene:
     def esc_event(self, event):
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
-                for scn in self.esc_screen:
-                    self.current_scene = scn
-                self.unpacking()
+                for eve in self.esc_events:
+                    for key, value in eve.items():
+                        if key == "bring_to_basic":
+                            for btn in value:
+                                btn.bring_to_basic_state()
+                        if key == "change_scene":
+                            if value is None:
+                                self.current_scene = self.scenes_history[-2]
+                                self.unpacking()
+                            else:
+                                self.current_scene = value
+                                self.unpacking()
+                        # elif key == "switch_visibility":  # Если есть скрипт change_display
+                        #     for btn in value:  # Перебираем все кнопки в списке
+                        #         btn.switch_visibility()  # Вызываем метод toggle_display для каждой кнопки
+                        # self.current_scene = scn
+                # self.unpacking()
 
     def user_event(self, event):
         if event.type == pg.USEREVENT and event.button in self.current_buttons:
@@ -44,7 +58,7 @@ class Scene:
         self.current_screen = []
         self.current_buttons = []
         self.button_objts = []
-        self.esc_screen = []
+        self.esc_events = []
 
         for scene in sm.scenes:
             for scene_num, scene_items_list in scene.items():
@@ -56,33 +70,30 @@ class Scene:
                                     self.current_screen.append(i)
                             if k == "buttons":
                                 self.current_buttons = v
-                            if k == "esc_screen":
+                            if k == "esc_event":
                                 if v is None:
-                                    self.esc_screen.append(self.scenes_history[-1])
+                                    pass
                                 else:
-                                    self.esc_screen.append(v)
-
-        # Подчистка истории скринов ------------------------------------
-        # if (len(self.scenes_history)) > 1:
-        #     print("---len(scenes_history) > 1")
-        #     for scene_in_history in self.scenes_history:
-        #         print("---for scene_in_history in scenes_history")
-        #         if scene_in_history == self.scenes_history[-1]:
-        #             print("---scene_in_history == scenes_history[-1]")
-        #             self.scenes_history.remove(scene_in_history)
-        # --------------------------------------------------------------
+                                    self.esc_events = v
 
         self.scenes_history.append(self.current_scene)
 
+        # Подчистка истории скринов
+        if (len(self.scenes_history)) > 1:
+            for scene_in_history in self.scenes_history[:-1]:
+                if scene_in_history == self.scenes_history[-1]:
+                    self.scenes_history.remove(scene_in_history)
+                    break
+
         for button in self.current_buttons:
-            print(button)
+            # print(button)
             for buttons_name, buttons_actions_list in button.items():
                 self.button_objts.append(buttons_name)
 
         print(f"\ncurrent_scene - {self.current_scene}")
         print(f"scenes_history - {self.scenes_history}")
         print(f"current_screen - {self.current_screen}")
-        print(f"esc_screen - {self.esc_screen}")
+        print(f"esc_event - {self.esc_events}")
         print(f"current_buttons - {self.current_buttons}")
 
     def button_handle_event(self, event):
@@ -106,19 +117,30 @@ class Scene:
                                     for k, v in eventtt.items():
                                         self.check_button_events(k, v)
 
+    # def click_event(self, event):
+    #     if event.type == pg.MOUSEBUTTONUP:
+    #         print("click")
+
+
     def check_button_events(self, key, value):  # Проверка событий кнопки
+        if key == "bring_to_basic":
+            for btn in value:
+                btn.bring_to_basic_state()
         if key == "change_scene":
-            if value is None:
+            if value == "EXIT":
                 pg.quit()
                 sys.exit()
+            elif value is None:
+                self.current_scene = self.scenes_history[-2]
+                self.unpacking()
             else:
                 self.current_scene = value
                 self.unpacking()
         if key == "print_text":
             value.print_text()
         if key == "switch_visibility":  # Если есть скрипт change_display
-            for btn in value:  # Перебираем все кнопки в списке
-                btn.switch_visibility()  # Вызываем метод toggle_display для каждой кнопки
+            for btn in value:
+                btn.switch_visibility()
         if key == "switch_activity":
             for btn in value:
                 btn.switch_activity()

@@ -13,13 +13,12 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        self.scene = Scene(current_scene="scene_0")
+        self.scene = Scene(current_scene="scene_main_menu")
 
     def update(self):
         """
         Метод обновления экрана (flip)
         """
-        self.scene.screen_draw(self.screen)
         self.scene.button_update(self.screen)
         pg.display.flip()
         self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
@@ -32,6 +31,7 @@ class Game:
         Видимо здесь должны подгружаться менюшки
         """
         self.screen.fill("black")
+        self.scene.screen_draw(self.screen)
 
     def check_events(self):
         """
@@ -44,6 +44,7 @@ class Game:
             self.scene.esc_event(event)
             self.scene.button_click_event(event)
             self.scene.button_handle_event(event)
+            # self.scene.click_event(event)
 
     def run(self):
         """
