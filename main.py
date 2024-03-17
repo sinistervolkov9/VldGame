@@ -1,7 +1,8 @@
 import sys
 from settings import *
 import pygame as pg
-from scene_init import Scene
+# from scene_init import Scene
+from card import Card
 
 
 class Game:
@@ -13,13 +14,16 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        self.scene = Scene(current_scene="scene_main_menu")
+        # self.scene = Scene(current_scene="scene_main_menu")
+        self.card = Card(self, "resources/button_images/default_button.png", "resources/button_images/g.png",
+                         "resources/button_images/b_frame.png", "resources/button_images/r.png",
+                         "полный лох и чмошник", "Decription")
 
     def update(self):
         """
         Метод обновления экрана (flip)
         """
-        self.scene.button_update(self.screen)
+        # self.scene.button_update(self.screen)
         pg.display.flip()
         self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
@@ -31,7 +35,8 @@ class Game:
         Видимо здесь должны подгружаться менюшки
         """
         self.screen.fill("black")
-        self.scene.screen_draw(self.screen)
+        # self.scene.screen_draw(self.screen)
+        self.card.draw()
 
     def check_events(self):
         """
@@ -41,15 +46,16 @@ class Game:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
-            self.scene.esc_event(event)
-            self.scene.button_click_event(event)
-            self.scene.button_handle_event(event)
+            # self.scene.esc_event(event)
+            # self.scene.button_click_event(event)
+            # self.scene.button_handle_event(event)
             # self.scene.click_event(event)
 
     def run(self):
         """
         Работа программы, как процесс
         """
+        self.card.check_simbols()
         while True:
             self.check_events()
             self.update()
