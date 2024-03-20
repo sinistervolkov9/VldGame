@@ -1,7 +1,6 @@
 import pygame as pg
 
 
-# Экран сам по себе
 class Screen:
     def __init__(
             self,

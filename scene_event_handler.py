@@ -138,7 +138,7 @@ class Scene:
                 self.unpacking()
         if key == "print_text":
             value.print_text()
-        if key == "switch_visibility":  # Если есть скрипт change_display
+        if key == "switch_visibility":
             for btn in value:
                 btn.switch_visibility()
         if key == "switch_activity":

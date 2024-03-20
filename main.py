@@ -2,7 +2,10 @@ import sys
 from settings import *
 import pygame as pg
 # from scene_init import Scene
-from card import ClassCard
+from card_class import CardClass
+from player import Player
+from card_loot import CardLoot
+from deck import Deck
 
 
 class Game:
@@ -10,18 +13,45 @@ class Game:
         pg.init()  # Инициализатор pygame
         self.screen = pg.display.set_mode(RES)
         self.clock = pg.time.Clock()
-        # self.mouse_pos = pg.mouse.get_pos()
         self.new_game()
 
     def new_game(self):
         # self.scene = Scene(current_scene="scene_main_menu")
-        self.card = ClassCard(self, "resources/card_items/image/image.png",
-                              "resources/card_items/description_block/description_block.png",
-                              "resources/card_items/frame/frame.png", "resources/card_items/name_block/name_block.png",
-                              "лёха)", "Описание",
-                              0, 0,
-                              3, 2, 1,
-                              3, 5, 10)
+
+        self.card_loot_1 = CardLoot(self,
+                                    "resources/card_items/image/image.png",
+                                    "resources/card_items/description_block/description_block.png",
+                                    "resources/card_items/frame/frame.png",
+                                    "resources/card_items/name_block/name_block.png",
+                                    "меч", "Описание",
+                                    'basic', 'strength', 2, 3,
+                                    1, 3, 1,
+                                    3, 0,
+                                    [], [])
+        self.card_loot_2 = CardLoot(self,
+                                    "resources/card_items/image/image.png",
+                                    "resources/card_items/description_block/description_block.png",
+                                    "resources/card_items/frame/frame.png",
+                                    "resources/card_items/name_block/name_block.png",
+                                    "наручи", "Описание",
+                                    'basic', 'strength', 2, 3,
+                                    1, 3, 1,
+                                    1, 1,
+                                    [], [])
+        self.deck = Deck(self, [self.card_loot_1, self.card_loot_2])
+        self.card_class = CardClass(self,
+                                    self.deck,
+                                    "resources/card_items/image/image.png",
+                                    "resources/card_items/description_block/description_block.png",
+                                    "resources/card_items/frame/frame.png",
+                                    "resources/card_items/name_block/name_block.png",
+                                    "рыцарь", "Описание",
+                                    50, 50,
+                                    2, 0, 0)
+        self.player = Player(self, self.card_class, 1, 1, 1, 1, 5)
+
+        self.active_card = None
+        self.card_list = [self.card_class]
 
     def update(self):
         """
@@ -32,7 +62,7 @@ class Game:
         self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
 
-        self.card.card_check_hover(pg.mouse.get_pos())
+        self.card_class.card_check_hover(pg.mouse.get_pos())
 
     def draw(self):
         """
@@ -42,7 +72,8 @@ class Game:
         """
         self.screen.fill("black")
         # self.scene.screen_draw(self.screen)
-        self.card.draw()
+
+        self.card_class.draw()
 
     def check_events(self):
         """
@@ -63,7 +94,8 @@ class Game:
         """
         Работа программы, как процесс
         """
-        self.card.check_simbols()
+        # self.card_class.check_simbols()
+        self.player.print_stats()
         while True:
             self.check_events()
             self.update()

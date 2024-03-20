@@ -2,32 +2,49 @@ import pygame as pg
 from settings import CARD_HEIGHT, CARD_WIDTH, FRAME_WIDTH
 
 
-class Card:
+class CardLoot:
     def __init__(self, game,
                  image, description_block, frame, name_block,
                  name, description,
-                 pos_x, pos_y
-                 ):
+                 loot_type, rarity, renewable_type, copies_number,
+                 characteristic_for_check, cost, application_speed,
+                 damage, armor,
+                 spells: list, perks: list):
 
         self.game = game
-
+        # -
         self.image = image
         self.description_block = description_block
         self.frame = frame
         self.name_block = name_block
-
+        # -
         self.name = " ".join(name.upper().split())
         self.description = " ".join(description.split())
 
-        self.pos_x = pos_x
-        self.pos_y = pos_y
+        self.loot_type = loot_type  # Тип Лута (Головняк, Броник...)
+        self.rarity = rarity  # Редкость (basic...)
+        self.renewable_type = renewable_type  # Тип возобновляемости Лута в колоде (возобновляемая (неуничтожаемая) / одноразовая)
+        self.copies_number = copies_number  # Количество копий карточки в колоде
 
-        # ---
+        self.characteristic_for_check = characteristic_for_check  # Проверяемая характиристка
+        self.cost = cost  # Стоимость применения
+        self.application_speed = application_speed  # Скорость применения (Мгновенное, Быстрое, Медленное)
+
+        self.damage = damage
+        self.armor = armor
+
+        self.spells = spells
+        self.perks = perks
+
+        # --------------------------------------------------------------------------------------------------------------
 
         self.w = CARD_WIDTH  # Ширина
         self.h = CARD_HEIGHT  # Высота
         self.scale = 100  # 100
         self.is_hovered = False
+
+        self.pos_x = 0
+        self.pos_y = 0
 
         # ---
 
@@ -40,20 +57,15 @@ class Card:
         self.font_size_name = 40
         self.font_size_description = 30
 
-        # --- ??? ---
+        # ---
 
         self.font_size_damage = 30
         self.font_size_armor = 30
 
-        # --- ??? ---
-
-        self.font_size_strength = 30
-        self.font_size_dexterity = 30
-        self.font_size_intelligence = 30
-
         # ---
 
         self.get_size_pos()
+        self.update()
 
     def load_images(self):
 
@@ -99,17 +111,6 @@ class Card:
         self.pos_armor_block = (self.w * self.scale - 35, self.h * self.scale - 35)
         print(f'size_armor_block - {self.size_armor_block}')
 
-        # --- ??? ---
-
-        self.size_strength_block = (40, 40)
-        self.pos_strength_block = (-20, 0)
-
-        self.size_dexterity_block = (40, 40)
-        self.pos_dexterity_block = (-20, 40)
-
-        self.size_intelligence_block = (40, 40)
-        self.pos_intelligence_block = (-20, 80)
-
         # ---
 
         # self.update()
@@ -140,17 +141,6 @@ class Card:
         self.armor_block = pg.transform.scale(self.armor_block, self.size_armor_block)
         self.armor_block_rect = self.armor_block.get_rect(topleft=self.pos_armor_block)
 
-        # --- ??? ---
-
-        self.strength_block = pg.transform.scale(self.strength_block, self.size_strength_block)
-        self.strength_block_rect = self.strength_block.get_rect(topleft=self.pos_strength_block)
-
-        self.dexterity_block = pg.transform.scale(self.dexterity_block, self.size_dexterity_block)
-        self.dexterity_block_rect = self.dexterity_block.get_rect(topleft=self.pos_dexterity_block)
-
-        self.intelligence_block = pg.transform.scale(self.intelligence_block, self.size_intelligence_block)
-        self.intelligence_block_rect = self.intelligence_block.get_rect(topleft=self.pos_intelligence_block)
-
         # ---
 
         self.get_font_size_name()
@@ -168,6 +158,16 @@ class Card:
         self.description_text_rect = self.description_text_surface.get_rect(
             center=(self.description_block_rect.centerx, self.description_block_rect.centery))
 
+        damage_font = pg.font.Font(None, self.font_size_damage)
+        self.damage_text_surface = damage_font.render(str(self.damage), True, "white")
+        self.damage_text_rect = self.damage_text_surface.get_rect(
+            center=(self.damage_block_rect.centerx, self.damage_block_rect.centery))
+
+        armor_font = pg.font.Font(None, self.font_size_armor)
+        self.armor_text_surface = armor_font.render(str(self.armor), True, "white")
+        self.armor_text_rect = self.armor_text_surface.get_rect(
+            center=(self.armor_block_rect.centerx, self.armor_block_rect.centery))
+
     def draw(self):
 
         self.game.screen.blit(self.background, self.frame_rect.topleft)
@@ -183,6 +183,11 @@ class Card:
 
         self.game.screen.blit(self.name_text_surface, self.name_text_rect)
         self.game.screen.blit(self.description_text_surface, self.description_text_rect)
+
+        # ---
+
+        self.game.screen.blit(self.damage_text_surface, self.damage_text_rect)
+        self.game.screen.blit(self.armor_text_surface, self.armor_text_rect)
 
     def check_simbols(self):
         print(f'{self.name} - simb_count: {len(self.name)} - size: {self.font_size_name}')
@@ -234,104 +239,3 @@ class Card:
                 else:
                     symbols_scale += add_scale
                     start_number_of_symbols += add_symbols
-
-    def card_check_hover(self, mouse_pos):
-        self.is_hovered = self.frame_rect.collidepoint(mouse_pos)
-
-    def card_hover_event(self):
-        hover_scale = 150
-
-        if self.is_hovered:
-            self.scale = hover_scale
-            self.update()
-        else:
-            self.scale = 100
-            self.update()
-
-
-class ClassCard(Card):
-    def __init__(self, game,
-                 image, description_block, frame, name_block,
-                 name, description,
-                 pos_x, pos_y,
-
-                 strength, dexterity, intelligence,
-                 damage=0, armor=0, health=10
-                 ):
-        super().__init__(game,
-                         image, description_block, frame, name_block,
-                         name, description,
-                         pos_x, pos_y)
-
-        # --- !!! ---
-
-        # self.scale = 50
-        # self.get_size_pos()
-
-        # ---
-
-        self.strength = strength
-        self.dexterity = dexterity
-        self.intelligence = intelligence
-
-        self.damage = damage  # На самом деле это значение не указывается, а вычисляется
-        self.armor = armor  # На самом деле это значение не указывается, а вычисляется
-        self.health = health  # На самом деле это значение не указывается, а вычисляется
-
-        # --- !!! ---
-
-        self.update()
-
-    def load_images(self):
-        super().load_images()
-
-        self.strength_block = pg.image.load('resources/card_items/strength_block/strength_block.png')
-        self.dexterity_block = pg.image.load('resources/card_items/dexterity_block/dexterity_block.png')
-        self.intelligence_block = pg.image.load('resources/card_items/intelligence_block/intelligence_block.png')
-
-    def update(self):
-        super().update()
-
-        damage_font = pg.font.Font(None, self.font_size_damage)
-        self.damage_text_surface = damage_font.render(str(self.damage), True, "white")
-        self.damage_text_rect = self.damage_text_surface.get_rect(
-            center=(self.damage_block_rect.centerx, self.damage_block_rect.centery))
-
-        armor_font = pg.font.Font(None, self.font_size_armor)
-        self.armor_text_surface = armor_font.render(str(self.armor), True, "white")
-        self.armor_text_rect = self.armor_text_surface.get_rect(
-            center=(self.armor_block_rect.centerx, self.armor_block_rect.centery))
-
-        # ---
-
-        strength_font = pg.font.Font(None, self.font_size_strength)
-        self.strength_text_surface = strength_font.render(str(self.strength), True, "white")
-        self.strength_text_rect = self.strength_text_surface.get_rect(
-            center=(self.strength_block_rect.centerx, self.strength_block_rect.centery))
-
-        dexterity_font = pg.font.Font(None, self.font_size_dexterity)
-        self.dexterity_text_surface = dexterity_font.render(str(self.dexterity), True, "white")
-        self.dexterity_text_rect = self.dexterity_text_surface.get_rect(
-            center=(self.dexterity_block_rect.centerx, self.dexterity_block_rect.centery))
-
-        intelligence_font = pg.font.Font(None, self.font_size_intelligence)
-        self.intelligence_text_surface = intelligence_font.render(str(self.intelligence), True, "white")
-        self.intelligence_text_rect = self.intelligence_text_surface.get_rect(
-            center=(self.intelligence_block_rect.centerx, self.intelligence_block_rect.centery))
-
-    def draw(self):
-        super().draw()
-
-        self.game.screen.blit(self.strength_block, self.strength_block_rect.topleft)
-        self.game.screen.blit(self.dexterity_block, self.dexterity_block_rect.topleft)
-        self.game.screen.blit(self.intelligence_block, self.intelligence_block_rect.topleft)
-
-        self.game.screen.blit(self.damage_text_surface, self.damage_text_rect)
-        self.game.screen.blit(self.armor_text_surface, self.armor_text_rect)
-
-        self.game.screen.blit(self.strength_text_surface, self.strength_text_rect)
-        self.game.screen.blit(self.dexterity_text_surface, self.dexterity_text_rect)
-        self.game.screen.blit(self.intelligence_text_surface, self.intelligence_text_rect)
-
-class LootCard(Card):
-    pass
