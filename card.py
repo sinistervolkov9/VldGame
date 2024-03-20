@@ -1,15 +1,15 @@
 import pygame as pg
-from settings import CARD_HEIGHT, CARD_WIDTH
+from settings import CARD_HEIGHT, CARD_WIDTH, FRAME_WIDTH
 
 
 class Card:
-    def __init__(self, game, image, description_block, frame, name_block,
-                 name, description):
+    def __init__(self, game,
+                 image, description_block, frame, name_block,
+                 name, description,
+                 pos_x, pos_y
+                 ):
 
         self.game = game
-        self.w = CARD_WIDTH  # Ширина
-        self.h = CARD_HEIGHT  # Высота
-        self.scale = 50
 
         self.image = image
         self.description_block = description_block
@@ -19,62 +19,174 @@ class Card:
         self.name = " ".join(name.upper().split())
         self.description = " ".join(description.split())
 
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+        # ---
+
+        self.w = CARD_WIDTH  # Ширина
+        self.h = CARD_HEIGHT  # Высота
+        self.scale = 100  # 100
+        self.is_hovered = False
+
+        # ---
+
+        self.load_images()
+
+        # ---
+
         # self.font_size_name = int(self.scale-self.scale*0.6)  # 40
-        self.font_size_name = None
-        self.font_size_description = int(self.scale - self.scale * 0.7)  # 30
+        # self.font_size_description = int(self.scale - self.scale * 0.75)  # 30
+        self.font_size_name = 40
+        self.font_size_description = 30
+
+        # --- ??? ---
+
+        self.font_size_damage = 30
+        self.font_size_armor = 30
+
+        # --- ??? ---
+
+        self.font_size_strength = 30
+        self.font_size_dexterity = 30
+        self.font_size_intelligence = 30
+
+        # ---
+
+        self.get_size_pos()
+
+    def load_images(self):
+
+        self.background = pg.image.load("resources/card_items/background/background.png")
+        self.image = pg.image.load(self.image)
+        self.description_block = pg.image.load(self.description_block)
+        self.frame = pg.image.load(self.frame)
+        self.name_block = pg.image.load(self.name_block)
+
+        self.damage_block = pg.image.load('resources/card_items/damage_block/damage_block.png')
+        self.armor_block = pg.image.load('resources/card_items/armor_block/armor_block.png')
+
+    def get_size_pos(self):
+
+        # --- size, pos ---
+
+        self.size_background = (self.w * self.scale, self.h * self.scale)
+        self.pos_background = (self.pos_x, self.pos_y)
+
+        self.size_image = (self.w * self.scale, self.h / 1.5 * self.scale)
+        self.pos_image = (self.pos_x, self.pos_y)
+
+        self.size_description_block = ((self.w * self.scale) - FRAME_WIDTH,
+                                       (self.h / 2 * self.scale) - (self.h / 6 * self.scale) - FRAME_WIDTH / 2)
+        self.pos_description_block = (
+            self.pos_x + FRAME_WIDTH / 2, self.pos_y + (self.h / 2 * self.scale) + (self.h / 6 * self.scale))
+        print(f'size_description_block - {self.size_description_block}')
+
+        self.size_frame = (self.w * self.scale, self.h * self.scale)
+        self.pos_frame = (self.pos_x, self.pos_y)
+
+        self.size_name_block = (self.w * self.scale - FRAME_WIDTH / 2, self.h / 6 * self.scale)
+        self.pos_name_block = (self.pos_x + FRAME_WIDTH / 4, self.pos_y + self.h / 2 * self.scale)
+        print(f'size_name_block - {self.size_name_block}')
+
+        # ---
+
+        self.size_damage_block = (30, 30)
+        self.pos_damage_block = (5, self.h * self.scale - 35)
+        print(f'size_damage_block - {self.size_damage_block}')
+
+        self.size_armor_block = (30, 30)
+        self.pos_armor_block = (self.w * self.scale - 35, self.h * self.scale - 35)
+        print(f'size_armor_block - {self.size_armor_block}')
+
+        # --- ??? ---
+
+        self.size_strength_block = (40, 40)
+        self.pos_strength_block = (-20, 0)
+
+        self.size_dexterity_block = (40, 40)
+        self.pos_dexterity_block = (-20, 40)
+
+        self.size_intelligence_block = (40, 40)
+        self.pos_intelligence_block = (-20, 80)
+
+        # ---
+
+        # self.update()
+
+    def update(self):
+
+        self.background = pg.transform.scale(self.background, self.size_background)
+        self.background_rect = self.background.get_rect(topleft=self.pos_background)
+
+        self.image = pg.transform.scale(self.image, self.size_image)
+        self.image_rect = self.image.get_rect(topleft=self.pos_image)
+
+        self.description_block = pg.transform.scale(self.description_block, self.size_description_block)
+        self.description_block_rect = self.description_block.get_rect(
+            topleft=self.pos_description_block)
+
+        self.frame = pg.transform.scale(self.frame, self.size_frame)
+        self.frame_rect = self.frame.get_rect(topleft=self.pos_frame)
+
+        self.name_block = pg.transform.scale(self.name_block, self.size_name_block)
+        self.name_block_rect = self.name_block.get_rect(topleft=self.pos_name_block)
+
+        # --- ??? ---
+
+        self.damage_block = pg.transform.scale(self.damage_block, self.size_damage_block)
+        self.damage_block_rect = self.damage_block.get_rect(topleft=self.pos_damage_block)
+
+        self.armor_block = pg.transform.scale(self.armor_block, self.size_armor_block)
+        self.armor_block_rect = self.armor_block.get_rect(topleft=self.pos_armor_block)
+
+        # --- ??? ---
+
+        self.strength_block = pg.transform.scale(self.strength_block, self.size_strength_block)
+        self.strength_block_rect = self.strength_block.get_rect(topleft=self.pos_strength_block)
+
+        self.dexterity_block = pg.transform.scale(self.dexterity_block, self.size_dexterity_block)
+        self.dexterity_block_rect = self.dexterity_block.get_rect(topleft=self.pos_dexterity_block)
+
+        self.intelligence_block = pg.transform.scale(self.intelligence_block, self.size_intelligence_block)
+        self.intelligence_block_rect = self.intelligence_block.get_rect(topleft=self.pos_intelligence_block)
+
+        # ---
 
         self.get_font_size_name()
         # self.get_font_size_description()
 
         # ---
 
-        self.background = pg.image.load("resources/button_images/default_button.png")
-        self.background = pg.transform.scale(self.background, (self.w * self.scale, self.h * self.scale))
-        self.background_rect = self.background.get_rect(topleft=(0, 0))
-
-        # self.rect = pg.Rect(0, 0, self.w, self.h)
-        self.image = pg.image.load(self.image)
-        self.image = pg.transform.scale(self.image, (self.w * self.scale, self.h / 2 * self.scale))
-        self.image_rect = self.image.get_rect(topleft=(0, 0))
-
-        self.description_block = pg.image.load(self.description_block)
-        self.description_block = pg.transform.scale(self.description_block,
-                                                    (self.w * self.scale, self.h / 2 * self.scale))
-        self.description_block_rect = self.description_block.get_rect(topleft=(0, self.h / 2 * self.scale))
-
-        self.frame = pg.image.load(self.frame)
-        self.frame = pg.transform.scale(self.frame, (self.w * self.scale, self.h * self.scale))
-        self.frame_rect = self.frame.get_rect(topleft=(0, 0))
-
-        self.name_block = pg.image.load(self.name_block)
-        self.name_block = pg.transform.scale(self.name_block, (self.w * self.scale - 10, self.h / 6 * self.scale))
-        self.name_block_rect = self.name_block.get_rect(topleft=(5, self.h / 2 * self.scale))
-
-    def draw(self):
-        # card = self.rect
-        # pg.draw.rect(self.game.screen, "white", card)
-
-        self.game.screen.blit(self.image, self.image_rect.topleft)
-        self.game.screen.blit(self.description_block, self.description_block_rect.topleft)
-        self.game.screen.blit(self.frame, self.frame_rect.topleft)
-        self.game.screen.blit(self.name_block, self.name_block_rect.topleft)
-
-        #
-
         name_font = pg.font.Font(None, self.font_size_name)
-        name_text_surface = name_font.render(str(self.name), True, "white")
-        name_text_rect = name_text_surface.get_rect(center=(self.name_block_rect.centerx, self.name_block_rect.centery))
-        self.game.screen.blit(name_text_surface, name_text_rect)
+        self.name_text_surface = name_font.render(str(self.name), True, "white")
+        self.name_text_rect = self.name_text_surface.get_rect(
+            center=(self.name_block_rect.centerx, self.name_block_rect.centery))
 
         description_font = pg.font.Font(None, self.font_size_description)
-        description_text_surface = description_font.render(str(self.description), True, "white")
-        description_text_rect = description_text_surface.get_rect(
+        self.description_text_surface = description_font.render(str(self.description), True, "white")
+        self.description_text_rect = self.description_text_surface.get_rect(
             center=(self.description_block_rect.centerx, self.description_block_rect.centery))
-        self.game.screen.blit(description_text_surface, description_text_rect)
+
+    def draw(self):
+
+        self.game.screen.blit(self.background, self.frame_rect.topleft)
+        self.game.screen.blit(self.description_block, self.description_block_rect.topleft)
+        self.game.screen.blit(self.frame, self.frame_rect.topleft)
+        self.game.screen.blit(self.image, self.image_rect.topleft)
+        self.game.screen.blit(self.name_block, self.name_block_rect.topleft)
+
+        self.game.screen.blit(self.damage_block, self.damage_block_rect.topleft)
+        self.game.screen.blit(self.armor_block, self.armor_block_rect.topleft)
+
+        # ---
+
+        self.game.screen.blit(self.name_text_surface, self.name_text_rect)
+        self.game.screen.blit(self.description_text_surface, self.description_text_rect)
 
     def check_simbols(self):
         print(f'{self.name} - simb_count: {len(self.name)} - size: {self.font_size_name}')
-        print(f'{self.description} - {len(self.description)} символов')
+        print(f'{self.description} - simb_count: {len(self.description)} - size: {self.font_size_description}')
 
     def get_font_size_name(self):
         number_of_reductions = 4  # 4
@@ -83,7 +195,7 @@ class Card:
         add_symbols = 2  # 2
 
         symbols_scale = 0.6  # 0.6
-        add_scale = 0.005  # 0.005
+        add_scale = 0.05  # 0.05
 
         if len(self.name) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
             self.name = self.name[
@@ -99,5 +211,127 @@ class Card:
                     symbols_scale += add_scale
                     start_number_of_symbols += add_symbols
 
-    # def get_font_size_description(self):
-    #     pass
+    def get_font_size_description(self):
+        number_of_reductions = 4  # 4
+
+        start_number_of_symbols = 11  # 11
+        add_symbols = 2.5  # 2.5
+
+        symbols_scale = 0.75  # 0.75
+        add_scale = 0.015  # 0.015
+
+        if len(self.description) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
+            self.description = self.description[
+                               :int(
+                                   start_number_of_symbols + number_of_reductions * add_symbols - add_symbols) - 3] + "..."
+            end_symbols_scale = symbols_scale + add_scale * (number_of_reductions - 1)
+            self.font_size_description = int(self.scale - self.scale * end_symbols_scale)
+        else:
+            for i in range(number_of_reductions):
+                if len(self.description) <= start_number_of_symbols:
+                    self.font_size_description = int(self.scale - self.scale * symbols_scale)
+                    break
+                else:
+                    symbols_scale += add_scale
+                    start_number_of_symbols += add_symbols
+
+    def card_check_hover(self, mouse_pos):
+        self.is_hovered = self.frame_rect.collidepoint(mouse_pos)
+
+    def card_hover_event(self):
+        hover_scale = 150
+
+        if self.is_hovered:
+            self.scale = hover_scale
+            self.update()
+        else:
+            self.scale = 100
+            self.update()
+
+
+class ClassCard(Card):
+    def __init__(self, game,
+                 image, description_block, frame, name_block,
+                 name, description,
+                 pos_x, pos_y,
+
+                 strength, dexterity, intelligence,
+                 damage=0, armor=0, health=10
+                 ):
+        super().__init__(game,
+                         image, description_block, frame, name_block,
+                         name, description,
+                         pos_x, pos_y)
+
+        # --- !!! ---
+
+        # self.scale = 50
+        # self.get_size_pos()
+
+        # ---
+
+        self.strength = strength
+        self.dexterity = dexterity
+        self.intelligence = intelligence
+
+        self.damage = damage  # На самом деле это значение не указывается, а вычисляется
+        self.armor = armor  # На самом деле это значение не указывается, а вычисляется
+        self.health = health  # На самом деле это значение не указывается, а вычисляется
+
+        # --- !!! ---
+
+        self.update()
+
+    def load_images(self):
+        super().load_images()
+
+        self.strength_block = pg.image.load('resources/card_items/strength_block/strength_block.png')
+        self.dexterity_block = pg.image.load('resources/card_items/dexterity_block/dexterity_block.png')
+        self.intelligence_block = pg.image.load('resources/card_items/intelligence_block/intelligence_block.png')
+
+    def update(self):
+        super().update()
+
+        damage_font = pg.font.Font(None, self.font_size_damage)
+        self.damage_text_surface = damage_font.render(str(self.damage), True, "white")
+        self.damage_text_rect = self.damage_text_surface.get_rect(
+            center=(self.damage_block_rect.centerx, self.damage_block_rect.centery))
+
+        armor_font = pg.font.Font(None, self.font_size_armor)
+        self.armor_text_surface = armor_font.render(str(self.armor), True, "white")
+        self.armor_text_rect = self.armor_text_surface.get_rect(
+            center=(self.armor_block_rect.centerx, self.armor_block_rect.centery))
+
+        # ---
+
+        strength_font = pg.font.Font(None, self.font_size_strength)
+        self.strength_text_surface = strength_font.render(str(self.strength), True, "white")
+        self.strength_text_rect = self.strength_text_surface.get_rect(
+            center=(self.strength_block_rect.centerx, self.strength_block_rect.centery))
+
+        dexterity_font = pg.font.Font(None, self.font_size_dexterity)
+        self.dexterity_text_surface = dexterity_font.render(str(self.dexterity), True, "white")
+        self.dexterity_text_rect = self.dexterity_text_surface.get_rect(
+            center=(self.dexterity_block_rect.centerx, self.dexterity_block_rect.centery))
+
+        intelligence_font = pg.font.Font(None, self.font_size_intelligence)
+        self.intelligence_text_surface = intelligence_font.render(str(self.intelligence), True, "white")
+        self.intelligence_text_rect = self.intelligence_text_surface.get_rect(
+            center=(self.intelligence_block_rect.centerx, self.intelligence_block_rect.centery))
+
+    def draw(self):
+        super().draw()
+
+        self.game.screen.blit(self.strength_block, self.strength_block_rect.topleft)
+        self.game.screen.blit(self.dexterity_block, self.dexterity_block_rect.topleft)
+        self.game.screen.blit(self.intelligence_block, self.intelligence_block_rect.topleft)
+
+        self.game.screen.blit(self.damage_text_surface, self.damage_text_rect)
+        self.game.screen.blit(self.armor_text_surface, self.armor_text_rect)
+
+        self.game.screen.blit(self.strength_text_surface, self.strength_text_rect)
+        self.game.screen.blit(self.dexterity_text_surface, self.dexterity_text_rect)
+        self.game.screen.blit(self.intelligence_text_surface, self.intelligence_text_rect)
+
+class LootCard(Card):
+    pass

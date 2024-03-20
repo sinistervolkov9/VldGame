@@ -2,7 +2,7 @@ import sys
 from settings import *
 import pygame as pg
 # from scene_init import Scene
-from card import Card
+from card import ClassCard
 
 
 class Game:
@@ -15,9 +15,13 @@ class Game:
 
     def new_game(self):
         # self.scene = Scene(current_scene="scene_main_menu")
-        self.card = Card(self, "resources/button_images/default_button.png", "resources/button_images/g.png",
-                         "resources/button_images/b_frame.png", "resources/button_images/r.png",
-                         "полный лох и чмошник", "Decription")
+        self.card = ClassCard(self, "resources/card_items/image/image.png",
+                              "resources/card_items/description_block/description_block.png",
+                              "resources/card_items/frame/frame.png", "resources/card_items/name_block/name_block.png",
+                              "лёха)", "Описание",
+                              0, 0,
+                              3, 2, 1,
+                              3, 5, 10)
 
     def update(self):
         """
@@ -27,6 +31,8 @@ class Game:
         pg.display.flip()
         self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
+
+        self.card.card_check_hover(pg.mouse.get_pos())
 
     def draw(self):
         """
@@ -46,10 +52,12 @@ class Game:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
-            # self.scene.esc_event(event)
-            # self.scene.button_click_event(event)
-            # self.scene.button_handle_event(event)
-            # self.scene.click_event(event)
+        # self.card.card_hover_event()
+
+        # self.scene.esc_event(event)
+        # self.scene.button_click_event(event)
+        # self.scene.button_handle_event(event)
+        # self.scene.click_event(event)
 
     def run(self):
         """
