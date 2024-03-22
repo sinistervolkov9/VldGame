@@ -1,257 +1,131 @@
 import pygame as pg
+from settings import BUTTON_WIDTH, BUTTON_HEIGHT
 
-pg.init()
 
-
-# Кнопка сама по себе
 class Button:
-    def __init__(
-            self,
-            text: str = None, font=None,
-            text_color=None, text_color_hover=None, text_color_click=None,
-            image=None, image_hover=None, image_click=None, sound_hover=None, sound_click=None,
-            x=0, y=0, width=200, height=60,
-            visible=True, activity=True
-    ):
+    def __init__(self,
+                 game,
+                 image_basic, image_hover, image_press,
+                 text,
+                 sound_hover, sound_click
+                 ):
+        self.game = game
 
-        self.text = text  # Выводимый текст
-        self.font = font  # Шрифт выводимого текста (будет постоянный для всех состояний текста)
-        self.text_color = text_color  # Цвет выводимого текста
-        self.text_color_hover = text_color_hover  # Цвет текста при наведении на КНОПКУ
-        self.text_color_click = text_color_click  # Цвет текста при нажатии на КНОПКУ
-        self.image = image  # Изображение выводимой кнопки
-        self.image_hover = image_hover  # Изображение кнопки при наведении на нее
-        self.image_click = image_click  # Изображение кнопки при нажатии на нее
-        self.sound_hover = sound_hover  # Звук кнопки при наведении на нее
-        self.sound_click = sound_click  # Звук кнопки при нажатии на нее
-        self.x = x  # Позиция по x-координате
-        self.y = y  # Позиция по y-координате
-        self.width = width  # Длина кнопки
-        self.height = height  # Высота кнопки
-        self.over = None  # Вспомогательный аргумент
+        self.image = 'resources/button/default/button.png' if image_basic is None else image_basic
+        self.image_hover = 'resources/button/default/button_hovered.png' if image_hover is None else image_hover
+        self.image_press = 'resources/button/default/button_pressed.png' if image_press is None else image_press
 
-        self.visible = visible
-        self.activity = activity
+        self.text = 'button' if text is None else " ".join(text.split())
 
-        self.base_visible = visible
-        self.base_activity = activity
+        self.sound_hover = 'resources/sounds/default_sound_hover.wav' if sound_hover is None else sound_hover
+        self.sound_click = 'resources/sounds/default_sound_click.wav' if sound_click is None else sound_click
 
-        # self.functions = functions  # Список функциональных возможностей кнопки
-        # self.display_trigger = {"display_trigger": True}  # Словарь для триггера видимости кнопки
+        # ---
 
-        # Работа с аргументами-переменными 1:
-        # text
-        if text:
-            self.text = text
-        else:
-            self.text = "text"
-
-        # font
-        if font:
-            self.font = "resources/fonts/" + font
-        else:
-            self.font = None
-
-        # text_color
-        if text_color:
-            self.text_color = text_color
-        else:
-            self.text_color = "black"
-
-        # text_color_hover
-        if text_color_hover:
-            self.text_color_hover = text_color_hover
-        else:
-            self.text_color_hover = self.text_color
-
-        # text_color_click
-        if text_color_click:
-            self.text_color_click = text_color_click
-        else:
-            self.text_color_click = self.text_color
-
-        # image
-        if image:
-            self.image = "resources/button_images/" + image
-        else:
-            self.image = "resources/button_images/default_button.png"
-
-        # image_hover
-        if image_hover:
-            self.image_hover = "resources/button_images/" + image_hover
-        else:
-            self.image_hover = self.image
-
-        # image_click
-        if image_click:
-            self.image_click = "resources/button_images/" + image_click
-        else:
-            self.image_click = self.image
-
-        # sound_hover
-        if sound_hover:
-            if sound_hover == "default":
-                self.sound_hover = "resources/sounds/default_sound_hover.wav"
-            else:
-                self.sound_hover = "resources/sounds/" + sound_hover
-        else:
-            self.sound_hover = None
-
-        # sound_click
-        if sound_click:
-            if sound_click == "default":
-                self.sound_click = "resources/sounds/default_sound_click.wav"
-            else:
-                self.sound_click = "resources/sounds/" + sound_click
-        else:
-            self.sound_click = None
-
-        # Работа с аргументами-переменными 2:
-        # Подгрузка изображения кнопки
-        self.image = pg.image.load(self.image)
-        self.image = pg.transform.scale(self.image, (width, height))
-
-        # Изображение кнопки при наведении (если будет добавлено)
-        if self.image_hover:
-            self.image_hover = pg.image.load(self.image_hover)
-            self.image_hover = pg.transform.scale(self.image_hover, (width, height))
-        self.rect = self.image.get_rect(topleft=(x, y))  # rect
-
-        # Изображение кнопки при нажатии (если будет добавлено)
-        if self.image_click:
-            self.image_click = pg.image.load(self.image_click)
-            self.image_click = pg.transform.scale(self.image_click, (width, height))
-        self.rect = self.image.get_rect(topleft=(x, y))  # rect
-
-        # Цвет текста
-        # Если будет меняться цвет текста при наведении
-        if self.text_color_hover:
-            self.color_hover = self.text_color_hover
-
-        # Если будет меняться цвет текста при нажатии
-        if self.text_color_click:
-            self.color_click = self.text_color_click
-
-        # Звуки при наведении и нажатии
-        # Если будет добавлен звук при наведении
-        if self.sound_hover:
-            self.sound_hover = pg.mixer.Sound(self.sound_hover)
-        else:
-            self.sound_hover = None
-
-        # Если будет добавлен звук при нажатии
-        if self.sound_click:
-            self.sound_click = pg.mixer.Sound(self.sound_click)
-        else:
-            self.sound_click = None
-
-        # Для проверки, наведена ли мышка на кнопку
+        self.scale = 50  # 50
+        self.w = BUTTON_WIDTH  # Ширина
+        self.h = BUTTON_HEIGHT  # Высота
+        self.pos_x = 50  # ?
+        self.pos_y = 50  # ?
         self.is_hovered = False
-        # Для проверки, наведена ли мышка на кнопку
         self.is_clicked = False
 
-    def draw(self, screen):
-        """
-        Метод, который позволит нарисовать кнопку.
-        В него передаем экран, на котором будет рисоваться кнопка
-        """
-        if self.visible:
-            # Чтобы понять, какую картинку и какого цвета текст необх. отобразить
-            if self.is_clicked:
-                current_image = self.image_click
-                current_text_color = self.color_click
-            elif self.is_hovered:
-                current_image = self.image_hover
-                current_text_color = self.color_hover
-            else:
-                current_image = self.image
-                current_text_color = self.text_color
+        # ---
 
-            # Отображение кнопки:
-            screen.blit(current_image, self.rect.topleft)
+        self.load_images()
+        self.load_sounds()
+        self.get_size_pos()
+        self.update()  # ?
 
-            # Отображение текста:
-            # Размер шрифта (базово - половина высоты кнопки)
-            text_size = self.height / 2
+    def load_images(self):
+        self.image = pg.image.load(self.image)
+        self.image_hover = pg.image.load(self.image_hover)
+        self.image_press = pg.image.load(self.image_press)
 
-            # Подключение шрифта (базово - базовый)
-            font = pg.font.Font(self.font, int(text_size))
+    def load_sounds(self):
+        self.sound_hover = pg.mixer.Sound(self.sound_hover)
+        self.sound_click = pg.mixer.Sound(self.sound_click)
 
-            # Рендеринг текста
-            text_surface = font.render(self.text, True, current_text_color)
-
-            # rect текста (создание невидимой обводки текста)
-            text_rect = text_surface.get_rect(center=self.rect.center)
-
-            text_size_count = 4
-            for i in range(3):
-                if text_rect.width > self.rect.width or text_rect.height > self.rect.height:
-                    # Обрезаем текст
-                    text_size = self.height / text_size_count
-                    # Подключение шрифта (базово - базовый)
-                    font = pg.font.Font(self.font, int(text_size))
-
-                    # Рендеринг текста
-                    text_surface = font.render(self.text, True, current_text_color)
-
-                    # rect текста (создание невидимой обводки текста)
-                    text_rect = text_surface.get_rect(center=self.rect.center)
-
-                    text_size_count += 2
-                else:
-                    break
-
-            # Вывод текста
-            screen.blit(text_surface, text_rect)
+    def get_size_pos(self):
+        self.size_button = (self.w * self.scale, self.h * self.scale)
+        self.pos_button = (self.pos_x, self.pos_y)
 
     def check_hover(self, mouse_pos):
-        """
-        Проверяет, наведена мышка на кнопку или нет
-        """
-        if self.activity:
-            self.is_hovered = self.rect.collidepoint(mouse_pos)
-        # if self.visible:
-        #     self.is_hovered = self.rect.collidepoint(mouse_pos)
+        self.is_hovered = self.image_rect.collidepoint(mouse_pos)
+
+    def update(self):
+        self.image = pg.transform.scale(self.image, self.size_button)
+        self.image_rect = self.image.get_rect(topleft=self.pos_button)
+
+        self.image_hover = pg.transform.scale(self.image_hover, self.size_button)
+        # self.image_hover_rect = self.image_hover.get_rect(topleft=self.pos_button)
+
+        self.image_press = pg.transform.scale(self.image_press, self.size_button)
+        # self.image_press_rect = self.image_press.get_rect(topleft=self.pos_button)
+
+        # ---
+
+        self.get_font_size_text()
+
+        # ---
+
+        text_font = pg.font.Font(None, self.font_size_text)
+        self.text_text_surface = text_font.render(self.text, True, "white")
+        self.text_text_rect = self.text_text_surface.get_rect(
+            center=(self.image_rect.centerx, self.image_rect.centery))
+
+    def get_font_size_text(self):
+        number_of_reductions = 4  # 4
+
+        start_number_of_symbols = 7  # 7
+        add_symbols = 2  # 2
+
+        symbols_scale = 0.5  # 0.5
+        add_scale = 0.05  # 0.05
+
+        if len(self.text) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
+            self.text = self.text[
+                        :int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols) - 3] + "..."
+            end_symbols_scale = symbols_scale + add_scale * (number_of_reductions - 1)
+            self.font_size_text = int(self.scale - self.scale * end_symbols_scale)
+        else:
+            for i in range(number_of_reductions):
+                if len(self.text) <= start_number_of_symbols:
+                    self.font_size_text = int(self.scale - self.scale * symbols_scale)
+                    break
+                else:
+                    symbols_scale += add_scale
+                    start_number_of_symbols += add_symbols
+
+    def draw(self):
+        if self.is_clicked:
+            current_image = self.image_press
+        elif self.is_hovered:
+            current_image = self.image_hover
+        else:
+            current_image = self.image
+
+        self.game.screen.blit(current_image, self.image_rect.topleft)
+        self.game.screen.blit(self.text_text_surface, self.text_text_rect)
 
     def handle_event(self, event):
-        """
-        Метод обрабоки событий
-        """
-        if self.visible:
+        if self.is_hovered:
+            if not self.over:
+                if self.sound_hover:
+                    self.sound_hover.play()
+                self.over = True
+        else:
+            self.over = False
 
-            # Звук наведения, если есть:
-            if self.is_hovered:
-                if not self.over:
-                    if self.sound_hover:
-                        self.sound_hover.play()
-                    self.over = True
-            else:
-                self.over = False
+        pressed = pg.mouse.get_pressed()
+        if pressed[0] and self.is_hovered:
+            self.is_clicked = True
 
-            # Звук нажатия, если есть:
-            pressed = pg.mouse.get_pressed()
-            if pressed[0] and self.is_hovered:
-                self.is_clicked = True
+        if event.type == pg.MOUSEBUTTONUP and event.button == 1 and self.is_hovered:
+            if self.sound_click:
+                self.sound_click.play()
+            self.is_clicked = False
+            pg.event.post(pg.event.Event(pg.USEREVENT, button=self))
 
-            if event.type == pg.MOUSEBUTTONUP and event.button == 1 and self.is_hovered:
-                if self.sound_click:
-                    self.sound_click.play()
-                    #  Пока не завершится анимация кнопки-клика:
-                self.is_clicked = False
-                pg.event.post(pg.event.Event(pg.USEREVENT, button=self))
-                # print("self.is_clicked = False")
-            if event.type == pg.MOUSEBUTTONUP and event.button == 1 and not self.is_hovered:
-                self.is_clicked = False
-
-    def bring_to_basic_state(self):
-        self.visible = self.base_visible
-        self.activity = self.base_activity
-
-    def switch_visibility(self):
-        """
-        Меняет значение триггера видимости на противоположное
-        """
-        self.visible = not self.visible
-
-    def switch_activity(self):
-        self.activity = not self.activity
+        if event.type == pg.MOUSEBUTTONUP and event.button == 1 and not self.is_hovered:
+            self.is_clicked = False

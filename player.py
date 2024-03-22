@@ -70,7 +70,6 @@ class Player:
 
     def print_stats(self):
         print(
-            f'Сила - {self.strength}; Ловкость - {self.dexterity}; Интеллект - {self.intelligence}\nСтамина - {self.stamina}\n')
-
-        print(f'ХП - {self.hit_points}')
-        print(f'Скорость - {self.speed}')
+            f'Сила - {self.strength}; Ловкость - {self.dexterity}; Интеллект - {self.intelligence}; Стамина - {self.stamina}')
+        print(f'Урон - {self.card_class.damage}; Броня - {self.card_class.armor}')
+        print(f'ХП - {self.hit_points}; Скорость - {self.speed}')

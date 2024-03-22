@@ -6,6 +6,8 @@ from card_class import CardClass
 from player import Player
 from card_loot import CardLoot
 from deck import Deck
+from screen import Screen
+from button import Button
 
 
 class Game:
@@ -17,6 +19,9 @@ class Game:
 
     def new_game(self):
         # self.scene = Scene(current_scene="scene_main_menu")
+
+        self.screeeeennnn = Screen(self, None, None, None)
+        self.button = Button(self, None, None, None, 'text', None, None)
 
         self.card_loot_1 = CardLoot(self,
                                     "resources/card_items/image/image.png",
@@ -46,12 +51,8 @@ class Game:
                                     "resources/card_items/frame/frame.png",
                                     "resources/card_items/name_block/name_block.png",
                                     "рыцарь", "Описание",
-                                    50, 50,
                                     2, 0, 0)
         self.player = Player(self, self.card_class, 1, 1, 1, 1, 5)
-
-        self.active_card = None
-        self.card_list = [self.card_class]
 
     def update(self):
         """
@@ -62,6 +63,7 @@ class Game:
         self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
 
+        self.button.check_hover(pg.mouse.get_pos())
         self.card_class.card_check_hover(pg.mouse.get_pos())
 
     def draw(self):
@@ -73,6 +75,8 @@ class Game:
         self.screen.fill("black")
         # self.scene.screen_draw(self.screen)
 
+        self.screeeeennnn.draw()
+        self.button.draw()
         self.card_class.draw()
 
     def check_events(self):
@@ -83,7 +87,8 @@ class Game:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
-        # self.card.card_hover_event()
+            # self.card_class.card_hover_event(event)
+            self.button.handle_event(event)
 
         # self.scene.esc_event(event)
         # self.scene.button_click_event(event)

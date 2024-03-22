@@ -7,13 +7,12 @@ class CardClass:
                  deck,
                  image, description_block, frame, name_block,
                  name, description,
-                 pos_x, pos_y,
                  strength, dexterity, intelligence):
 
         self.game = game
 
         self.deck = deck
-        # -
+
         self.image = image
         self.description_block = description_block
         self.frame = frame
@@ -21,9 +20,6 @@ class CardClass:
 
         self.name = " ".join(name.upper().split())
         self.description = " ".join(description.split())
-        # -
-        self.pos_x = pos_x
-        self.pos_y = pos_y
 
         self.strength = strength
         self.dexterity = dexterity
@@ -34,11 +30,12 @@ class CardClass:
 
         # ---
 
+        self.scale = 75  # 100
         self.w = CARD_WIDTH  # Ширина
         self.h = CARD_HEIGHT  # Высота
-        self.scale = 100  # 100
+        self.pos_x = 800 / 2 - 100
+        self.pos_y = 600 / 2 - 150
         self.is_hovered = False
-        self.active_card = None
 
         # ---
 
@@ -46,22 +43,20 @@ class CardClass:
 
         # ---
 
-        # self.font_size_name = int(self.scale-self.scale*0.6)  # 40
-        # self.font_size_description = int(self.scale - self.scale * 0.75)  # 30
-        self.font_size_name = 40
-        self.font_size_description = 30
-
-        self.font_size_damage = 30
-        self.font_size_armor = 30
-
-        self.font_size_strength = 30
-        self.font_size_dexterity = 30
-        self.font_size_intelligence = 30
+        # self.font_size_name = 40
+        # self.font_size_description = 30
+        #
+        # self.font_size_damage = 30
+        # self.font_size_armor = 30
+        #
+        # self.font_size_strength = 30
+        # self.font_size_dexterity = 30
+        # self.font_size_intelligence = 30
 
         # ---
 
         self.get_size_pos()
-        self.update()
+        self.update()  # ?
 
     def load_images(self):
 
@@ -80,8 +75,6 @@ class CardClass:
 
     def get_size_pos(self):
 
-        # --- size, pos ---
-
         self.size_background = (self.w * self.scale, self.h * self.scale)
         self.pos_background = (self.pos_x, self.pos_y)
 
@@ -92,24 +85,23 @@ class CardClass:
                                        (self.h / 2 * self.scale) - (self.h / 6 * self.scale) - FRAME_WIDTH / 2)
         self.pos_description_block = (
             self.pos_x + FRAME_WIDTH / 2, self.pos_y + (self.h / 2 * self.scale) + (self.h / 6 * self.scale))
-        print(f'size_description_block - {self.size_description_block}')
 
         self.size_frame = (self.w * self.scale, self.h * self.scale)
         self.pos_frame = (self.pos_x, self.pos_y)
 
         self.size_name_block = (self.w * self.scale - FRAME_WIDTH / 2, self.h / 6 * self.scale)
         self.pos_name_block = (self.pos_x + FRAME_WIDTH / 4, self.pos_y + self.h / 2 * self.scale)
-        print(f'size_name_block - {self.size_name_block}')
 
         # ---
 
         self.size_damage_block = (round(self.scale / 3.333, 2), round(self.scale / 3.333, 2))
         self.pos_damage_block = (self.pos_x + self.scale / 20, self.pos_y + self.h * self.scale - self.scale / 2.857)
-        print(f'size_damage_block - {self.size_damage_block}')
+        # print(f'size_damage_block - {self.size_damage_block}')
 
         self.size_armor_block = (round(self.scale / 3.333, 2), round(self.scale / 3.333, 2))
-        self.pos_armor_block = (self.pos_x + self.w * self.scale - self.scale / 2.857, self.pos_y + self.h * self.scale - self.scale / 2.857)
-        print(f'size_armor_block - {self.size_armor_block}')
+        self.pos_armor_block = (
+        self.pos_x + self.w * self.scale - self.scale / 2.857, self.pos_y + self.h * self.scale - self.scale / 2.857)
+        # print(f'size_armor_block - {self.size_armor_block}')
 
         self.size_strength_block = (self.scale / 2.5, self.scale / 2.5)
         self.pos_strength_block = (self.pos_x + -self.scale / 5, self.pos_y)
@@ -120,9 +112,72 @@ class CardClass:
         self.size_intelligence_block = (self.scale / 2.5, self.scale / 2.5)
         self.pos_intelligence_block = (self.pos_x + -self.scale / 5, self.pos_y + self.scale * 0.8)
 
-        # ---
+    def get_font_size_name(self):
+        number_of_reductions = 4  # 4
 
-        # self.update()
+        start_number_of_symbols = 7  # 7
+        add_symbols = 2  # 2
+
+        symbols_scale = 0.6  # 0.6
+        add_scale = 0.05  # 0.05
+
+        if len(self.name) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
+            self.name = self.name[
+                        :int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols) - 3] + "..."
+            end_symbols_scale = symbols_scale + add_scale * (number_of_reductions - 1)
+            self.font_size_name = int(self.scale - self.scale * end_symbols_scale)
+        else:
+            for i in range(number_of_reductions):
+                if len(self.name) <= start_number_of_symbols:
+                    self.font_size_name = int(self.scale - self.scale * symbols_scale)
+                    break
+                else:
+                    symbols_scale += add_scale
+                    start_number_of_symbols += add_symbols
+
+    def get_font_size_description(self):
+        number_of_reductions = 4  # 4
+
+        start_number_of_symbols = 11  # 11
+        add_symbols = 2.5  # 2.5
+
+        symbols_scale = 0.75  # 0.75
+        add_scale = 0.015  # 0.015
+
+        if len(self.description) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
+            self.description = self.description[
+                               :int(
+                                   start_number_of_symbols + number_of_reductions * add_symbols - add_symbols) - 3] + "..."
+            end_symbols_scale = symbols_scale + add_scale * (number_of_reductions - 1)
+            self.font_size_description = int(self.scale - self.scale * end_symbols_scale)
+        else:
+            for i in range(number_of_reductions):
+                if len(self.description) <= start_number_of_symbols:
+                    self.font_size_description = int(self.scale - self.scale * symbols_scale)
+                    break
+                else:
+                    symbols_scale += add_scale
+                    start_number_of_symbols += add_symbols
+
+    def get_font_size_stats(self):
+        font_scale = 0.34
+
+        self.font_size_damage = int(self.scale * font_scale)
+        self.font_size_armor = int(self.scale * font_scale)
+
+        self.font_size_strength = int(self.scale * font_scale)
+        self.font_size_dexterity = int(self.scale * font_scale)
+        self.font_size_intelligence = int(self.scale * font_scale)
+
+    def card_check_hover(self, mouse_pos):
+        self.is_hovered = self.frame_rect.collidepoint(mouse_pos)
+
+    # Должно быть не здесь:
+    def card_hover_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                self.pos_x, self.pos_y = event.pos
+                self.get_size_pos()
 
     def update(self):
 
@@ -234,74 +289,3 @@ class CardClass:
     def check_simbols(self):
         print(f'{self.name} - simb_count: {len(self.name)} - size: {self.font_size_name}')
         print(f'{self.description} - simb_count: {len(self.description)} - size: {self.font_size_description}')
-
-    def get_font_size_name(self):
-        number_of_reductions = 4  # 4
-
-        start_number_of_symbols = 7  # 7
-        add_symbols = 2  # 2
-
-        symbols_scale = 0.6  # 0.6
-        add_scale = 0.05  # 0.05
-
-        if len(self.name) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
-            self.name = self.name[
-                        :int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols) - 3] + "..."
-            end_symbols_scale = symbols_scale + add_scale * (number_of_reductions - 1)
-            self.font_size_name = int(self.scale - self.scale * end_symbols_scale)
-        else:
-            for i in range(number_of_reductions):
-                if len(self.name) <= start_number_of_symbols:
-                    self.font_size_name = int(self.scale - self.scale * symbols_scale)
-                    break
-                else:
-                    symbols_scale += add_scale
-                    start_number_of_symbols += add_symbols
-
-    def get_font_size_description(self):
-        number_of_reductions = 4  # 4
-
-        start_number_of_symbols = 11  # 11
-        add_symbols = 2.5  # 2.5
-
-        symbols_scale = 0.75  # 0.75
-        add_scale = 0.015  # 0.015
-
-        if len(self.description) > int(start_number_of_symbols + number_of_reductions * add_symbols - add_symbols):
-            self.description = self.description[
-                               :int(
-                                   start_number_of_symbols + number_of_reductions * add_symbols - add_symbols) - 3] + "..."
-            end_symbols_scale = symbols_scale + add_scale * (number_of_reductions - 1)
-            self.font_size_description = int(self.scale - self.scale * end_symbols_scale)
-        else:
-            for i in range(number_of_reductions):
-                if len(self.description) <= start_number_of_symbols:
-                    self.font_size_description = int(self.scale - self.scale * symbols_scale)
-                    break
-                else:
-                    symbols_scale += add_scale
-                    start_number_of_symbols += add_symbols
-
-    def get_font_size_stats(self):
-        font_scale = 0.34
-
-        self.font_size_damage = int(self.scale * font_scale)
-        self.font_size_armor = int(self.scale * font_scale)
-
-        self.font_size_strength = int(self.scale * font_scale)
-        self.font_size_dexterity = int(self.scale * font_scale)
-        self.font_size_intelligence = int(self.scale * font_scale)
-
-    def card_check_hover(self, mouse_pos):
-        self.is_hovered = self.frame_rect.collidepoint(mouse_pos)
-
-    # Должно быть не здесь:
-    def card_hover_event(self):
-        hover_scale = 150
-
-        if self.is_hovered:
-            self.scale = hover_scale
-            self.update()
-        else:
-            self.scale = 100
-            self.update()
