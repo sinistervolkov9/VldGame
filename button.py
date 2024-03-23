@@ -1,13 +1,14 @@
 import pygame as pg
-from settings import BUTTON_WIDTH, BUTTON_HEIGHT
+from settings import BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_SCALE, SCREEN_POS
 
 
 class Button:
     def __init__(self,
                  game,
-                 image_basic, image_hover, image_press,
-                 text,
-                 sound_hover, sound_click
+                 image_basic=None, image_hover=None, image_press=None,
+                 text='text',
+                 sound_hover=None, sound_click=None,
+                 pos=None
                  ):
         self.game = game
 
@@ -20,15 +21,20 @@ class Button:
         self.sound_hover = 'resources/sounds/default_sound_hover.wav' if sound_hover is None else sound_hover
         self.sound_click = 'resources/sounds/default_sound_click.wav' if sound_click is None else sound_click
 
+        # self.pos = SCREEN_POS["tl"] if pos is None else pos
+
         # ---
 
-        self.scale = 50  # 50
+        self.scale = BUTTON_SCALE
         self.w = BUTTON_WIDTH  # Ширина
         self.h = BUTTON_HEIGHT  # Высота
-        self.pos_x = 50  # ?
-        self.pos_y = 50  # ?
         self.is_hovered = False
         self.is_clicked = False
+
+        if pos is None:
+            self.pos = self.x, self.y = SCREEN_POS["tl"][0] - self.w * self.scale / 2, SCREEN_POS["tl"][1] - self.h * self.scale / 2
+        else:
+            self.pos = self.x, self.y = pos[0] - self.w * self.scale / 2, pos[1] - self.h * self.scale / 2
 
         # ---
 
@@ -48,7 +54,7 @@ class Button:
 
     def get_size_pos(self):
         self.size_button = (self.w * self.scale, self.h * self.scale)
-        self.pos_button = (self.pos_x, self.pos_y)
+        self.pos_button = self.pos
 
     def check_hover(self, mouse_pos):
         self.is_hovered = self.image_rect.collidepoint(mouse_pos)
@@ -118,6 +124,7 @@ class Button:
             self.over = False
 
         pressed = pg.mouse.get_pressed()
+
         if pressed[0] and self.is_hovered:
             self.is_clicked = True
 

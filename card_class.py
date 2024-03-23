@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import CARD_HEIGHT, CARD_WIDTH, FRAME_WIDTH
+from settings import CARD_HEIGHT, CARD_WIDTH, FRAME_WIDTH, CARD_SCALE, SCREEN_POS
 
 
 class CardClass:
@@ -30,11 +30,11 @@ class CardClass:
 
         # ---
 
-        self.scale = 75  # 100
+        self.scale = CARD_SCALE
         self.w = CARD_WIDTH  # Ширина
         self.h = CARD_HEIGHT  # Высота
-        self.pos_x = 800 / 2 - 100
-        self.pos_y = 600 / 2 - 150
+        self.pos_x = SCREEN_POS['c'][0] - self.w * self.scale / 2
+        self.pos_y = SCREEN_POS['c'][1] - self.h * self.scale / 2
         self.is_hovered = False
 
         # ---
@@ -102,6 +102,8 @@ class CardClass:
         self.pos_armor_block = (
         self.pos_x + self.w * self.scale - self.scale / 2.857, self.pos_y + self.h * self.scale - self.scale / 2.857)
         # print(f'size_armor_block - {self.size_armor_block}')
+
+        # ---
 
         self.size_strength_block = (self.scale / 2.5, self.scale / 2.5)
         self.pos_strength_block = (self.pos_x + -self.scale / 5, self.pos_y)
@@ -177,9 +179,12 @@ class CardClass:
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
                 self.pos_x, self.pos_y = event.pos
-                self.get_size_pos()
+                # self.get_size_pos()
+                self.update()
 
     def update(self):
+
+        # self.get_size_pos()  # ?
 
         self.background = pg.transform.scale(self.background, self.size_background)
         self.background_rect = self.background.get_rect(topleft=self.pos_background)

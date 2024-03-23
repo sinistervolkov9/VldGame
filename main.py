@@ -8,20 +8,24 @@ from card_loot import CardLoot
 from deck import Deck
 from screen import Screen
 from button import Button
+from markup import Markup
 
 
 class Game:
     def __init__(self):
         pg.init()  # Инициализатор pygame
         self.screen = pg.display.set_mode(RES)
+        # self.screen = pg.display.set_mode(RES, pg.FULLSCREEN)
         self.clock = pg.time.Clock()
         self.new_game()
 
     def new_game(self):
         # self.scene = Scene(current_scene="scene_main_menu")
 
+        self.markup = Markup(self)
         self.screeeeennnn = Screen(self, None, None, None)
-        self.button = Button(self, None, None, None, 'text', None, None)
+        self.button = Button(self, None, None, None, 'Кнопка!)', None, None, SCREEN_POS['c9'])
+        self.button_2 = Button(self, None, None, None, 'Кнопка 0_0', None, None, SCREEN_POS['c21'])
 
         self.card_loot_1 = CardLoot(self,
                                     "resources/card_items/image/image.png",
@@ -64,6 +68,7 @@ class Game:
         pg.display.set_caption("Vld Game")
 
         self.button.check_hover(pg.mouse.get_pos())
+        self.button_2.check_hover(pg.mouse.get_pos())
         self.card_class.card_check_hover(pg.mouse.get_pos())
 
     def draw(self):
@@ -75,8 +80,10 @@ class Game:
         self.screen.fill("black")
         # self.scene.screen_draw(self.screen)
 
-        self.screeeeennnn.draw()
+        self.markup.draw()
+        # self.screeeeennnn.draw()
         self.button.draw()
+        self.button_2.draw()
         self.card_class.draw()
 
     def check_events(self):
@@ -84,11 +91,12 @@ class Game:
         Проверка на нажатие кнопок и т. п.
         """
         for event in pg.event.get():
-            if event.type == pg.QUIT:
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 pg.quit()
                 sys.exit()
-            # self.card_class.card_hover_event(event)
+            self.card_class.card_hover_event(event)
             self.button.handle_event(event)
+            self.button_2.handle_event(event)
 
         # self.scene.esc_event(event)
         # self.scene.button_click_event(event)

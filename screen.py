@@ -5,14 +5,14 @@ from settings import RES, SCREEN_POS
 class Screen:
     def __init__(self,
                  game,
-                 image,
+                 image=None,
                  size=None, pos=None
                  ):
         self.game = game
 
         self.image = 'resources/backgrounds/background.png' if image is None else image
         self.size = RES if size is None else size
-        self.pos = SCREEN_POS["topleft"] if pos is None else pos
+        self.pos = SCREEN_POS["tl"] if pos is None else pos
 
         self.load_images()
         self.get_size_pos()
