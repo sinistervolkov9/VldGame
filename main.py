@@ -1,7 +1,7 @@
 import sys
 from settings import *
 import pygame as pg
-# from scene_init import Scene
+# from scene_event_handler import Scene
 from card_class import CardClass
 from player import Player
 from card_loot import CardLoot
@@ -24,8 +24,9 @@ class Game:
 
         self.markup = Markup(self)
         self.screeeeennnn = Screen(self, None, None, None)
-        self.button = Button(self, None, None, None, 'Кнопка!)', None, None, SCREEN_POS['c9'])
-        self.button_2 = Button(self, None, None, None, 'Кнопка 0_0', None, None, SCREEN_POS['c21'])
+        self.button_1 = Button(self, 'Кнопка!)', None, None, None, None, None, SCREEN_POS['c9'])
+        self.button_2 = Button(self, 'Кнопка 0_0', None, None, None, None, None, SCREEN_POS['c21'])
+        self.button_3 = Button(self, 'Кнопо4ка', None, None, None, None, None, SCREEN_POS['c33'])
 
         self.card_loot_1 = CardLoot(self,
                                     "resources/card_items/image/image.png",
@@ -67,8 +68,9 @@ class Game:
         self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
         pg.display.set_caption("Vld Game")
 
-        self.button.check_hover(pg.mouse.get_pos())
+        self.button_1.check_hover(pg.mouse.get_pos())
         self.button_2.check_hover(pg.mouse.get_pos())
+        self.button_3.check_hover(pg.mouse.get_pos())
         self.card_class.card_check_hover(pg.mouse.get_pos())
 
     def draw(self):
@@ -81,9 +83,10 @@ class Game:
         # self.scene.screen_draw(self.screen)
 
         self.markup.draw()
-        # self.screeeeennnn.draw()
-        self.button.draw()
+        self.screeeeennnn.draw()
+        self.button_1.draw()
         self.button_2.draw()
+        self.button_3.draw()
         self.card_class.draw()
 
     def check_events(self):
@@ -95,13 +98,14 @@ class Game:
                 pg.quit()
                 sys.exit()
             self.card_class.card_hover_event(event)
-            self.button.handle_event(event)
+            self.button_1.handle_event(event)
             self.button_2.handle_event(event)
+            self.button_3.handle_event(event)
 
-        # self.scene.esc_event(event)
-        # self.scene.button_click_event(event)
-        # self.scene.button_handle_event(event)
-        # self.scene.click_event(event)
+            # self.scene.esc_event(event)
+            # self.scene.button_click_event(event)
+            # self.scene.button_handle_event(event)
+            # self.scene.click_event(event)
 
     def run(self):
         """

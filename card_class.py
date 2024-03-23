@@ -33,8 +33,8 @@ class CardClass:
         self.scale = CARD_SCALE
         self.w = CARD_WIDTH  # Ширина
         self.h = CARD_HEIGHT  # Высота
-        self.pos_x = SCREEN_POS['c'][0] - self.w * self.scale / 2
-        self.pos_y = SCREEN_POS['c'][1] - self.h * self.scale / 2
+        self.pos_x = SCREEN_POS['c24'][0] - self.w * self.scale / 2
+        self.pos_y = SCREEN_POS['c24'][1] - self.h * self.scale / 2
         self.is_hovered = False
 
         # ---

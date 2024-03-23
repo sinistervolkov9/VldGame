@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import CARD_HEIGHT, CARD_WIDTH, FRAME_WIDTH
+from settings import CARD_HEIGHT, CARD_WIDTH, FRAME_WIDTH, CARD_SCALE, SCREEN_POS
 
 
 class CardLoot:
@@ -12,7 +12,7 @@ class CardLoot:
                  spells: list, perks: list):
 
         self.game = game
-        # -
+
         self.image = image
         self.description_block = description_block
         self.frame = frame
@@ -38,10 +38,11 @@ class CardLoot:
 
         # ---
 
+        self.scale = CARD_SCALE  # ?
         self.w = CARD_WIDTH  # Ширина
         self.h = CARD_HEIGHT  # Высота
-        self.pos_x = 0
-        self.pos_y = 0
+        self.pos_x = SCREEN_POS['c'][0] - self.w * self.scale / 2
+        self.pos_y = SCREEN_POS['c'][1] - self.h * self.scale / 2
         self.scale = 100  # 100
         self.is_hovered = False
 

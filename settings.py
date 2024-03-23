@@ -3,6 +3,8 @@
 RES = WIDTH, HEIGHT = 600, 400  # 1920, 1080  1366, 768  900, 500 || # 600, 400
 FPS = 60  # 60
 
+BASE_RES = (1920, 1080)
+
 SCREEN_POS = {
     "tl": (0, 0),  # Top Left
     "t1": (WIDTH // 8, 0),  # Top 1/8
@@ -94,8 +96,6 @@ SCREEN_POS = {
     "b7": (7 * WIDTH // 8, HEIGHT),  # Bottom 7/8
     "br": (WIDTH, HEIGHT),  # Bottom Right
 }
-
-BASE_RES = (1920, 1080)
 
 # --- Card ---
 

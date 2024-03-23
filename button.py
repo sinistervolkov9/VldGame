@@ -5,18 +5,18 @@ from settings import BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_SCALE, SCREEN_POS
 class Button:
     def __init__(self,
                  game,
-                 image_basic=None, image_hover=None, image_press=None,
                  text='text',
+                 image_basic=None, image_hover=None, image_press=None,
                  sound_hover=None, sound_click=None,
                  pos=None
                  ):
         self.game = game
 
+        self.text = 'button' if text is None else " ".join(text.split())
+
         self.image = 'resources/button/default/button.png' if image_basic is None else image_basic
         self.image_hover = 'resources/button/default/button_hovered.png' if image_hover is None else image_hover
         self.image_press = 'resources/button/default/button_pressed.png' if image_press is None else image_press
-
-        self.text = 'button' if text is None else " ".join(text.split())
 
         self.sound_hover = 'resources/sounds/default_sound_hover.wav' if sound_hover is None else sound_hover
         self.sound_click = 'resources/sounds/default_sound_click.wav' if sound_click is None else sound_click
@@ -29,7 +29,7 @@ class Button:
         self.w = BUTTON_WIDTH  # Ширина
         self.h = BUTTON_HEIGHT  # Высота
         self.is_hovered = False
-        self.is_clicked = False
+        self.is_press = False
 
         if pos is None:
             self.pos = self.x, self.y = SCREEN_POS["tl"][0] - self.w * self.scale / 2, SCREEN_POS["tl"][1] - self.h * self.scale / 2
@@ -104,9 +104,11 @@ class Button:
                     start_number_of_symbols += add_symbols
 
     def draw(self):
-        if self.is_clicked:
+        pressed = pg.mouse.get_pressed()
+
+        if self.is_press:
             current_image = self.image_press
-        elif self.is_hovered:
+        elif self.is_hovered and not pressed[0]:
             current_image = self.image_hover
         else:
             current_image = self.image
@@ -115,6 +117,8 @@ class Button:
         self.game.screen.blit(self.text_text_surface, self.text_text_rect)
 
     def handle_event(self, event):
+        pressed = pg.mouse.get_pressed()
+
         if self.is_hovered:
             if not self.over:
                 if self.sound_hover:
@@ -123,16 +127,16 @@ class Button:
         else:
             self.over = False
 
-        pressed = pg.mouse.get_pressed()
+        if pressed[0] and not self.is_hovered:
+            self.is_hovered = False
+            self.is_press = False
+            self.over = True
 
-        if pressed[0] and self.is_hovered:
-            self.is_clicked = True
+        if self.is_hovered and event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            self.is_press = True
 
-        if event.type == pg.MOUSEBUTTONUP and event.button == 1 and self.is_hovered:
+        if self.is_hovered and self.is_press and event.type == pg.MOUSEBUTTONUP and event.button == 1:
             if self.sound_click:
                 self.sound_click.play()
-            self.is_clicked = False
+            self.is_press = False
             pg.event.post(pg.event.Event(pg.USEREVENT, button=self))
-
-        if event.type == pg.MOUSEBUTTONUP and event.button == 1 and not self.is_hovered:
-            self.is_clicked = False

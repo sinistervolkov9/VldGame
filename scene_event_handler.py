@@ -117,9 +117,9 @@ class Scene:
                                     for k, v in eventtt.items():
                                         self.check_button_events(k, v)
 
-    # def click_event(self, event):
-    #     if event.type == pg.MOUSEBUTTONUP:
-    #         print("click")
+    def click_event(self, event):
+        if event.type == pg.MOUSEBUTTONUP:
+            print("click")
 
 
     def check_button_events(self, key, value):  # Проверка событий кнопки
