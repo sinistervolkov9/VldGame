@@ -7,93 +7,93 @@ BASE_RES = (1920, 1080)
 
 SCREEN_POS = {
     "tl": (0, 0),  # Top Left
-    "t1": (WIDTH // 8, 0),  # Top 1/8
-    "t2": (2 * WIDTH // 8, 0),  # Top 2/8
-    "t3": (3 * WIDTH // 8, 0),  # Top 3/8
-    "t4": (4 * WIDTH // 8, 0),  # Top 4/8
-    "t5": (5 * WIDTH // 8, 0),  # Top 5/8
-    "t6": (6 * WIDTH // 8, 0),  # Top 6/8
-    "t7": (7 * WIDTH // 8, 0),  # Top 7/8
+    "t01": (WIDTH // 8, 0),  # Top 1/8
+    "t02": (2 * WIDTH // 8, 0),  # Top 2/8
+    "t03": (3 * WIDTH // 8, 0),  # Top 3/8
+    "t04": (4 * WIDTH // 8, 0),  # Top 4/8
+    "t05": (5 * WIDTH // 8, 0),  # Top 5/8
+    "t06": (6 * WIDTH // 8, 0),  # Top 6/8
+    "t07": (7 * WIDTH // 8, 0),  # Top 7/8
     "tr": (WIDTH, 0),  # Top Right
 
-    "l1": (0, HEIGHT // 8),  # Left 1/8
-    "c1": (WIDTH // 8, HEIGHT // 8),  # Center 1/8
-    "c2": (2 * WIDTH // 8, HEIGHT // 8),  # Center 2/8
-    "c3": (3 * WIDTH // 8, HEIGHT // 8),  # Center 3/8
-    "c4": (4 * WIDTH // 8, HEIGHT // 8),  # Center 4/8
-    "c5": (5 * WIDTH // 8, HEIGHT // 8),  # Center 5/8
-    "c6": (6 * WIDTH // 8, HEIGHT // 8),  # Center 6/8
-    "c7": (7 * WIDTH // 8, HEIGHT // 8),  # Center 7/8
-    "r1": (WIDTH, HEIGHT // 8),  # Right 1/8
+    "tl1": (0, HEIGHT // 8),  # Left 1/8
+    "t11": (WIDTH // 8, HEIGHT // 8),  # Center 1/8
+    "t12": (2 * WIDTH // 8, HEIGHT // 8),  # Center 2/8
+    "t13": (3 * WIDTH // 8, HEIGHT // 8),  # Center 3/8
+    "t14": (4 * WIDTH // 8, HEIGHT // 8),  # Center 4/8
+    "t15": (5 * WIDTH // 8, HEIGHT // 8),  # Center 5/8
+    "t16": (6 * WIDTH // 8, HEIGHT // 8),  # Center 6/8
+    "t17": (7 * WIDTH // 8, HEIGHT // 8),  # Center 7/8
+    "tr1": (WIDTH, HEIGHT // 8),  # Right 1/8
 
-    "l2": (0, 2 * HEIGHT // 8),  # Left 2/8
-    "c8": (WIDTH // 8, 2 * HEIGHT // 8),  # Center 8/8
-    "c9": (2 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 9/8
-    "c10": (3 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 10/8
-    "c11": (4 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 11/8
-    "c12": (5 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 12/8
-    "c13": (6 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 13/8
-    "r2": (7 * WIDTH // 8, 2 * HEIGHT // 8),  # Right 2/8
-    "r3": (WIDTH, 2 * HEIGHT // 8),  # Right 3/8
+    "tl2": (0, 2 * HEIGHT // 8),  # Left 2/8
+    "t21": (WIDTH // 8, 2 * HEIGHT // 8),  # Center 8/8
+    "t22": (2 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 9/8
+    "t23": (3 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 10/8
+    "t24": (4 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 11/8
+    "t25": (5 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 12/8
+    "t26": (6 * WIDTH // 8, 2 * HEIGHT // 8),  # Center 13/8
+    "t27": (7 * WIDTH // 8, 2 * HEIGHT // 8),  # Right 2/8
+    "tr2": (WIDTH, 2 * HEIGHT // 8),  # Right 3/8
 
-    "l3": (0, 3 * HEIGHT // 8),  # Left 3/8
-    "c14": (WIDTH // 8, 3 * HEIGHT // 8),  # Center 14/8
-    "c15": (2 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 15/8
-    "c16": (3 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 16/8
-    "c17": (4 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 17/8
-    "c18": (5 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 18/8
-    "c19": (6 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 19/8
-    "r4": (7 * WIDTH // 8, 3 * HEIGHT // 8),  # Right 4/8
-    "r5": (WIDTH, 3 * HEIGHT // 8),  # Right 5/8
+    "tl3": (0, 3 * HEIGHT // 8),  # Left 3/8
+    "t31": (WIDTH // 8, 3 * HEIGHT // 8),  # Center 14/8
+    "t32": (2 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 15/8
+    "t33": (3 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 16/8
+    "t34": (4 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 17/8
+    "t35": (5 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 18/8
+    "t36": (6 * WIDTH // 8, 3 * HEIGHT // 8),  # Center 19/8
+    "t37": (7 * WIDTH // 8, 3 * HEIGHT // 8),  # Right 4/8
+    "tr3": (WIDTH, 3 * HEIGHT // 8),  # Right 5/8
 
-    "l4": (0, 4 * HEIGHT // 8),  # Left 4/8
-    "c20": (WIDTH // 8, 4 * HEIGHT // 8),  # Center 20/8
-    "c21": (2 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 21/8
-    "c22": (3 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 22/8
+    "cl": (0, 4 * HEIGHT // 8),  # Left 4/8
+    "cl1": (WIDTH // 8, 4 * HEIGHT // 8),  # Center 20/8
+    "cl2": (2 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 21/8
+    "cl3": (3 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 22/8
     "c": (4 * WIDTH // 8, 4 * HEIGHT // 8),  # Center
-    "c24": (5 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 24/8
-    "c25": (6 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 25/8
-    "r6": (7 * WIDTH // 8, 4 * HEIGHT // 8),  # Right 6/8
-    "r7": (WIDTH, 4 * HEIGHT // 8),  # Right 7/8
+    "cr3": (5 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 24/8
+    "cr2": (6 * WIDTH // 8, 4 * HEIGHT // 8),  # Center 25/8
+    "cr1": (7 * WIDTH // 8, 4 * HEIGHT // 8),  # Right 6/8
+    "cr": (WIDTH, 4 * HEIGHT // 8),  # Right 7/8
 
-    "l5": (0, 5 * HEIGHT // 8),  # Left 5/8
-    "c26": (WIDTH // 8, 5 * HEIGHT // 8),  # Center 26/8
-    "c27": (2 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 27/8
-    "c28": (3 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 28/8
-    "c29": (4 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 29/8
-    "c30": (5 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 30/8
-    "c31": (6 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 31/8
-    "r8": (7 * WIDTH // 8, 5 * HEIGHT // 8),  # Right 8/8
-    "r9": (WIDTH, 5 * HEIGHT // 8),  # Right 9/8
+    "bl3": (0, 5 * HEIGHT // 8),  # Left 5/8
+    "b37": (WIDTH // 8, 5 * HEIGHT // 8),  # Center 26/8
+    "b36": (2 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 27/8
+    "b35": (3 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 28/8
+    "b34": (4 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 29/8
+    "b33": (5 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 30/8
+    "b32": (6 * WIDTH // 8, 5 * HEIGHT // 8),  # Center 31/8
+    "b31": (7 * WIDTH // 8, 5 * HEIGHT // 8),  # Right 8/8
+    "br3": (WIDTH, 5 * HEIGHT // 8),  # Right 9/8
 
-    "l6": (0, 6 * HEIGHT // 8),  # Left 6/8
-    "c32": (WIDTH // 8, 6 * HEIGHT // 8),  # Center 32/8
-    "c33": (2 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 33/8
-    "c34": (3 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 34/8
-    "c35": (4 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 35/8
-    "c36": (5 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 36/8
-    "c37": (6 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 37/8
-    "r10": (7 * WIDTH // 8, 6 * HEIGHT // 8),  # Right 10/8
-    "r11": (WIDTH, 6 * HEIGHT // 8),  # Right 11/8
+    "bl2": (0, 6 * HEIGHT // 8),  # Left 6/8
+    "b27": (WIDTH // 8, 6 * HEIGHT // 8),  # Center 32/8
+    "b26": (2 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 33/8
+    "b25": (3 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 34/8
+    "b24": (4 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 35/8
+    "b23": (5 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 36/8
+    "b22": (6 * WIDTH // 8, 6 * HEIGHT // 8),  # Center 37/8
+    "b21": (7 * WIDTH // 8, 6 * HEIGHT // 8),  # Right 10/8
+    "br2": (WIDTH, 6 * HEIGHT // 8),  # Right 11/8
 
-    "l7": (0, 7 * HEIGHT // 8),  # Left 7/8
-    "c38": (WIDTH // 8, 7 * HEIGHT // 8),  # Center 38/8
-    "c39": (2 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 39/8
-    "c40": (3 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 40/8
-    "c41": (4 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 41/8
-    "c42": (5 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 42/8
-    "c43": (6 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 43/8
-    "r12": (7 * WIDTH // 8, 7 * HEIGHT // 8),  # Right 12/8
-    "r13": (WIDTH, 7 * HEIGHT // 8),  # Right 13/8
+    "bl1": (0, 7 * HEIGHT // 8),  # Left 7/8
+    "b17": (WIDTH // 8, 7 * HEIGHT // 8),  # Center 38/8
+    "b16": (2 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 39/8
+    "b15": (3 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 40/8
+    "b14": (4 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 41/8
+    "b13": (5 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 42/8
+    "b12": (6 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 43/8
+    "b11": (7 * WIDTH // 8, 7 * HEIGHT // 8),  # Right 12/8
+    "br1": (WIDTH, 7 * HEIGHT // 8),  # Right 13/8
 
     "bl": (0, HEIGHT),  # Bottom Left
-    "b1": (WIDTH // 8, HEIGHT),  # Bottom 1/8
-    "b2": (2 * WIDTH // 8, HEIGHT),  # Bottom 2/8
-    "b3": (3 * WIDTH // 8, HEIGHT),  # Bottom 3/8
-    "b4": (4 * WIDTH // 8, HEIGHT),  # Bottom 4/8
-    "b5": (5 * WIDTH // 8, HEIGHT),  # Bottom 5/8
-    "b6": (6 * WIDTH // 8, HEIGHT),  # Bottom 6/8
-    "b7": (7 * WIDTH // 8, HEIGHT),  # Bottom 7/8
+    "b07": (WIDTH // 8, HEIGHT),  # Bottom 1/8
+    "b06": (2 * WIDTH // 8, HEIGHT),  # Bottom 2/8
+    "b05": (3 * WIDTH // 8, HEIGHT),  # Bottom 3/8
+    "b04": (4 * WIDTH // 8, HEIGHT),  # Bottom 4/8
+    "b03": (5 * WIDTH // 8, HEIGHT),  # Bottom 5/8
+    "b02": (6 * WIDTH // 8, HEIGHT),  # Bottom 6/8
+    "b01": (7 * WIDTH // 8, HEIGHT),  # Bottom 7/8
     "br": (WIDTH, HEIGHT),  # Bottom Right
 }
 

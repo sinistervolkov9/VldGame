@@ -1,313 +1,90 @@
+import sys
+import pygame as pg
 from settings import *
-from button_old import ButtonOld
-from screen_old import ScreenOld
-from print_event import PrintEvent
+from button import Button
+from scene import Scene
 
-# screens --------------------------------------------------------------------------------------------------------------
 
-screen_0_main = ScreenOld("default_background.jpg",
-                          0, 0, WIDTH, HEIGHT,
-                          "ГЛАВНАЯ",
-                          None, "white", 50)
+# ----------------------------------------------------------------------------------------------------------------------
 
-screen_pause_menu = ScreenOld("background.jpg",
-                              WIDTH * 0.5 / 2, HEIGHT * 0.2 / 2, WIDTH - WIDTH * 0.5, HEIGHT - HEIGHT * 0.2,
-                              "Меню",
-                              None, "white", 50)
+class SceneMainMenu(Scene):
+    def __init__(self, game):
+        super().__init__(game)
 
-screen_exit = ScreenOld("background.jpg",
-                        WIDTH * 0.2 / 2, HEIGHT * 0.4 / 2, WIDTH - WIDTH * 0.2, HEIGHT - HEIGHT * 0.4,
-                        "ВЫЙТИ?",
-                        None, "white", 50,
-                        visible=False)
+    def new_game(self):
+        super().new_game()
 
-screen_sections = ScreenOld("background.jpg",
-                            0, 0, 100, HEIGHT,
-                            "",
-                            None, "white", 50)
+        self.button_1 = Button(self, 'Кнопка!)', SCREEN_POS['t12'], None, None, None, None, None)
+        self.button_2 = Button(self, 'Кнопка!)', SCREEN_POS['t21'], None, None, None, None, None)
+        self.button_3 = Button(self, 'Кнопо4ка', SCREEN_POS['t33'], None, None, None, None, None)
 
-screen_subsections_to_play = ScreenOld("background.jpg",
-                                       100, 0, 200, HEIGHT,
-                                       "ИГРАТЬ",
-                                       None, "white", 50, visible=False)
+        self.vis = [self.button_1, self.button_2, self.button_3]
+        self.novis = []
 
-screen_subsections_to_collection = ScreenOld("background.jpg",
-                                             100, 0, 200, HEIGHT,
-                                             "КОЛЛЕКЦИЯ",
-                                             None, "white", 50, visible=False)
+    def update(self):
+        super().update()
 
-# buttons --------------------------------------------------------------------------------------------------------------
+        for btn in self.vis:
+            btn.check_hover(pg.mouse.get_pos())
 
-# Кнопка "Профиль"
-# Перехов в окно профиля игрока
-button_00_to_profile = ButtonOld("Профиль", None,
-                              "white", "black", "green",
-                              "b.png", "g.png", "r.png",
-                              "dig_click_03.wav", "mouse_click_04.wav",
-                              20, 20, 60, 60)
+    def draw(self):
+        super().draw()
 
-#
-#
-button_00_to_main_menu = ButtonOld("Главная", None,
-                                "white", "black", "green",
-                                "b.png", "g.png", "r.png",
-                                "dig_click_03.wav", "mouse_click_04.wav",
-                                20, 100, 60, 60)
+        for obj in self.vis:
+            obj.draw()
 
-#
-#
-button_00_to_play = ButtonOld("Играть", None,
-                           "white", "black", "green",
-                           "b.png", "g.png", "r.png",
-                           "dig_click_03.wav", "mouse_click_04.wav",
-                           20, 180, 60, 60)
+    def check_events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                pg.quit()
+                sys.exit()
 
-#
-#
-button_00_to_collection = ButtonOld("Коллекция", None,
-                                 "white", "black", "green",
-                                 "b.png", "g.png", "r.png",
-                                 "dig_click_03.wav", "mouse_click_04.wav",
-                                 20, 260, 60, 60)
+            for i in self.vis:
+                i.handle_event(event)
+                if event.type == pg.USEREVENT and event.button == i:
+                    self.game.switch_scene()
+                    # self.game.call_button_pos()
 
-#
-#
-button_00_to_pause_menu = ButtonOld("Меню", None,
-                                 "white", "black", "green",
-                                 "b.png", "g.png", "r.png",
-                                 "dig_click_03.wav", "mouse_click_04.wav",
-                                 520, 20, 60, 60)
+    def new_method(self):
+        pass
 
-# Кнопка "Вернуться"
-#
-button_01_back = ButtonOld("Вернуться", None,
-                        "white", "black", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        WIDTH / 2 - (200 / 2), 120, 200, 60)
+# ----------------------------------------------------------------------------------------------------------------------
 
-# Кнопка "Настройки"
-# Перехов в окно "Настройки"
-button_01_settings = ButtonOld("Настройки", None,
-                            "white", "black", "green",
-                            "b.png", "g.png", "r.png",
-                            "dig_click_03.wav", "mouse_click_04.wav",
-                            WIDTH / 2 - (200 / 2), 190, 200, 60)
+class Scene2(Scene):
+    def __init__(self, game):
+        super().__init__(game)
 
-# Кнопка "Выход"
-# Выход из программы
-button_02_exit = ButtonOld("Выход", None,
-                        "white", "brown", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        WIDTH / 2 - (200 / 2), 260, 200, 60)
+    def new_game(self):
+        super().new_game()
 
-# Кнопка "Да"
-# Подтверждение выхода
-button_exit_yes = ButtonOld("Да", None,
-                         "white", "black", "green",
-                         "b.png", "g.png", "r.png",
-                         "dig_click_03.wav", "mouse_click_04.wav",
-                         (WIDTH + WIDTH * 0.2 / 2) / 8, 200, 200, 60,
-                         visible=False)
-# Кнопка "Нет"
-# Вернуться назад в меню
-button_exit_no = ButtonOld("Нет", None,
-                        "white", "black", "green",
-                        "b.png", "g.png", "r.png",
-                        "dig_click_03.wav", "mouse_click_04.wav",
-                        (WIDTH + WIDTH * 0.2 / 2) / 2, 200, 200, 60,
-                        visible=False)
+        self.button_1 = Button(self, 'Кн', SCREEN_POS['b12'], None, None, None, None, None)
+        self.button_2 = Button(self, 'Кн', SCREEN_POS['b22'], None, None, None, None, None)
+        self.button_3 = Button(self, 'Кн', SCREEN_POS['b31'], None, None, None, None, None)
 
-# Кампания
-#
-button_game_campaign = ButtonOld("Кампания", None,
-                              "white", "black", "green",
-                              "b.png", "g.png", "r.png",
-                              "dig_click_03.wav", "mouse_click_04.wav",
-                              125, 100, 150, 50,
-                              visible=False)
+        self.vis = [self.button_1, self.button_2, self.button_3]
+        self.novis = []
 
-# Стандартная игра
-#
-button_free_game = ButtonOld("Против компа", None,
-                          "white", "black", "green",
-                          "b.png", "g.png", "r.png",
-                          "dig_click_03.wav", "mouse_click_04.wav",
-                          125, 175, 150, 50,
-                          visible=False)
+    def update(self):
+        super().update()
 
-# Боевка онли
-#
-button_game_combat = ButtonOld("Схватка", None,
-                            "white", "black", "green",
-                            "b.png", "g.png", "r.png",
-                            "dig_click_03.wav", "mouse_click_04.wav",
-                            125, 250, 150, 50,
-                            visible=False)
+        for btn in self.vis:
+            btn.check_hover(pg.mouse.get_pos())
 
-# Карточки
-#
-button_cards = ButtonOld("Карточки", None,
-                      "white", "black", "green",
-                      "b.png", "g.png", "r.png",
-                      "dig_click_03.wav", "mouse_click_04.wav",
-                      125, 100, 150, 50,
-                      visible=False)
+    def draw(self):
+        super().draw()
 
-# Колоды
-#
-button_decks = ButtonOld("Колоды", None,
-                      "white", "black", "green",
-                      "b.png", "g.png", "r.png",
-                      "dig_click_03.wav", "mouse_click_04.wav",
-                      125, 175, 150, 50,
-                      visible=False)
+        for i in self.vis:
+            i.draw()
 
-# Рубашки
-#
-button_shirts = ButtonOld("Рубашки", None,
-                       "white", "black", "green",
-                       "b.png", "g.png", "r.png",
-                       "dig_click_03.wav", "mouse_click_04.wav",
-                       125, 250, 150, 50,
-                       visible=False)
+    def check_events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                pg.quit()
+                sys.exit()
 
-# print_events ---------------------------------------------------------------------------------------------------------
-
-print_event_0 = PrintEvent("В разработке")
-
-# items ----------------------------------------------------------------------------------------------------------------
-
-# item_1 = ScreenItem("r", 0, 0, 20, 20, None, None, None, None)
-
-# MAIN -----------------------------------------------------------------------------------------------------------------
-
-scenes = [
-    {"scene_main_menu":
-        [
-            {"screen": [screen_0_main,
-                        screen_sections, screen_subsections_to_collection, screen_subsections_to_play]},
-            {"buttons":
-                [
-                    {button_00_to_profile:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_00_to_main_menu:
-                        [
-                            {"bring_to_basic": [screen_subsections_to_collection, screen_subsections_to_play,
-                                                button_game_campaign, button_free_game, button_game_combat,
-                                                button_cards, button_decks, button_shirts]}
-                        ]
-                    },
-                    {button_00_to_play:
-                        [
-                            {"bring_to_basic": [screen_subsections_to_collection,
-                                                button_cards, button_decks, button_shirts]},
-                            {"switch_visibility": [screen_subsections_to_play,
-                                                   button_game_campaign, button_free_game, button_game_combat]}
-                        ]
-                    },
-                    {button_00_to_collection:
-                        [
-                            {"bring_to_basic": [screen_subsections_to_play,
-                                                button_game_campaign, button_free_game, button_game_combat]},
-                            {"switch_visibility": [screen_subsections_to_collection,
-                                                   button_cards, button_decks, button_shirts]}
-                        ]
-                    },
-                    {button_00_to_pause_menu:
-                        [
-                            {"change_scene": "scene_pause_menu"}
-                        ]
-                    },
-                    {button_game_campaign:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_free_game:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_game_combat:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_cards:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_decks:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_shirts:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    }
-                ]
-            },
-            {"esc_event":
-                [
-                    {"change_scene": "scene_pause_menu"}
-                ]
-            }
-        ]
-    },
-    {"scene_pause_menu":
-        [
-            {"screen": [screen_pause_menu, screen_exit]},
-            {"buttons":
-                [
-                    {button_01_back:
-                        [
-                            {"change_scene": None}
-                        ]
-                    },
-                    {button_01_settings:
-                        [
-                            {"print_text": print_event_0}
-                        ]
-                    },
-                    {button_02_exit:
-                        [
-                            {"switch_visibility": [screen_exit,
-                                                   button_exit_yes, button_exit_no,
-                                                   button_01_back, button_01_settings, button_02_exit]}
-                        ]
-                    },
-                    {button_exit_yes:
-                        [
-                            {"change_scene": "EXIT"}
-                        ]
-                    },
-                    {button_exit_no:
-                        [
-                            {"bring_to_basic": [screen_exit,
-                                                button_exit_yes, button_exit_no,
-                                                button_01_back, button_01_settings, button_02_exit]}
-                        ]
-                    }
-                ]
-            },
-            {"esc_event":
-                [
-                    {"bring_to_basic": [screen_exit,
-                                        button_exit_yes, button_exit_no,
-                                        button_01_back, button_01_settings, button_02_exit]},
-                    {"change_scene": None}
-                ]
-            }
-        ]
-    }
-]
+            for i in self.vis:
+                i.handle_event(event)
+                if event.type == pg.USEREVENT and event.button == i:
+                    self.game.switch_scene()
 
 # ----------------------------------------------------------------------------------------------------------------------
