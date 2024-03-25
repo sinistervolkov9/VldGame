@@ -6,13 +6,15 @@ class Button:
     def __init__(self,
                  game,
                  text='text',
+                 pos=None,
                  image_basic=None, image_hover=None, image_press=None,
-                 sound_hover=None, sound_click=None,
-                 pos=None
+                 sound_hover=None, sound_click=None
                  ):
         self.game = game
 
         self.text = 'button' if text is None else " ".join(text.split())
+
+        # self.pos = SCREEN_POS["tl"] if pos is None else pos
 
         self.image = 'resources/button/default/button.png' if image_basic is None else image_basic
         self.image_hover = 'resources/button/default/button_hovered.png' if image_hover is None else image_hover
@@ -20,8 +22,6 @@ class Button:
 
         self.sound_hover = 'resources/sounds/default_sound_hover.wav' if sound_hover is None else sound_hover
         self.sound_click = 'resources/sounds/default_sound_click.wav' if sound_click is None else sound_click
-
-        # self.pos = SCREEN_POS["tl"] if pos is None else pos
 
         # ---
 

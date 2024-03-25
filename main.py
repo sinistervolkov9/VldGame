@@ -13,7 +13,7 @@ from markup import Markup
 
 class Game:
     def __init__(self):
-        pg.init()  # Инициализатор pygame
+        pg.init()
         self.screen = pg.display.set_mode(RES)
         # self.screen = pg.display.set_mode(RES, pg.FULLSCREEN)
         self.clock = pg.time.Clock()
@@ -24,9 +24,9 @@ class Game:
 
         self.markup = Markup(self)
         self.screeeeennnn = Screen(self, None, None, None)
-        self.button_1 = Button(self, 'Кнопка!)', None, None, None, None, None, SCREEN_POS['c9'])
-        self.button_2 = Button(self, 'Кнопка 0_0', None, None, None, None, None, SCREEN_POS['c21'])
-        self.button_3 = Button(self, 'Кнопо4ка', None, None, None, None, None, SCREEN_POS['c33'])
+        self.button_1 = Button(self, 'Кнопка!)', SCREEN_POS['c9'], None, None, None, None, None)
+        self.button_2 = Button(self, 'Кнопка 0_0', SCREEN_POS['c21'], None, None, None, None, None)
+        self.button_3 = Button(self, 'Кнопо4ка', SCREEN_POS['c33'], None, None, None, None, None)
 
         self.card_loot_1 = CardLoot(self,
                                     "resources/card_items/image/image.png",
@@ -65,7 +65,7 @@ class Game:
         """
         # self.scene.button_update(self.screen)
         pg.display.flip()
-        self.clock.tick(FPS)  # Чилсо итераций (обновлений основного цикла игры за одну секунду)
+        self.clock.tick(FPS)
         pg.display.set_caption("Vld Game")
 
         self.button_1.check_hover(pg.mouse.get_pos())
