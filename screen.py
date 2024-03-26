@@ -13,6 +13,7 @@ class Screen:
         self.image = 'resources/backgrounds/background.png' if image is None else image
         self.size = RES if size is None else size
         self.pos = SCREEN_POS["tl"] if pos is None else pos
+        self.is_hovered = False
 
         self.load_images()
         self.get_size_pos()
@@ -30,3 +31,9 @@ class Screen:
 
     def draw(self):
         self.game.screen.blit(self.image, self.image_rect.topleft)
+
+    def check_hover(self, mouse_pos):
+        self.is_hovered = self.image_rect.collidepoint(mouse_pos)
+
+    def handle_event(self, event):
+        pass

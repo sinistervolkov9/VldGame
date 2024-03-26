@@ -24,9 +24,9 @@ class Game:
 
         self.markup = Markup(self)
         self.screeeeennnn = Screen(self, None, None, None)
-        self.button_1 = Button(self, 'Кнопка!)', SCREEN_POS['b32'], None, None, None, None, None)
-        self.button_2 = Button(self, 'Кнопка 0_0', SCREEN_POS['t21'], None, None, None, None, None)
-        self.button_3 = Button(self, 'Кнопо4ка', SCREEN_POS['b33'], None, None, None, None, None)
+        self.button_1 = Button(self, 'Кнопка!)', SCREEN_POS['tl11'], None, None, None, None, None)
+        self.button_2 = Button(self, 'Кнопка 0_0', SCREEN_POS['tr21'], None, None, None, None, None)
+        self.button_3 = Button(self, 'Кнопо4ка', SCREEN_POS['br13'], None, None, None, None, None)
 
         self.card_loot_1 = CardLoot(self,
                                     "resources/card_items/image/image.png",

@@ -1,8 +1,9 @@
-import sys
 import pygame as pg
-from settings import *
-from button import Button
+from settings import SCREEN_POS
 from scene import Scene
+from button import Button
+from screen import Screen
+from print_event import PrintEvent
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -11,80 +12,96 @@ class SceneMainMenu(Scene):
     def __init__(self, game):
         super().__init__(game)
 
-    def new_game(self):
-        super().new_game()
+    def declare_content(self):
+        super().declare_content()
 
-        self.button_1 = Button(self, 'Кнопка!)', SCREEN_POS['t12'], None, None, None, None, None)
-        self.button_2 = Button(self, 'Кнопка!)', SCREEN_POS['t21'], None, None, None, None, None)
-        self.button_3 = Button(self, 'Кнопо4ка', SCREEN_POS['t33'], None, None, None, None, None)
+        self.screen_main = Screen(self, None, None, None)
+        self.button_1 = Button(self, 'Кнопка 1', SCREEN_POS['tc3'], None, None, None, None, None)
+        self.button_2 = Button(self, 'Кнопка 2', SCREEN_POS['bc3'], None, None, None, None, None)
+        self.button_3 = Button(self, 'Сменить сцену', SCREEN_POS['bc1'], None, None, None, None, None)
+        self.print_event_1 = PrintEvent("Кнопка 1")
+        self.print_event_2 = PrintEvent("Кнопка 2")
 
-        self.vis = [self.button_1, self.button_2, self.button_3]
-        self.novis = []
+        # ---
+
+        self.scene_content = [
+            {'screens': [
+                self.screen_main
+            ]},
+            {'buttons': [
+                {self.button_1: [
+                    {'print_event': self.print_event_1},
+                ]},
+                {self.button_2: [
+                    {'print_event': self.print_event_2},
+                ]},
+                {self.button_3: [
+                    {'switch_scene': 'scene_2'},
+                ]}
+            ]}
+        ]
+
+        self.visible_content = [self.screen_main, self.button_1, self.button_2, self.button_3]
+        self.invisible_content = []
+
+    def content_unpacking(self):
+        super().content_unpacking()
+
+        pass
 
     def update(self):
         super().update()
 
-        for btn in self.vis:
+        for btn in self.visible_content:
             btn.check_hover(pg.mouse.get_pos())
 
     def draw(self):
         super().draw()
 
-        for obj in self.vis:
+        for obj in self.visible_content:
             obj.draw()
-
-    def check_events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                pg.quit()
-                sys.exit()
-
-            for i in self.vis:
-                i.handle_event(event)
-                if event.type == pg.USEREVENT and event.button == i:
-                    self.game.switch_scene()
-                    # self.game.call_button_pos()
 
     def new_method(self):
         pass
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 
-class Scene2(Scene):
+class SceneNext(Scene):
     def __init__(self, game):
         super().__init__(game)
 
-    def new_game(self):
-        super().new_game()
+    def declare_content(self):
+        super().declare_content()
 
-        self.button_1 = Button(self, 'Кн', SCREEN_POS['b12'], None, None, None, None, None)
-        self.button_2 = Button(self, 'Кн', SCREEN_POS['b22'], None, None, None, None, None)
-        self.button_3 = Button(self, 'Кн', SCREEN_POS['b31'], None, None, None, None, None)
+        self.button_21 = Button(self, 'Кн', SCREEN_POS['tc1'], None, None, None, None, None)
 
-        self.vis = [self.button_1, self.button_2, self.button_3]
-        self.novis = []
+        # ---
+
+        self.scene_content = [
+            {'screens': [
+                None
+            ]},
+            {'buttons': [
+                {self.button_21: [
+                    {'switch_scene': 'scene_1'},
+                ]}
+            ]}
+        ]
+        self.visible_content = [self.button_21]
+        self.invisible_content = []
 
     def update(self):
         super().update()
 
-        for btn in self.vis:
+        for btn in self.visible_content:
             btn.check_hover(pg.mouse.get_pos())
 
     def draw(self):
         super().draw()
 
-        for i in self.vis:
-            i.draw()
+        for obj in self.visible_content:
+            obj.draw()
 
-    def check_events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                pg.quit()
-                sys.exit()
-
-            for i in self.vis:
-                i.handle_event(event)
-                if event.type == pg.USEREVENT and event.button == i:
-                    self.game.switch_scene()
 
 # ----------------------------------------------------------------------------------------------------------------------
