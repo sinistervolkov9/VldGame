@@ -1,5 +1,5 @@
 from settings import *
-from button_old import ButtonOld
+from old.button_old import ButtonOld
 from screen_old import ScreenOld
 from print_event import PrintEvent
 

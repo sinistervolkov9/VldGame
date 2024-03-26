@@ -5,14 +5,16 @@ from settings import RES, SCREEN_POS
 class Screen:
     def __init__(self,
                  game,
+                 pos=None, size=None,
                  image=None,
-                 size=None, pos=None
                  ):
         self.game = game
 
-        self.image = 'resources/backgrounds/background.png' if image is None else image
-        self.size = RES if size is None else size
         self.pos = SCREEN_POS["tl"] if pos is None else pos
+        self.size = RES if size is None else size
+
+        self.image = 'resources/backgrounds/background.png' if image is None else image
+
         self.is_hovered = False
 
         self.load_images()

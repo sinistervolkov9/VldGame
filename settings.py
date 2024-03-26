@@ -77,9 +77,9 @@ SCREEN_POS = {
     "br2": (WIDTH, 6 * HEIGHT // 8),  # Right 11/8
 
     "bl1": (0, 7 * HEIGHT // 8),  # Left 7/8
-    "bl13": (WIDTH // 8, 7 * HEIGHT // 8),  # Center 38/8
+    "bl11": (WIDTH // 8, 7 * HEIGHT // 8),  # Center 38/8
     "bl12": (2 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 39/8
-    "bl11": (3 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 40/8
+    "bl13": (3 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 40/8
     "bc1": (4 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 41/8
     "br13": (5 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 42/8
     "br12": (6 * WIDTH // 8, 7 * HEIGHT // 8),  # Center 43/8
