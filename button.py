@@ -8,7 +8,7 @@ class Button:
                  text='text',
                  pos=None,
                  image_basic=None, image_hover=None, image_press=None,
-                 sound_hover=None, sound_click=None
+                 sound_hover=True, sound_click=True
                  ):
         self.game = game
 
@@ -20,8 +20,22 @@ class Button:
         self.image_hover = 'resources/button/default/button_hovered.png' if image_hover is None else image_hover
         self.image_press = 'resources/button/default/button_pressed.png' if image_press is None else image_press
 
-        self.sound_hover = 'resources/sounds/default_sound_hover.wav' if sound_hover is None else sound_hover
-        self.sound_click = 'resources/sounds/default_sound_click.wav' if sound_click is None else sound_click
+        # self.sound_hover = 'resources/sounds/default_sound_hover.wav' if sound_hover is None else sound_hover
+        # self.sound_click = 'resources/sounds/default_sound_click.wav' if sound_click is None else sound_click
+
+        if sound_hover is True:
+            self.sound_hover = 'resources/sounds/default_sound_hover.wav'
+        elif sound_hover is False:
+            self.sound_hover = None
+        else:
+            self.sound_hover = sound_hover
+
+        if sound_click is True:
+            self.sound_click = 'resources/sounds/default_sound_click.wav'
+        elif sound_click is False:
+            self.sound_click = None
+        else:
+            self.sound_click = sound_click
 
         # ---
 
@@ -30,6 +44,7 @@ class Button:
         self.h = BUTTON_HEIGHT  # Высота
         self.is_hovered = False
         self.is_press = False
+        self.over = False
 
         if pos is None:
             self.pos = self.x, self.y = SCREEN_POS["tl"][0] - self.w * self.scale / 2, SCREEN_POS["tl"][1] - self.h * self.scale / 2
@@ -49,8 +64,10 @@ class Button:
         self.image_press = pg.image.load(self.image_press)
 
     def load_sounds(self):
-        self.sound_hover = pg.mixer.Sound(self.sound_hover)
-        self.sound_click = pg.mixer.Sound(self.sound_click)
+        if self.sound_hover:
+            self.sound_hover = pg.mixer.Sound(self.sound_hover)
+        if self.sound_click:
+            self.sound_click = pg.mixer.Sound(self.sound_click)
 
     def get_size_pos(self):
         self.size_button = (self.w * self.scale, self.h * self.scale)
