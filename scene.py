@@ -14,6 +14,7 @@ class Scene:
 
         self.scene_content = [{'screens': []}, {'buttons': [{'': []}]}]
         self.all_scene_objects = []
+        # self.scene_soundtrack = None
 
         self.current_screen = None
         self.visible_content = []
@@ -31,6 +32,7 @@ class Scene:
         self.grid = Markup(self)
 
         self.scene_content = [{'screens': []}, {'buttons': [{'': []}]}]
+        # self.scene_soundtrack = None
         self.current_screen = None
         self.visible_content = []
         self.active_content = []
@@ -129,6 +131,9 @@ class Scene:
         if action_name == 'change_screen_to':
             self.change_screen_to(action_object)
 
+        if action_name == 'open_window':
+            self.open_window(action_object)
+
     # ---
 
     def print_event(self, action_object):
@@ -202,7 +207,7 @@ class Scene:
                 print(f'self.active_content.append({obj})')
 
     def change_screen_to(self, action_object, activity_too=True):  # NEED RENAME
-        print(f'OLD current_screen - {self.current_screen}')
+        print(f'current_screen - {self.current_screen}')
         if self.current_screen != action_object:
             if self.current_screen in self.visible_content:
                 self.visible_content.remove(self.current_screen)
@@ -221,11 +226,24 @@ class Scene:
                     self.active_content.append(self.current_screen)
                     print(f'self.active_content.append({self.current_screen})')
                     
-            print(f'current_screen - {self.current_screen}')
+            print(f'NEW current_screen - {self.current_screen}')
+
+    def open_window(self, action_object, activity_too=True):
+        for obj in action_object:
+            self.visible_content.append(obj)
+            self.active_content.append(obj)
+
+        for obj in self.all_scene_objects:
+            if obj not in action_object:
+                if obj in self.active_content:
+                    self.active_content.remove(obj)
 
     # ---
 
     # --- /// ---
+
+    def play_soundtrack(self):
+        pass
 
     def check_events(self):
         for event in pg.event.get():
