@@ -21,6 +21,7 @@ class Game:
         for scene in self.game_scenes:
             for scene_name, scene_object in scene.items():
                 if new_scene == scene_name:
+                    self.current_scene.stop_soundtrack()
                     self.current_scene = scene_object
 
     def run_game(self):

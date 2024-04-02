@@ -14,7 +14,8 @@ class SceneMainMenu(Scene):
     def declare_content(self):
         super().declare_content()
 
-        # self.scene_soundtrack = None
+        # self.scene_soundtrack = 'resources/sounds/background.wav'
+        self.scene_soundtrack = None
 
         self.screen_main = Screen(self, None, None, None)
         self.screen_2 = Screen(self, None, None, 'resources/backgrounds/background_2.png')
@@ -114,13 +115,17 @@ class SceneNext(Scene):
     def declare_content(self):
         super().declare_content()
 
+        # self.scene_soundtrack = 'resources/sounds/MedievaLoop (drums).wav'
+        self.scene_soundtrack = None
+
+        self.screen_2 = Screen(self, None, None, 'resources/backgrounds/background_2.png')
         self.button_21 = Button(self, 'back', SCREEN_POS['c'], None, None, None, True, True)
 
         # ---
 
         self.scene_content = [
             {'screens': [
-                None
+                self.screen_2
             ]},
             {'buttons': [
                 {self.button_21: [
@@ -128,8 +133,8 @@ class SceneNext(Scene):
                 ]}
             ]}
         ]
-        self.visible_content = [self.button_21]
+        self.visible_content = [self.screen_2, self.button_21]
         self.invisible_content = []
-        self.active_content = [self.button_21]
+        self.active_content = [self.screen_2, self.button_21]
 
 # ----------------------------------------------------------------------------------------------------------------------

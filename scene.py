@@ -14,7 +14,8 @@ class Scene:
 
         self.scene_content = [{'screens': []}, {'buttons': [{'': []}]}]
         self.all_scene_objects = []
-        # self.scene_soundtrack = None
+        self.scene_soundtrack = None
+        self.soundtrack_playing = False
 
         self.current_screen = None
         self.visible_content = []
@@ -32,7 +33,8 @@ class Scene:
         self.grid = Markup(self)
 
         self.scene_content = [{'screens': []}, {'buttons': [{'': []}]}]
-        # self.scene_soundtrack = None
+        self.scene_soundtrack = None
+        self.soundtrack_playing = False
         self.current_screen = None
         self.visible_content = []
         self.active_content = []
@@ -242,8 +244,31 @@ class Scene:
 
     # --- /// ---
 
-    def play_soundtrack(self):
-        pass
+    # --- sound ---
+
+    def play_soundtrack(self):  # 2
+        if self.scene_soundtrack and self.soundtrack_playing is False:  # Трек есть и он НЕ играет?
+            # print(f'2. Трек {self.scene_soundtrack} есть и он НЕ играет')  # Трек есть и он НЕ играет
+            pg.mixer.music.load(self.scene_soundtrack)
+            pg.mixer.music.play(-1)
+            self.soundtrack_playing = True
+            # print(f'3. Теперь трек {self.scene_soundtrack} играет')
+        # else:
+        #     print(f'5. Либо нет трека {self.scene_soundtrack}, либо он уже играет ')  # Либо нет трека, либо он уже играет
+
+    def check_soundtrack_playing(self):  # 1
+        if pg.mixer.music.get_busy() is False:  # Трек не играет?
+            # print(f'1. Трек {self.scene_soundtrack} не играет')
+            self.soundtrack_playing = False  # Трек не играет
+        # else:
+        #     print(f'4. Трек {self.scene_soundtrack} играет')  # Трек играет
+
+    def stop_soundtrack(self):
+        pg.mixer.music.stop()
+        self.soundtrack_playing = False  # Теперь трек не играет
+        # print(f'6. Теперь трек {self.scene_soundtrack} не играет')
+
+    # --- sound ---
 
     def check_events(self):
         for event in pg.event.get():
@@ -270,6 +295,8 @@ class Scene:
             obj.draw()
 
     def run(self):
+        self.check_soundtrack_playing()
+        self.play_soundtrack()
         self.check_events()
         self.update()
         self.draw()
