@@ -25,14 +25,14 @@ class Button:
 
         if sound_hover is True:
             self.sound_hover = 'resources/sounds/default_sound_hover.wav'
-        elif sound_hover is False:
+        elif sound_hover is False or sound_hover is None:
             self.sound_hover = None
         else:
             self.sound_hover = sound_hover
 
         if sound_click is True:
             self.sound_click = 'resources/sounds/default_sound_click.wav'
-        elif sound_click is False:
+        elif sound_click is False or sound_click is None:
             self.sound_click = None
         else:
             self.sound_click = sound_click

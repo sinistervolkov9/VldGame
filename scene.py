@@ -12,16 +12,21 @@ class Scene:
         # self.screen = pg.display.set_mode(RES, pg.FULLSCREEN)
         self.clock = pg.time.Clock()
 
+        self.grid = None
+
         self.scene_content = [{'screens': []}, {'buttons': [{'': []}]}]
         self.all_scene_objects = []
+
         self.scene_soundtrack = None
-        self.soundtrack_playing = False
-
+        # self.soundtrack_playing = False
         self.current_screen = None
-        self.visible_content = []
-        self.active_content = []
-        self.invisible_content = []
 
+        self.visible_content = []
+        self.invisible_content = []
+        self.active_content = []
+        self.inactive_content = []
+
+        self.scene_sounds = []
         self.scene_screens = []
         self.scene_buttons_and_actions = []
         self.scene_buttons = []
@@ -32,15 +37,20 @@ class Scene:
     def declare_content(self):
         self.grid = Markup(self)
 
-        self.scene_content = [{'screens': []}, {'buttons': [{'': []}]}]
+        self.scene_content = [{'sounds': []}, {'screens': []}, {'buttons': [{'': []}]}]
+        self.all_scene_objects = []
+
         self.scene_soundtrack = None
-        self.soundtrack_playing = False
+        # self.soundtrack_playing = False
         self.current_screen = None
+
         self.visible_content = []
-        self.active_content = []
         self.invisible_content = []
+        self.active_content = []
+        self.inactive_content = []
 
     def content_unpacking(self):
+        self.scene_sounds = []  # ?
         self.scene_screens = []  # ?
         self.scene_buttons_and_actions = []  # ?
         self.scene_buttons = []  # ?
@@ -48,6 +58,11 @@ class Scene:
         for content_group in self.scene_content:
             # {'screens': []}, {'buttons': [{'': []}]}
             for group_name, group_objects in content_group.items():
+                # {'sounds': []}
+                if group_name == 'sounds':
+                    # {'sounds': []}
+                    self.scene_sounds = group_objects
+                    # []
                 # {'screens': []}
                 if group_name == 'screens':
                     # {'screens': []}
@@ -135,6 +150,9 @@ class Scene:
 
         if action_name == 'open_window':
             self.open_window(action_object)
+
+        if action_name == 'play_sound':
+            self.play_sound(action_object)
 
     # ---
 
@@ -239,6 +257,9 @@ class Scene:
             if obj not in action_object:
                 if obj in self.active_content:
                     self.active_content.remove(obj)
+
+    def play_sound(self, action_object):
+        action_object.play_soundtrack()
 
     # ---
 

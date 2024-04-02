@@ -2,6 +2,7 @@ from settings import SCREEN_POS
 from scene import Scene
 from button import Button
 from screen import Screen, ScreenWindow
+from soundtrack import Soundtrack
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -14,8 +15,9 @@ class SceneMainMenu(Scene):
     def declare_content(self):
         super().declare_content()
 
-        # self.scene_soundtrack = 'resources/sounds/background.wav'
-        self.scene_soundtrack = None
+        self.scene_soundtrack_1 = 'resources/sounds/background.wav'
+
+        self.free_sound = Soundtrack(self, True)
 
         self.screen_main = Screen(self, None, None, None)
         self.screen_2 = Screen(self, None, None, 'resources/backgrounds/background_2.png')
@@ -34,6 +36,7 @@ class SceneMainMenu(Scene):
         self.button_11 = Button(self, 'change_scr_2', SCREEN_POS['br33'])
         self.button_12 = Button(self, 'open_window', SCREEN_POS['br13'])
         self.button_13 = Button(self, 'switch_screen', SCREEN_POS['tc3'])
+        self.button_14 = Button(self, 'play_sound', SCREEN_POS['tr11'])
 
         self.print_event_1 = "Кнопка 1"
         self.print_event_2 = "click_count"
@@ -41,6 +44,9 @@ class SceneMainMenu(Scene):
         # ---
 
         self.scene_content = [
+            {'sounds': [
+                self.scene_soundtrack_1,
+            ]},
             {'screens': [
                 self.screen_main, self.screen_2
             ]},
@@ -81,19 +87,25 @@ class SceneMainMenu(Scene):
                 {self.button_12: [
                     {'open_window': [self.screen_window, self.button_13]},
                 ]},
+                {self.button_14: [
+                    {'play_sound': self.free_sound},
+                ]},
             ]}
         ]
 
         # ---
 
+        self.scene_soundtrack = self.scene_soundtrack_1
         self.current_screen = self.screen_main
+
         self.visible_content = [self.screen_main, self.button_1, self.button_2, self.button_3, self.button_5,
                                 self.button_6, self.button_7, self.button_9, self.button_10, self.button_11,
-                                self.button_12]
+                                self.button_12, self.button_14]
         self.invisible_content = []
         self.active_content = [self.screen_main, self.button_1, self.button_2, self.button_3, self.button_5,
                                self.button_6, self.button_7, self.button_9, self.button_10, self.button_11,
-                               self.button_12]
+                               self.button_12, self.button_14]
+        self.inactive_content = []
 
     def userevent_applying(self, action_name, action_object):
         super().userevent_applying(action_name, action_object)
@@ -115,8 +127,7 @@ class SceneNext(Scene):
     def declare_content(self):
         super().declare_content()
 
-        # self.scene_soundtrack = 'resources/sounds/MedievaLoop (drums).wav'
-        self.scene_soundtrack = None
+        self.scene_sound_2 = 'resources/sounds/MedievaLoop (drums).wav'
 
         self.screen_2 = Screen(self, None, None, 'resources/backgrounds/background_2.png')
         self.button_21 = Button(self, 'back', SCREEN_POS['c'], None, None, None, True, True)
@@ -124,6 +135,9 @@ class SceneNext(Scene):
         # ---
 
         self.scene_content = [
+            {'sounds': [
+                self.scene_sound_2,
+            ]},
             {'screens': [
                 self.screen_2
             ]},
@@ -133,8 +147,13 @@ class SceneNext(Scene):
                 ]}
             ]}
         ]
+
+        self.scene_soundtrack = self.scene_sound_2
+        self.current_screen = self.screen_2
+
         self.visible_content = [self.screen_2, self.button_21]
         self.invisible_content = []
         self.active_content = [self.screen_2, self.button_21]
+        self.inactive_content = []
 
 # ----------------------------------------------------------------------------------------------------------------------
