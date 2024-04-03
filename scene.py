@@ -18,7 +18,6 @@ class Scene:
         self.all_scene_objects = []
 
         self.scene_soundtrack = None
-        # self.soundtrack_playing = False
         self.current_screen = None
 
         self.visible_content = []
@@ -32,7 +31,7 @@ class Scene:
         self.scene_buttons = []
 
         self.declare_content()
-        self.content_unpacking()
+        self.content_unpacking(self.scene_content)
 
     def declare_content(self):
         self.grid = Markup(self)
@@ -41,7 +40,6 @@ class Scene:
         self.all_scene_objects = []
 
         self.scene_soundtrack = None
-        # self.soundtrack_playing = False
         self.current_screen = None
 
         self.visible_content = []
@@ -49,13 +47,15 @@ class Scene:
         self.active_content = []
         self.inactive_content = []
 
-    def content_unpacking(self):
-        self.scene_sounds = []  # ?
-        self.scene_screens = []  # ?
-        self.scene_buttons_and_actions = []  # ?
-        self.scene_buttons = []  # ?
+        self.screen_window = None
 
-        for content_group in self.scene_content:
+    def content_unpacking(self, content):
+        # self.scene_sounds = []  # ?
+        # self.scene_screens = []  # ?
+        # self.scene_buttons_and_actions = []  # ?
+        # self.scene_buttons = []  # ?
+
+        for content_group in content:
             # {'screens': []}, {'buttons': [{'': []}]}
             for group_name, group_objects in content_group.items():
                 # {'sounds': []}
@@ -80,8 +80,6 @@ class Scene:
                 self.scene_buttons.append(button_name)
                 # ''
 
-        # ---
-
         for obj in self.scene_screens:
             self.all_scene_objects.append(obj)
         for obj in self.scene_buttons:
@@ -91,12 +89,19 @@ class Scene:
             if obj not in self.visible_content:
                 self.invisible_content.append(obj)
 
-        # print(f'current_screen - {self.current_screen}')
-        # print(f"\nscene_screens - {self.scene_screens}")
-        # print(f"scene_buttons - {self.scene_buttons}")
-        # print(f"all_scene_objects - {self.all_scene_objects}")
-        # print(f"visible_content - {self.visible_content}")
-        # print(f"invisible_content - {self.invisible_content}")
+        for obj in self.all_scene_objects:
+            if obj not in self.active_content:
+                self.inactive_content.append(obj)
+
+        print(f'\nscene_soundtrack - {self.scene_soundtrack}')
+        print(f'current_screen - {self.current_screen}')
+        print(f"scene_screens - {self.scene_screens}")
+        print(f"scene_buttons - {self.scene_buttons}")
+        print(f"all_scene_objects - {self.all_scene_objects}")
+        print(f"visible_content - {self.visible_content}")
+        print(f"invisible_content - {self.invisible_content}")
+        print(f"active_content - {self.active_content}")
+        print(f"inactive_content - {self.inactive_content}")
 
     # --- /// ---
 
@@ -145,8 +150,8 @@ class Scene:
         if action_name == 'switch_activity':
             self.switch_activity(action_object)
 
-        if action_name == 'change_screen_to':
-            self.change_screen_to(action_object)
+        # if action_name == 'change_screen_to':
+        #     self.change_screen_to(action_object)
 
         if action_name == 'open_window':
             self.open_window(action_object)
@@ -160,110 +165,135 @@ class Scene:
         print(str(action_object))
 
     def switch_visibility(self, action_object, activity_too=True):
+        print(f'\naction_object - {action_object}')
         for obj in action_object:
             if obj in self.visible_content:
                 self.visible_content.remove(obj)
-                print(f'self.visible_content.remove({obj})')
+                print(f'visible_content.remove({obj})')
                 if activity_too is True:
                     if obj in self.active_content:
                         self.active_content.remove(obj)
-                        print(f'self.active_content.remove({obj})')
+                        print(f'active_content.remove({obj})')
+                        self.inactive_content.append(obj)
+                        print(f'inactive_content.append({obj})')
                 if obj not in self.invisible_content:
                     self.invisible_content.append(obj)
-                    print(f'self.invisible_content.append({obj})')
+                    print(f'invisible_content.append({obj})')
             elif obj in self.invisible_content:
                 self.invisible_content.remove(obj)
-                print(f'self.invisible_content.remove({obj})')
+                print(f'invisible_content.remove({obj})')
                 if activity_too is True:
                     if obj not in self.active_content:
+                        self.inactive_content.remove(obj)
+                        print(f'inactive_content.remove({obj})')
                         self.active_content.append(obj)
-                        print(f'self.active_content.append({obj})')
+                        print(f'active_content.append({obj})')
                 if obj not in self.visible_content:
                     self.visible_content.append(obj)
-                    print(f'self.visible_content.append({obj})')
+                    print(f'visible_content.append({obj})')
 
-        print(f'self.visible_content - {self.visible_content}')
-        print(f'self.invisible_content - {self.invisible_content}')
+        print(f'\nvisible_content - {self.visible_content}')
+        print(f'invisible_content - {self.invisible_content}')
+        print(f"active_content - {self.active_content}")
+        print(f"inactive_content - {self.inactive_content}")
 
     def make_visible(self, action_object, activity_too=True):
+        print(f'\naction_object - {action_object}')
         for obj in action_object:
             if obj in self.invisible_content:
                 self.invisible_content.remove(obj)
-                print(f'self.invisible_content.remove({obj})')
+                print(f'invisible_content.remove({obj})')
                 if activity_too is True:
                     if obj not in self.active_content:
+                        self.inactive_content.remove(obj)
+                        print(f'inactive_content.remove({obj})')
                         self.active_content.append(obj)
-                        print(f'self.active_content.append({obj})')
+                        print(f'active_content.append({obj})')
                 if obj not in self.visible_content:
                     self.visible_content.append(obj)
-                    print(f'self.visible_content.append({obj})')
+                    print(f'visible_content.append({obj})')
 
-        print(f'self.visible_content - {self.visible_content}')
-        print(f'self.invisible_content - {self.invisible_content}')
+        print(f'\nvisible_content - {self.visible_content}')
+        print(f'invisible_content - {self.invisible_content}')
+        print(f"active_content - {self.active_content}")
+        print(f"inactive_content - {self.inactive_content}")
 
     def make_invisible(self, action_object, activity_too=True):
+        print(f'\naction_object - {action_object}')
         for obj in action_object:
             if obj in self.visible_content:
                 self.visible_content.remove(obj)
-                print(f'self.visible_content.remove({obj})')
+                print(f'visible_content.remove({obj})')
                 if activity_too is True:
                     if obj in self.active_content:
                         self.active_content.remove(obj)
-                        print(f'self.active_content.remove({obj})')
+                        print(f'active_content.remove({obj})')
+                        self.inactive_content.append(obj)
+                        print(f'inactive_content.append({obj})')
                 if obj not in self.invisible_content:
                     self.invisible_content.append(obj)
-                    print(f'self.invisible_content.append({obj})')
+                    print(f'invisible_content.append({obj})')
 
-        print(f'self.visible_content - {self.visible_content}')
-        print(f'self.invisible_content - {self.invisible_content}')
+        print(f'\nvisible_content - {self.visible_content}')
+        print(f'invisible_content - {self.invisible_content}')
+        print(f"active_content - {self.active_content}")
+        print(f"inactive_content - {self.inactive_content}")
 
     def switch_activity(self, action_object):
+        print(f'\naction_object - {action_object}')
         for obj in action_object:
             if obj in self.active_content:
                 self.active_content.remove(obj)
-                print(f'self.active_content.remove({obj})')
-            elif obj in self.all_scene_objects and obj not in self.active_content:
-                self.active_content.append(obj)
-                print(f'self.active_content.append({obj})')
+                print(f'active_content.remove({obj})')
+                if obj not in self.inactive_content:
+                    self.inactive_content.append(obj)
+                    print(f'inactive_content.append({obj})')
+            elif obj in self.inactive_content:
+                self.inactive_content.remove(obj)
+                print(f'inactive_content.remove({obj})')
+                if obj not in self.active_content:
+                    self.active_content.append(obj)
+                    print(f'active_content.append({obj})')
 
-    def change_screen_to(self, action_object, activity_too=True):  # NEED RENAME
-        print(f'current_screen - {self.current_screen}')
-        if self.current_screen != action_object:
-            if self.current_screen in self.visible_content:
-                self.visible_content.remove(self.current_screen)
-                print(f'self.visible_content.remove({self.current_screen})')
-                self.invisible_content.append(self.current_screen)
-                print(f'self.invisible_content.append({self.current_screen})')
-                if activity_too is True:
-                    if self.current_screen in self.active_content:
-                        self.active_content.remove(self.current_screen)
-                        print(f'self.active_content.remove({self.current_screen})')
+        print(f"active_content - {self.active_content}")
+        print(f"inactive_content - {self.inactive_content}")
 
-            self.visible_content.insert(0, action_object)  # !
-            self.current_screen = action_object
-            if activity_too is True:
-                if self.current_screen not in self.active_content:
-                    self.active_content.append(self.current_screen)
-                    print(f'self.active_content.append({self.current_screen})')
-                    
-            print(f'NEW current_screen - {self.current_screen}')
+    # def change_screen_to(self, action_object, activity_too=True):  # Зачем?
+    #     # print(f'current_screen - {self.current_screen}')
+    #     if self.current_screen != action_object:
+    #         if self.current_screen in self.visible_content:
+    #             self.visible_content.remove(self.current_screen)
+    #             # print(f'self.visible_content.remove({self.current_screen})')
+    #             self.invisible_content.append(self.current_screen)
+    #             # print(f'self.invisible_content.append({self.current_screen})')
+    #             if activity_too is True:
+    #                 if self.current_screen in self.active_content:
+    #                     self.active_content.remove(self.current_screen)
+    #                     # print(f'self.active_content.remove({self.current_screen})')
+    #
+    #         self.visible_content.insert(0, action_object)  # !
+    #         self.current_screen = action_object
+    #         if activity_too is True:
+    #             if self.current_screen not in self.active_content:
+    #                 self.active_content.append(self.current_screen)
+    #                 # print(f'self.active_content.append({self.current_screen})')
+    #
+    #         # print(f'NEW current_screen - {self.current_screen}')
 
-    def open_window(self, action_object, activity_too=True):
-        for obj in action_object:
-            self.visible_content.append(obj)
-            self.active_content.append(obj)
-
-        for obj in self.all_scene_objects:
-            if obj not in action_object:
-                if obj in self.active_content:
-                    self.active_content.remove(obj)
+    # def open_window(self, action_object, activity_too=True):
+    #     for obj in action_object:
+    #         self.visible_content.append(obj)
+    #         self.active_content.append(obj)
+    #
+    #     for obj in self.all_scene_objects:
+    #         if obj not in action_object:
+    #             if obj in self.active_content:
+    #                 self.active_content.remove(obj)
 
     def play_sound(self, action_object):
         action_object.play_soundtrack()
 
     # ---
-
-    # --- /// ---
 
     # --- sound ---
 
@@ -291,6 +321,12 @@ class Scene:
 
     # --- sound ---
 
+    def check_window_close(self, event):
+        # if event.type == pg.MOUSEBUTTONDOWN:
+        #     if not self.screen_window.image_rect.collidepoint(event.pos):
+        #         self.visible_content.remove(self.screen_window)
+        pass
+
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
@@ -299,6 +335,7 @@ class Scene:
 
             self.content_handle_event(event)
             self.check_userevent(event)
+            self.check_window_close(event)
 
     def update(self):
         pg.display.flip()

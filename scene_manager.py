@@ -32,11 +32,10 @@ class SceneMainMenu(Scene):
         self.button_7 = Button(self, 'click_count', SCREEN_POS['bl33'])
         self.button_8 = Button(self, 'set_count', SCREEN_POS['bl13'])
         self.button_9 = Button(self, 'switch_activity', SCREEN_POS['tr13'])
-        self.button_10 = Button(self, 'change_scr_1', SCREEN_POS['tr33'])
-        self.button_11 = Button(self, 'change_scr_2', SCREEN_POS['br33'])
+        self.button_10 = Button(self, 'play_sound', SCREEN_POS['tr33'])
+        self.button_11 = Button(self, '! NONE !', SCREEN_POS['br33'])
         self.button_12 = Button(self, 'open_window', SCREEN_POS['br13'])
         self.button_13 = Button(self, 'switch_screen', SCREEN_POS['tc3'])
-        self.button_14 = Button(self, 'play_sound', SCREEN_POS['tr11'])
 
         self.print_event_1 = "Кнопка 1"
         self.print_event_2 = "click_count"
@@ -79,32 +78,40 @@ class SceneMainMenu(Scene):
                     {'switch_activity': [self.button_10]},
                 ]},
                 {self.button_10: [
-                    {'change_screen_to': self.screen_main},
-                ]},
-                {self.button_11: [
-                    {'change_screen_to': self.screen_2},
-                ]},
-                {self.button_12: [
-                    {'open_window': [self.screen_window, self.button_13]},
-                ]},
-                {self.button_14: [
                     {'play_sound': self.free_sound},
                 ]},
+                {self.button_11: [
+                    {'NONE': self.screen_2},
+                ]},
+                {self.button_12: [
+                    # {'open_window': [self.screen_window]},
+                    # {'make_visible': [self.button_13]},
+                    # {'open_window': self.window_content_menu},
+                ]},
+                # {self.button_13: [
+                #     {'print_event': self.print_event_1},
+                # ]},
             ]}
+        ]
+
+        # -
+
+        self.window_content_menu = [
+            {'screens': [self.screen_window]}, {'buttons': [{self.button_13: [{'print_event': self.print_event_1}]}]}
         ]
 
         # ---
 
-        self.scene_soundtrack = self.scene_soundtrack_1
+        # self.scene_soundtrack = self.scene_soundtrack_1
         self.current_screen = self.screen_main
 
         self.visible_content = [self.screen_main, self.button_1, self.button_2, self.button_3, self.button_5,
                                 self.button_6, self.button_7, self.button_9, self.button_10, self.button_11,
-                                self.button_12, self.button_14]
+                                self.button_12]
         self.invisible_content = []
         self.active_content = [self.screen_main, self.button_1, self.button_2, self.button_3, self.button_5,
                                self.button_6, self.button_7, self.button_9, self.button_10, self.button_11,
-                               self.button_12, self.button_14]
+                               self.button_12]
         self.inactive_content = []
 
     def userevent_applying(self, action_name, action_object):
@@ -148,7 +155,7 @@ class SceneNext(Scene):
             ]}
         ]
 
-        self.scene_soundtrack = self.scene_sound_2
+        # self.scene_soundtrack = self.scene_sound_2
         self.current_screen = self.screen_2
 
         self.visible_content = [self.screen_2, self.button_21]
