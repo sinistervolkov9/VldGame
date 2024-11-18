@@ -22,6 +22,7 @@ class SceneMainMenu(Scene):
         self.screen_main = Screen(self, None, None, None)
         self.screen_2 = Screen(self, None, None, 'resources/backgrounds/background_2.png')
         self.screen_window = ScreenWindow(self, None, None, 'resources/backgrounds/background_2.png')
+        self.screen_window_2 = ScreenWindow(self, SCREEN_POS['tl32'], None, 'resources/backgrounds/background.png')
 
         self.button_1 = Button(self, 'print_event', SCREEN_POS['tl11'])
         self.button_2 = Button(self, 'switch_scene', SCREEN_POS['tl31'])
@@ -33,12 +34,16 @@ class SceneMainMenu(Scene):
         self.button_8 = Button(self, 'set_count', SCREEN_POS['bl13'])
         self.button_9 = Button(self, 'switch_activity', SCREEN_POS['tr13'])
         self.button_10 = Button(self, 'play_sound', SCREEN_POS['tr33'])
-        self.button_11 = Button(self, '! NONE !', SCREEN_POS['br33'])
-        self.button_12 = Button(self, 'open_window', SCREEN_POS['br13'])
-        self.button_13 = Button(self, 'switch_screen', SCREEN_POS['tc3'])
+        self.button_11 = Button(self, 'open_window', SCREEN_POS['br33'])
+        self.button_12 = Button(self, 'return', SCREEN_POS['tc3'])
+        self.button_13 = Button(self, 'open_new_window', SCREEN_POS['bc3'])
+        self.button_14 = Button(self, 'return', SCREEN_POS['tl32'])
 
         self.print_event_1 = "Кнопка 1"
         self.print_event_2 = "click_count"
+
+        self.window_content_menu = [self.screen_window, self.button_12, self.button_13]
+        self.window_content_menu_2 = [self.screen_window_2, self.button_14]
 
         # ---
 
@@ -47,8 +52,10 @@ class SceneMainMenu(Scene):
                 self.scene_soundtrack_1,
             ]},
             {'screens': [
-                self.screen_main, self.screen_2
+                self.screen_main,
+                self.screen_window, self.screen_window_2
             ]},
+            # {'windows': [self.window_content_menu]},
             {'buttons': [
                 {self.button_1: [
                     {'print_event': self.print_event_1},
@@ -81,37 +88,35 @@ class SceneMainMenu(Scene):
                     {'play_sound': self.free_sound},
                 ]},
                 {self.button_11: [
-                    {'NONE': self.screen_2},
+                    {'open_window': self.window_content_menu},
+                    # {'make_invisible': [self.button_13]}
                 ]},
                 {self.button_12: [
-                    # {'open_window': [self.screen_window]},
-                    # {'make_visible': [self.button_13]},
-                    # {'open_window': self.window_content_menu},
+                    {'close_window': self.window_content_menu},
                 ]},
-                # {self.button_13: [
-                #     {'print_event': self.print_event_1},
-                # ]},
+                {self.button_13: [
+                    {'open_window': self.window_content_menu_2},
+                ]},
+                {self.button_14: [
+                    # {'close_window': self.window_content_menu},
+                    {'close_window': self.window_content_menu_2},
+                ]},
             ]}
-        ]
-
-        # -
-
-        self.window_content_menu = [
-            {'screens': [self.screen_window]}, {'buttons': [{self.button_13: [{'print_event': self.print_event_1}]}]}
         ]
 
         # ---
 
         # self.scene_soundtrack = self.scene_soundtrack_1
         self.current_screen = self.screen_main
+        self.scene_windows = [self.window_content_menu, self.window_content_menu_2]
 
         self.visible_content = [self.screen_main, self.button_1, self.button_2, self.button_3, self.button_5,
                                 self.button_6, self.button_7, self.button_9, self.button_10, self.button_11,
-                                self.button_12]
+                                ]
         self.invisible_content = []
         self.active_content = [self.screen_main, self.button_1, self.button_2, self.button_3, self.button_5,
                                self.button_6, self.button_7, self.button_9, self.button_10, self.button_11,
-                               self.button_12]
+                               ]
         self.inactive_content = []
 
     def userevent_applying(self, action_name, action_object):

@@ -56,7 +56,7 @@ class Game:
                                     "resources/card_items/frame/frame.png",
                                     "resources/card_items/name_block/name_block.png",
                                     "рыцарь", "Описание",
-                                    2, 0, 0)
+                                    2, 1, 3)
         self.player = Player(self, self.card_class, 1, 1, 1, 1, 5)
 
     def update(self):
